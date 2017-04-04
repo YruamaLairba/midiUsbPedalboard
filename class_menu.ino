@@ -36,6 +36,10 @@ class  MenuBase
     MenuManager * const manager;
     MenuBase * const parent ;
 
+    uint8_t selection;
+    //int8_t selectionMax;
+    
+
   public:
     MenuBase(MenuManager* manager, MenuBase* parent):
     manager(manager),
@@ -51,20 +55,22 @@ class  MenuBase
     virtual void print() = 0;
 };
 
+
+
 // class associating a label an a menu element
 class MenuFolder_Item
 {
   public:
     MenuBase* item;
-    char * label;
+    const char * label;
   public: 
-    MenuFolder_Item(MenuBase* item,char * label):
+    MenuFolder_Item(MenuBase* item, const char * label):
     item(item),
     label(label)
     {}
 
     MenuBase* get_item(){return item;}
-    char* get_label(){return label;}
+    const char* get_label(){return label;}
 };
 
 //a menu that contain submenu
@@ -73,11 +79,9 @@ class MenuFolder : public MenuBase
   public:
     MenuFolder_Item * items;
     int8_t nbItems;
-    int8_t selectedItem;
-  
   public:
     MenuFolder(MenuManager* manager, MenuBase* parent, MenuFolder_Item * items,int8_t nbItems):
-    MenuBase(manager,parent),
+    MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
     items(items),
     nbItems(nbItems)
     {}
@@ -89,6 +93,8 @@ class MenuFolder : public MenuBase
     virtual bool cancel();
     virtual bool reset();
     virtual void print();
+
+
 };
 
 void MenuFolder::activate()
@@ -100,9 +106,9 @@ void MenuFolder::activate()
 bool MenuFolder::next()
 {
   bool res = false;
-  if (this->selectedItem < this->nbItems - 1)
+  if (this->selection < this->nbItems -1)
   {
-    this->selectedItem++;
+    this->selection++;
     res = true;
   }
   return res;
@@ -111,9 +117,9 @@ bool MenuFolder::next()
 bool MenuFolder::prev()
 {
   bool res = false;
-  if (this->selectedItem > 0)
+  if (this->selection > 0)
   {
-    this->selectedItem--;
+    this->selection--;
     res = true;
   }
   return res;
@@ -122,9 +128,9 @@ bool MenuFolder::prev()
 bool MenuFolder::validate()
 {
   bool res = false;
-  if(items[selectedItem].item != NULL)
+  if(items[selection].item != NULL)
   {
-    items[selectedItem].item->activate();
+    items[selection].item->activate();
     res = true;
   }
   return res;
@@ -143,7 +149,7 @@ bool MenuFolder::cancel()
 
 bool MenuFolder::reset()
 {
-  selectedItem = 0;
+  selection = 0;
   return true;
 }
 
@@ -153,7 +159,7 @@ void MenuFolder::print()
   for (int i = 0; i< nbItems; i++)
   {
     Serial.print(items[i].label);
-    if (i == selectedItem)
+    if (i == selection)
     {
       Serial.print("<<<");
     }
@@ -161,7 +167,114 @@ void MenuFolder::print()
   }
 }
 
+
+class MenuPresetLoad : public MenuBase
+{
+  public:
+    //int8_t userPresetSelect;
+    //int8_t factoryPresetSelect;
+    
+    //int8_t nbUserPreset;
+    //int8_t nbFactoryPreset;
+    uint8_t displayOffset;
+
+    uint8_t nbPreset;
+  public:
+    //MenuPresetLoad(MenuManager* manager, MenuBase* parent, int8_t nbUserPreset,int8_t nbFactoryPreset):
+    //MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
+    //nbUserPreset(nbUserPreset),
+    //nbFactoryPreset(nbFactoryPreset)
+    MenuPresetLoad(MenuManager* manager, MenuBase* parent, int8_t nbPreset):
+    MenuBase(manager,parent),
+    nbPreset(nbPreset)
+    
+    {}
+    virtual void activate();
+    
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+};
 //typedef struct MenuManager MenuManager;
+void MenuPresetLoad::activate()
+{
+  this->reset();
+  manager->pt_current = this;
+}
+
+bool MenuPresetLoad::next()
+{
+  bool res = false;
+  if (this->selection < this->nbPreset -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+  return res;
+}
+
+bool MenuPresetLoad::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+  return res;
+}
+
+bool MenuPresetLoad::validate()
+{
+  Serial.print("Preset ");
+  Serial.print(selection,DEC);
+  Serial.print(" loaded\n\r");
+  return true;
+}
+
+bool MenuPresetLoad::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->pt_current = parent;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuPresetLoad::reset()
+{
+  selection = 0;
+  displayOffset = 0;
+  return true;
+}
+
+void MenuPresetLoad::print()
+{
+  
+  for (int i = displayOffset; i< (displayOffset + 4); i++)
+  {
+    Serial.print("Preset ");
+    Serial.print(i,DEC);
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
 
 
 bool MenuManager::next()
@@ -192,7 +305,7 @@ void MenuManager::print()
 
 extern MenuFolder mainConf;
 extern MenuFolder swSelect;
-extern MenuFolder loadPreset;
+extern MenuPresetLoad loadPreset;
 
 
 extern MenuManager manager;
@@ -216,6 +329,7 @@ MenuFolder_Item swSelect_items [] =
 };
 MenuFolder swSelect(&manager,&mainConf,swSelect_items,4);
 
+/*
 MenuFolder_Item loadPreset_items [] = 
 {
   MenuFolder_Item(NULL,"USER 0"),
@@ -224,7 +338,8 @@ MenuFolder_Item loadPreset_items [] =
   MenuFolder_Item(NULL,"USER 3")
 };
 MenuFolder loadPreset(&manager,&mainConf,loadPreset_items,4);
-
+*/
+MenuPresetLoad loadPreset(&manager,&mainConf, 129);
 
 MenuManager manager (&mainConf);
 
@@ -294,6 +409,6 @@ void loop() {
     Serial.print((int)&(mainConf_items),HEX);Serial.print("\n\r");
     */
     //mainConf.print(&mainConf);
-    //Serial.print(mainConf.selectedItem,DEC);
+    //Serial.print(mainConf.selection,DEC);
   }
 }
