@@ -1,9 +1,42 @@
 #include "menus.h"
 
+
+//MenuManager
+void MenuManager::set_active(MenuBase* activated)
+{
+  pt_current = activated;
+}
+
+
+bool MenuManager::next()
+{
+  return pt_current->next();
+}
+
+bool MenuManager::prev()
+{
+  return pt_current->prev();
+}
+
+bool MenuManager::validate()
+{
+  return pt_current->validate();
+}
+
+bool MenuManager::cancel()
+{
+  return pt_current->cancel();
+}
+
+void MenuManager::print()
+{
+  pt_current->print();
+}
+
 void MenuFolder::activate()
 {
   this->reset();
-  manager->pt_current = this;
+  manager->set_active(this);
 }
 
 bool MenuFolder::next()
@@ -44,7 +77,7 @@ bool MenuFolder::cancel()
   bool res = false;
   if(parent != NULL)
   {
-    manager->pt_current = parent;
+    manager->set_active(parent);
     res = true;
   }
   return res;
@@ -76,7 +109,7 @@ void MenuFolder::print()
 void MenuPresetLoad::activate()
 {
   this->reset();
-  manager->pt_current = this;
+  manager->set_active(this);
 }
 
 bool MenuPresetLoad::next()
@@ -122,7 +155,7 @@ bool MenuPresetLoad::cancel()
   bool res = false;
   if(parent != NULL)
   {
-    manager->pt_current = parent;
+    manager->set_active(parent);
     res = true;
   }
   return res;
@@ -155,7 +188,7 @@ void MenuPresetLoad::print()
 void MenuEnumSelect::activate()
 {
   this->reset();
-  manager->pt_current = this;
+  manager->set_active(this);
 }
 
 bool MenuEnumSelect::next()
@@ -191,7 +224,7 @@ bool MenuEnumSelect::cancel()
   bool res = false;
   if(parent != NULL)
   {
-    manager->pt_current = parent;
+    manager->set_active(parent);
     res = true;
   }
   return res;
@@ -210,28 +243,4 @@ void MenuEnumSelect::print()
 }
 
 
-//MenuManager
-bool MenuManager::next()
-{
-  return pt_current->next();
-}
 
-bool MenuManager::prev()
-{
-  return pt_current->prev();
-}
-
-bool MenuManager::validate()
-{
-  return pt_current->validate();
-}
-
-bool MenuManager::cancel()
-{
-  return pt_current->cancel();
-}
-
-void MenuManager::print()
-{
-  pt_current->print();
-}

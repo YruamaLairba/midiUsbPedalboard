@@ -9,11 +9,13 @@ class MenuBase;
 
 class MenuManager
 {
-  public:
+  private:
     MenuBase * const pt_root ;
     MenuBase * pt_current ;
   public:
     MenuManager(MenuBase* root):pt_root(root),pt_current(root){}
+
+    void set_active(MenuBase* activated);
  
     bool next();
     bool prev();
