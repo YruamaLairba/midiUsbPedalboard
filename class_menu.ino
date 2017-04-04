@@ -18,6 +18,7 @@ uint8_t prec_button_cancel;
 extern MenuFolder mainConf;
 extern MenuFolder swSelect;
 extern MenuPresetLoad loadPreset;
+extern MenuEnumSelect fswModeSelect;
 
 
 extern MenuManager manager;
@@ -34,13 +35,24 @@ MenuFolder mainConf(&manager,NULL,mainConf_items,4);
 
 MenuFolder_Item swSelect_items [] = 
 {
-  MenuFolder_Item(NULL,"FS 0"),
+  MenuFolder_Item(&fswModeSelect,"FS 0"),
   MenuFolder_Item(NULL,"FS 1"),
   MenuFolder_Item(NULL,"FS 2"),
   MenuFolder_Item(NULL,"FS 3")
 };
 MenuFolder swSelect(&manager,&mainConf,swSelect_items,4);
 
+
+const char* fswModeSelect_items[]
+{
+  "Tog(on)",
+  "Tog(off)",
+  "Mom(on)",
+  "Mom(off)",
+  "Sing(on)",
+  "Sing(off)"
+};
+MenuEnumSelect fswModeSelect(&manager,&swSelect,fswModeSelect_items,6);
 /*
 MenuFolder_Item loadPreset_items [] = 
 {

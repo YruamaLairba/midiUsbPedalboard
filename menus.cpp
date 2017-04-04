@@ -151,6 +151,66 @@ void MenuPresetLoad::print()
 }
 
 
+//MenuEnumSelect
+void MenuEnumSelect::activate()
+{
+  this->reset();
+  manager->pt_current = this;
+}
+
+bool MenuEnumSelect::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuEnumSelect::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuEnumSelect::validate()
+{
+  //TODO
+  return true;
+}
+
+bool MenuEnumSelect::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->pt_current = parent;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuEnumSelect::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuEnumSelect::print()
+{
+  Serial.print(items[selection]);
+  Serial.print("\n\r");
+}
+
+
+//MenuManager
 bool MenuManager::next()
 {
   return pt_current->next();

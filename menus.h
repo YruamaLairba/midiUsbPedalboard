@@ -1,3 +1,6 @@
+#ifndef MENUS_H
+#define MENUS_H
+
 #include <stdint.h>
 #include <Arduino.h>// for Serial
 
@@ -105,9 +108,9 @@ class MenuPresetLoad : public MenuBase
     //nbFactoryPreset(nbFactoryPreset)
     MenuPresetLoad(MenuManager* manager, MenuBase* parent, int8_t nbPreset):
     MenuBase(manager,parent),
-    nbPreset(nbPreset)
-    
+    nbPreset(nbPreset) 
     {}
+    
     virtual void activate();
     
     virtual bool next();
@@ -117,3 +120,24 @@ class MenuPresetLoad : public MenuBase
     virtual bool reset();
     virtual void print();
 };
+
+class MenuEnumSelect : public MenuBase
+{
+  private:
+    const char** items;
+    uint8_t nbItems;
+  public:
+    MenuEnumSelect(MenuManager* manager, MenuBase* parent, const char** items, uint8_t nbItems):
+    MenuBase(manager,parent),items(items),nbItems(nbItems){}
+
+    virtual void activate();
+    
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+  
+};
+#endif //MENUS_H
