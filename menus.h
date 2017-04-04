@@ -1,3 +1,6 @@
+#include <stdint.h>
+#include <Arduino.h>// for Serial
+
 
 class MenuBase;
 
