@@ -27,7 +27,7 @@ class MenuManager
 
 class  MenuBase
 {
-  public:
+  protected:
     MenuManager * const manager;
     MenuBase * const parent ;
 
@@ -54,7 +54,7 @@ class  MenuBase
 // class associating a label an a menu element
 class MenuFolder_Item
 {
-  public:
+  private:
     MenuBase* item;
     const char * label;
   public: 
@@ -71,7 +71,7 @@ class MenuFolder_Item
 //a menu that contain submenu
 class MenuFolder : public MenuBase
 {
-  public:
+  private:
     MenuFolder_Item * items;
     int8_t nbItems;
   public:
@@ -94,7 +94,7 @@ class MenuFolder : public MenuBase
 
 class MenuPresetLoad : public MenuBase
 {
-  public:
+  private:
     //int8_t userPresetSelect;
     //int8_t factoryPresetSelect;
     

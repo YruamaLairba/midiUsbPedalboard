@@ -64,9 +64,10 @@ bool MenuFolder::prev()
 bool MenuFolder::validate()
 {
   bool res = false;
-  if(items[selection].item != NULL)
+  MenuBase* pt_item = items[selection].get_item();
+  if(pt_item != NULL)
   {
-    items[selection].item->activate();
+    pt_item->activate();
     res = true;
   }
   return res;
@@ -94,7 +95,7 @@ void MenuFolder::print()
   
   for (int i = 0; i< nbItems; i++)
   {
-    Serial.print(items[i].label);
+    Serial.print(items[i].get_label());
     if (i == selection)
     {
       Serial.print("<<<");
