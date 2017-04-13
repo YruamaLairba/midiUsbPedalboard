@@ -7,7 +7,6 @@ void MenuManager::set_active(MenuBase* activated)
   pt_current = activated;
 }
 
-
 bool MenuManager::next()
 {
   return pt_current->next();
@@ -33,6 +32,15 @@ void MenuManager::print()
   pt_current->print();
 }
 
+
+//MenuBase
+void MenuBase::activate()
+{
+  this->reset();
+  manager->set_active(this);
+}
+
+//MenuFolder
 void MenuFolder::activate()
 {
   this->reset();
@@ -104,7 +112,76 @@ void MenuFolder::print()
   }
 }
 
+//MenuSwSelect
 
+bool MenuSwSelect::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwSelect::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwSelect::validate()
+{
+  bool res = false;
+  return res;
+}
+
+bool MenuSwSelect::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwSelect::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuSwSelect::print()
+{
+  
+  for (int i = 0; i< nbItems; i++)
+  {
+    if (i<4)
+    {
+      Serial.print("FS ");
+      Serial.print(i,DEC);
+    }
+    else if (i == 4)
+    {
+      Serial.print("Exp");
+    }
+
+
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
 
 //typedef struct MenuManager MenuManager;
 void MenuPresetLoad::activate()

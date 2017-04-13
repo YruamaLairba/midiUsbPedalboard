@@ -40,7 +40,7 @@ class  MenuBase
     manager(manager),
     parent(parent)
     {}
-    virtual void activate() = 0;
+    virtual void activate();
       
     virtual bool next() = 0;
     virtual bool prev() = 0;
@@ -89,8 +89,53 @@ class MenuFolder : public MenuBase
     virtual bool reset();
     virtual void print();
 
-
 };
+
+//the menu to select a fooswitch or an expresion pedal
+class MenuSwSelect : public MenuBase
+{
+  private:
+     const int8_t nbItems = 5;
+    #warning: "fix me"
+    //MenuBase* fsConfig;
+    //MenuBase* expConfig;
+    //MenuBase* expswConfig;
+    
+  public:
+    MenuSwSelect(MenuManager* manager, MenuBase* parent):
+    MenuBase(manager,parent)
+    {}
+    
+    //virtual void activate();
+    
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();  
+};
+
+
+
+class MenuSwConfig : public MenuBase
+{
+  private:
+    const uint8_t nbItems = 2;
+    uint8_t selectedSw;
+    #warning: "fix me"
+    //MenuBase* fsMode;
+    //MenuBase* fsCommand;
+  public:
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();  
+};
+
 
 class MenuPresetLoad : public MenuBase
 {
@@ -142,4 +187,7 @@ class MenuEnumSelect : public MenuBase
     virtual void print();
   
 };
+
+
+
 #endif //MENUS_H

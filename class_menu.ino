@@ -1,4 +1,5 @@
 #include "menus.h"
+#include "footswitch.h"
 
 #define ROTARY_A 2
 #define ROTARY_B 3
@@ -15,8 +16,11 @@ uint8_t prec_button_ok;
 uint8_t prec_button_cancel;
 
 
+//
+
 extern MenuFolder mainConf;
-extern MenuFolder swSelect;
+//extern MenuFolder swSelect;
+extern MenuSwSelect swSelect;
 extern MenuPresetLoad loadPreset;
 extern MenuEnumSelect fswModeSelect;
 
@@ -33,14 +37,15 @@ MenuFolder_Item mainConf_items [] =
 };
 MenuFolder mainConf(&manager,NULL,mainConf_items,4);
 
+/*
 MenuFolder_Item swSelect_items [] = 
 {
   MenuFolder_Item(&fswModeSelect,"FS 0"),
   MenuFolder_Item(NULL,"FS 1"),
   MenuFolder_Item(NULL,"FS 2"),
   MenuFolder_Item(NULL,"FS 3")
-};
-MenuFolder swSelect(&manager,&mainConf,swSelect_items,4);
+};*/
+MenuSwSelect swSelect(&manager,&mainConf);
 
 
 const char* fswModeSelect_items[]
