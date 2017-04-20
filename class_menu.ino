@@ -21,6 +21,9 @@ uint8_t prec_button_cancel;
 extern MenuFolder mainConf;
 //extern MenuFolder swSelect;
 extern MenuSwSelect swSelect;
+extern MenuSwConfig swConfig;
+extern MenuExpConfig expConfig;
+
 extern MenuPresetLoad loadPreset;
 extern MenuEnumSelect fswModeSelect;
 
@@ -45,8 +48,10 @@ MenuFolder_Item swSelect_items [] =
   MenuFolder_Item(NULL,"FS 2"),
   MenuFolder_Item(NULL,"FS 3")
 };*/
-MenuSwSelect swSelect(&manager,&mainConf);
+MenuSwSelect swSelect(&manager,&mainConf,&swConfig,&expConfig);
 
+MenuSwConfig swConfig(&manager,&swSelect);
+MenuExpConfig expConfig(&manager,&swSelect);
 
 const char* fswModeSelect_items[]
 {

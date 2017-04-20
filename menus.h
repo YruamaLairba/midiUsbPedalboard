@@ -92,18 +92,23 @@ class MenuFolder : public MenuBase
 };
 
 //the menu to select a fooswitch or an expresion pedal
+class MenuSwConfig; //forward declaration
+class MenuExpConfig; //forward declaration
+
 class MenuSwSelect : public MenuBase
 {
   private:
      const int8_t nbItems = 5;
     #warning: "fix me"
-    //MenuBase* fsConfig;
-    //MenuBase* expConfig;
+    MenuSwConfig* swConfig;
+    MenuExpConfig* expConfig;
     //MenuBase* expswConfig;
     
   public:
-    MenuSwSelect(MenuManager* manager, MenuBase* parent):
-    MenuBase(manager,parent)
+    MenuSwSelect(MenuManager* manager, MenuBase* parent,MenuSwConfig* swConfig,MenuExpConfig* expConfig):
+    MenuBase(manager,parent),
+    swConfig(swConfig),
+    expConfig(expConfig)
     {}
     
     //virtual void activate();
@@ -127,13 +132,42 @@ class MenuSwConfig : public MenuBase
     //MenuBase* fsMode;
     //MenuBase* fsCommand;
   public:
+    MenuSwConfig(MenuManager* manager, MenuBase* parent):
+    MenuBase(manager,parent)
+    {}
 
     virtual bool next();
     virtual bool prev();
     virtual bool validate();
     virtual bool cancel();
     virtual bool reset();
-    virtual void print();  
+    virtual void print();
+
+    void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
+};
+
+
+class MenuExpConfig : public MenuBase
+{
+  private:
+    const uint8_t nbItems = 2;
+    uint8_t selectedSw;
+    #warning: "fix me"
+    //MenuBase* fsMode;
+    //MenuBase* fsCommand;
+  public:
+    MenuExpConfig(MenuManager* manager, MenuBase* parent):
+    MenuBase(manager,parent)
+    {}
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+
+    void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
 };
 
 

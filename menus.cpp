@@ -139,6 +139,18 @@ bool MenuSwSelect::prev()
 bool MenuSwSelect::validate()
 {
   bool res = false;
+  if(selection < 4)
+  {
+    swConfig->set_swToConfig(selection);
+    swConfig->activate();
+    res = true;
+  }
+  else if (selection < 5)
+  {
+    expConfig->set_swToConfig(0);
+    expConfig->activate();
+    res = true;
+  }
   return res;
 }
 
@@ -182,6 +194,137 @@ void MenuSwSelect::print()
     Serial.print("\n\r");
   }
 }
+
+//MenuSwConfig
+bool MenuSwConfig::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwConfig::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwConfig::validate()
+{
+  bool res = false;
+  return res;
+}
+
+bool MenuSwConfig::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwConfig::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuSwConfig::print()
+{
+  
+  for (int i = 0; i< nbItems; i++)
+  {
+    switch (i)
+    {
+      case 0: Serial.print("FS Cmd");break;
+      case 1: Serial.print("FS Mode");break;
+    }
+    
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
+//
+//MenuExpConfig
+bool MenuExpConfig::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpConfig::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpConfig::validate()
+{
+  bool res = false;
+  return res;
+}
+
+bool MenuExpConfig::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpConfig::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuExpConfig::print()
+{
+  
+  for (int i = 0; i< nbItems; i++)
+  {
+    switch (i)
+    {
+      case 0: Serial.print("EXP Cmd");break;
+      case 1: Serial.print("EXP Mode");break;
+    }
+
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
+
 
 //typedef struct MenuManager MenuManager;
 void MenuPresetLoad::activate()
