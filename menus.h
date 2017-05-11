@@ -16,7 +16,7 @@ class MenuManager
     MenuManager(MenuBase* root):pt_root(root),pt_current(root){}
 
     void set_active(MenuBase* activated);
- 
+
     bool next();
     bool prev();
     bool validate();
@@ -33,7 +33,7 @@ class  MenuBase
 
     uint8_t selection;
     //int8_t selectionMax;
-    
+
 
   public:
     MenuBase(MenuManager* manager, MenuBase* parent):
@@ -41,7 +41,7 @@ class  MenuBase
     parent(parent)
     {}
     virtual void activate();
-      
+
     virtual bool next() = 0;
     virtual bool prev() = 0;
     virtual bool validate() = 0;
@@ -57,7 +57,7 @@ class MenuFolder_Item
   private:
     MenuBase* item;
     const char * label;
-  public: 
+  public:
     MenuFolder_Item(MenuBase* item, const char * label):
     item(item),
     label(label)
@@ -81,7 +81,7 @@ class MenuFolder : public MenuBase
     nbItems(nbItems)
     {}
     virtual void activate();
-    
+
     virtual bool next();
     virtual bool prev();
     virtual bool validate();
@@ -103,16 +103,16 @@ class MenuSwSelect : public MenuBase
     MenuSwConfig* swConfig;
     MenuExpConfig* expConfig;
     //MenuBase* expswConfig;
-    
+
   public:
     MenuSwSelect(MenuManager* manager, MenuBase* parent,MenuSwConfig* swConfig,MenuExpConfig* expConfig):
     MenuBase(manager,parent),
     swConfig(swConfig),
     expConfig(expConfig)
     {}
-    
+
     //virtual void activate();
-    
+
     virtual bool next();
     virtual bool prev();
     virtual bool validate();
@@ -176,7 +176,7 @@ class MenuPresetLoad : public MenuBase
   private:
     //int8_t userPresetSelect;
     //int8_t factoryPresetSelect;
-    
+
     //int8_t nbUserPreset;
     //int8_t nbFactoryPreset;
     uint8_t displayOffset;
@@ -191,9 +191,9 @@ class MenuPresetLoad : public MenuBase
     MenuBase(manager,parent),
     nbPreset(nbPreset) 
     {}
-    
+
     virtual void activate();
-    
+
     virtual bool next();
     virtual bool prev();
     virtual bool validate();
@@ -212,14 +212,14 @@ class MenuEnumSelect : public MenuBase
     MenuBase(manager,parent),items(items),nbItems(nbItems){}
 
     virtual void activate();
-    
+
     virtual bool next();
     virtual bool prev();
     virtual bool validate();
     virtual bool cancel();
     virtual bool reset();
     virtual void print();
-  
+
 };
 
 
