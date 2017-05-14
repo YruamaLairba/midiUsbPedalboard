@@ -91,37 +91,6 @@ class MenuFolder : public MenuBase
 
 };
 
-//menu mainConf
-
-//forward declaration of submenu class
-class MenuSwSelect;
-class MenuPresetLoad;
-class MenuPresetSave;
-class MenuGeneralSetting;
-#warning: "unfinished"
-class MenuMainConf : public MenuBase
-{
-  private:
-    int8_t nbItems;
-    //MenuSwSelect swSelect;
-    //MenuPresetLoad presetLoad;
-    //MenuPresetSave presetSave;
-    //MenuGeneralSetting generalSetting;
-
-  public:
-    MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent);
-
-    virtual void activate();
-
-    virtual bool next();
-    virtual bool prev();
-    virtual bool validate();
-    virtual bool cancel();
-    virtual bool reset();
-    virtual void print();
-
-};
-
 //the menu to select a fooswitch or an expresion pedal
 class MenuSwConfig; //forward declaration
 class MenuExpConfig; //forward declaration
@@ -218,10 +187,7 @@ class MenuPresetLoad : public MenuBase
     //MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
     //nbUserPreset(nbUserPreset),
     //nbFactoryPreset(nbFactoryPreset)
-    MenuPresetLoad(MenuManager* manager, MenuBase* parent, int8_t nbPreset):
-    MenuBase(manager,parent),
-    nbPreset(nbPreset) 
-    {}
+    MenuPresetLoad(MenuManager* pt_manager, MenuBase* pt_parent);
 
     virtual void activate();
 
@@ -231,6 +197,32 @@ class MenuPresetLoad : public MenuBase
     virtual bool cancel();
     virtual bool reset();
     virtual void print();
+};
+
+//menu mainConf
+
+#warning: "unfinished"
+class MenuMainConf : public MenuBase
+{
+  private:
+    int8_t nbItems;
+    //MenuSwSelect swSelect;
+    MenuPresetLoad presetLoad;
+    //MenuPresetSave presetSave;
+    //MenuGeneralSetting generalSetting;
+
+  public:
+    MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent);
+
+    virtual void activate();
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+
 };
 
 class MenuEnumSelect : public MenuBase
