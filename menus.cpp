@@ -112,6 +112,119 @@ void MenuFolder::print()
   }
 }
 
+//MenuMainConf
+
+//ctor
+#warning :"unfinished"
+MenuMainConf::MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager,parent),
+    //swSelect(pt_manager, this),
+    //presetLoad(pt_manager, this)
+    //presetSave(pt_manager, this),
+    //generalSetting(pt_manager, this)
+    nbItems(4)
+    {}
+
+void MenuMainConf::activate()
+{
+  this->reset();
+  manager->set_active(this);
+}
+
+bool MenuMainConf::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuMainConf::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+#warning: "not finished"
+bool MenuMainConf::validate()
+{
+  bool res = false;
+  switch (selection)
+  {
+    case 0:
+      //swSelect.activate();
+      res=true;
+      break;
+    case 1:
+      //presetLoad.activate();
+      res=true;
+      break;
+    case 2:
+      //presetSave.activate();
+      res=true;
+      break;
+    case 3:
+      //generalSetting.activate();
+      res=true;
+      break;
+  return res;
+  }
+}
+
+bool MenuMainConf::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuMainConf::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuMainConf::print()
+{
+  for (int i = 0; i< nbItems; i++)
+  {
+    switch(i)
+    {
+      case 0:
+        Serial.print("SW set");
+        break;
+      case 1:
+        Serial.print("Load Pres");
+        break;
+      case 2:
+        Serial.print("Save Pres");
+        break;
+      case 3:
+        Serial.print("Gen. set");
+        break;
+      default:
+        break;
+    }
+    if (selection == i)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
+
 //MenuSwSelect
 
 bool MenuSwSelect::next()
