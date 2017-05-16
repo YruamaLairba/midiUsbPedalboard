@@ -412,6 +412,94 @@ void MenuPresetLoad::print()
   }
 }
 
+//MenuPresetSave
+
+//ctor
+MenuPresetSave::MenuPresetSave(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager, pt_parent),
+    nbPreset(128)
+    {}
+
+void MenuPresetSave::activate()
+{
+  this->reset();
+  manager->set_active(this);
+}
+
+bool MenuPresetSave::next()
+{
+  bool res = false;
+  if (this->selection < this->nbPreset -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+  return res;
+}
+
+bool MenuPresetSave::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+  return res;
+}
+
+#warning "this is only a prototype"
+bool MenuPresetSave::validate()
+{
+  Serial.print("Preset ");
+  Serial.print(selection,DEC);
+  Serial.print(" saved\n\r");
+  return true;
+}
+
+bool MenuPresetSave::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuPresetSave::reset()
+{
+  selection = 0;
+  displayOffset = 0;
+  return true;
+}
+
+void MenuPresetSave::print()
+{
+  
+  for (int i = displayOffset; i< (displayOffset + 4); i++)
+  {
+    Serial.print("Preset ");
+    Serial.print(i,DEC);
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
+
+
+
 //MenuMainConf
 
 //ctor
@@ -420,7 +508,7 @@ MenuMainConf::MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent)
   : MenuBase(pt_manager,pt_parent),
     //swSelect(pt_manager, this),
     presetLoad(pt_manager, this),
-    //presetSave(pt_manager, this),
+    presetSave(pt_manager, this),
     //generalSetting(pt_manager, this)
     nbItems(4)
     {}
@@ -468,7 +556,7 @@ bool MenuMainConf::validate()
       res=true;
       break;
     case 2:
-      //presetSave.activate();
+      presetSave.activate();
       res=true;
       break;
     case 3:

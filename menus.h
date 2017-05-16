@@ -199,6 +199,28 @@ class MenuPresetLoad : public MenuBase
     virtual void print();
 };
 
+class MenuPresetSave : public MenuBase
+{
+  private:
+    uint8_t displayOffset;
+    uint8_t nbPreset;
+  public:
+    //MenuPresetSave(MenuManager* manager, MenuBase* parent, int8_t nbUserPreset,int8_t nbFactoryPreset):
+    //MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
+    //nbUserPreset(nbUserPreset),
+    //nbFactoryPreset(nbFactoryPreset)
+    MenuPresetSave(MenuManager* pt_manager, MenuBase* pt_parent);
+
+    virtual void activate();
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+};
+
 //menu mainConf
 
 #warning: "unfinished"
@@ -208,7 +230,7 @@ class MenuMainConf : public MenuBase
     int8_t nbItems;
     //MenuSwSelect swSelect;
     MenuPresetLoad presetLoad;
-    //MenuPresetSave presetSave;
+    MenuPresetSave presetSave;
     //MenuGeneralSetting generalSetting;
 
   public:
