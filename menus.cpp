@@ -112,89 +112,6 @@ void MenuFolder::print()
   }
 }
 
-//MenuSwSelect
-
-bool MenuSwSelect::next()
-{
-  bool res = false;
-  if (this->selection < this->nbItems -1)
-  {
-    this->selection++;
-    res = true;
-  }
-  return res;
-}
-
-bool MenuSwSelect::prev()
-{
-  bool res = false;
-  if (this->selection > 0)
-  {
-    this->selection--;
-    res = true;
-  }
-  return res;
-}
-
-bool MenuSwSelect::validate()
-{
-  bool res = false;
-  if(selection < 4)
-  {
-    swConfig->set_swToConfig(selection);
-    swConfig->activate();
-    res = true;
-  }
-  else if (selection < 5)
-  {
-    expConfig->set_swToConfig(0);
-    expConfig->activate();
-    res = true;
-  }
-  return res;
-}
-
-bool MenuSwSelect::cancel()
-{
-  bool res = false;
-  if(parent != NULL)
-  {
-    manager->set_active(parent);
-    res = true;
-  }
-  return res;
-}
-
-bool MenuSwSelect::reset()
-{
-  selection = 0;
-  return true;
-}
-
-void MenuSwSelect::print()
-{
-  
-  for (int i = 0; i< nbItems; i++)
-  {
-    if (i<4)
-    {
-      Serial.print("FS ");
-      Serial.print(i,DEC);
-    }
-    else if (i == 4)
-    {
-      Serial.print("Exp");
-    }
-
-
-    if (i == selection)
-    {
-      Serial.print("<<<");
-    }
-    Serial.print("\n\r");
-  }
-}
-
 //MenuSwConfig
 bool MenuSwConfig::next()
 {
@@ -325,6 +242,94 @@ void MenuExpConfig::print()
   }
 }
 
+//MenuSwSelect
+
+//ctor
+MenuSwSelect::MenuSwSelect(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager, pt_parent){}
+
+bool MenuSwSelect::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems -1)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwSelect::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+#warning "unfinished, need submenu"
+bool MenuSwSelect::validate()
+{
+  /*
+  bool res = false;
+  if(selection < 4)
+  {
+    swConfig->set_swToConfig(selection);
+    swConfig->activate();
+    res = true;
+  }
+  else if (selection < 5)
+  {
+    expConfig->set_swToConfig(0);
+    expConfig->activate();
+    res = true;
+  }
+  return res;
+  */
+  return true;
+}
+
+bool MenuSwSelect::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuSwSelect::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuSwSelect::print()
+{
+  for (int i = 0; i< nbItems; i++)
+  {
+    if (i<4)
+    {
+      Serial.print("FS ");
+      Serial.print(i,DEC);
+    }
+    else if (i == 4)
+    {
+      Serial.print("Exp");
+    }
+
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
 
 //MenuPresetLoad
 
@@ -602,7 +607,7 @@ void MenuGeneralSetting::print()
 #warning :"unfinished"
 MenuMainConf::MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent)
   : MenuBase(pt_manager,pt_parent),
-    //swSelect(pt_manager, this),
+    swSelect(pt_manager, this),
     presetLoad(pt_manager, this),
     presetSave(pt_manager, this),
     generalSetting(pt_manager, this),
@@ -644,7 +649,7 @@ bool MenuMainConf::validate()
   switch (selection)
   {
     case 0:
-      //swSelect.activate();
+      swSelect.activate();
       res=true;
       break;
     case 1:

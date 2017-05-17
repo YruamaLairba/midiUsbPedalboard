@@ -91,36 +91,6 @@ class MenuFolder : public MenuBase
 
 };
 
-//the menu to select a fooswitch or an expresion pedal
-class MenuSwConfig; //forward declaration
-class MenuExpConfig; //forward declaration
-
-class MenuSwSelect : public MenuBase
-{
-  private:
-     const int8_t nbItems = 5;
-    #warning: "fix me"
-    MenuSwConfig* swConfig;
-    MenuExpConfig* expConfig;
-    //MenuBase* expswConfig;
-
-  public:
-    MenuSwSelect(MenuManager* manager, MenuBase* parent,MenuSwConfig* swConfig,MenuExpConfig* expConfig):
-    MenuBase(manager,parent),
-    swConfig(swConfig),
-    expConfig(expConfig)
-    {}
-
-    //virtual void activate();
-
-    virtual bool next();
-    virtual bool prev();
-    virtual bool validate();
-    virtual bool cancel();
-    virtual bool reset();
-    virtual void print();  
-};
-
 
 
 class MenuSwConfig : public MenuBase
@@ -170,6 +140,38 @@ class MenuExpConfig : public MenuBase
     void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
 };
 
+
+
+//the menu to select a fooswitch or an expresion pedal for config
+class MenuSwSelect : public MenuBase
+{
+  private:
+    const int8_t nbItems = 5;
+    #warning: "fix me"
+    //MenuSwConfig* swConfig;
+    //MenuExpConfig* expConfig;
+
+  public:
+    /*
+    MenuSwSelect(
+      MenuManager* manager,
+      MenuBase* parent,
+      MenuSwConfig* swConfig,
+      MenuExpConfig* expConfig)
+      : MenuBase(manager,parent),
+        swConfig(swConfig),
+        expConfig(expConfig){}
+    */
+    MenuSwSelect(MenuManager* pt_manager, MenuBase* pt_parent);
+    //virtual void activate();
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();  
+};
 
 class MenuPresetLoad : public MenuBase
 {
@@ -249,7 +251,7 @@ class MenuMainConf : public MenuBase
 {
   private:
     int8_t nbItems;
-    //MenuSwSelect swSelect;
+    MenuSwSelect swSelect;
     MenuPresetLoad presetLoad;
     MenuPresetSave presetSave;
     MenuGeneralSetting generalSetting;
