@@ -119,14 +119,11 @@ class MenuExpConfig : public MenuBase
 {
   private:
     static const uint8_t nbItems = 2;
-    uint8_t selectedSw;
-    #warning: "fix me"
+    #warning: "MenuExpConfig: don't forget submenu"
     //MenuBase* fsMode;
     //MenuBase* fsCommand;
   public:
-    MenuExpConfig(MenuManager* manager, MenuBase* parent):
-    MenuBase(manager,parent)
-    {}
+    MenuExpConfig(MenuManager* pt_manager, MenuBase* pt_parent);
 
     virtual bool next();
     virtual bool prev();
@@ -135,7 +132,7 @@ class MenuExpConfig : public MenuBase
     virtual bool reset();
     virtual void print();
 
-    void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
+    //void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
 };
 
 
@@ -147,7 +144,7 @@ class MenuSwSelect : public MenuBase
     static const int8_t nbItems = 5;
     #warning: "fix me"
     MenuFsConfig fsConfig;
-    //MenuExpConfig* expConfig;
+    MenuExpConfig expConfig;
 
   public:
     /*
