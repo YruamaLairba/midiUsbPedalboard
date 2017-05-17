@@ -558,6 +558,7 @@ bool MenuGeneralSetting::validate()
     case 1:
       break;
   }
+  return true;
 }
 
 bool MenuGeneralSetting::cancel()
@@ -662,8 +663,8 @@ bool MenuMainConf::validate()
       generalSetting.activate();
       res=true;
       break;
-  return res;
   }
+  return res;
 }
 
 bool MenuMainConf::cancel()

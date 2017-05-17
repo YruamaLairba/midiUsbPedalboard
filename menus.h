@@ -96,7 +96,7 @@ class MenuFolder : public MenuBase
 class MenuSwConfig : public MenuBase
 {
   private:
-    const uint8_t nbItems = 2;
+    static const uint8_t nbItems = 2;
     uint8_t selectedSw;
     #warning: "fix me"
     //MenuBase* fsMode;
@@ -120,7 +120,7 @@ class MenuSwConfig : public MenuBase
 class MenuExpConfig : public MenuBase
 {
   private:
-    const uint8_t nbItems = 2;
+    static const uint8_t nbItems = 2;
     uint8_t selectedSw;
     #warning: "fix me"
     //MenuBase* fsMode;
@@ -146,7 +146,7 @@ class MenuExpConfig : public MenuBase
 class MenuSwSelect : public MenuBase
 {
   private:
-    const int8_t nbItems = 5;
+    static const int8_t nbItems = 5;
     #warning: "fix me"
     //MenuSwConfig* swConfig;
     //MenuExpConfig* expConfig;
@@ -248,11 +248,11 @@ class MenuGeneralSetting : public MenuBase
 class MenuMainConf : public MenuBase
 {
   private:
-    int8_t nbItems;
     MenuSwSelect swSelect;
     MenuPresetLoad presetLoad;
     MenuPresetSave presetSave;
     MenuGeneralSetting generalSetting;
+    int8_t nbItems;
 
   public:
     MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent);
