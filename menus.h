@@ -221,6 +221,27 @@ class MenuPresetSave : public MenuBase
     virtual void print();
 };
 
+#warning "unifished, need submenu"
+class MenuGeneralSetting : public MenuBase
+{
+  private:
+    uint8_t displayOffset;
+    int8_t nbItems;
+
+  public:
+    MenuGeneralSetting(MenuManager* pt_manager, MenuBase* pt_parent);
+
+    virtual void activate();
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+};
+
+
 //menu mainConf
 
 #warning: "unfinished"
@@ -231,7 +252,7 @@ class MenuMainConf : public MenuBase
     //MenuSwSelect swSelect;
     MenuPresetLoad presetLoad;
     MenuPresetSave presetSave;
-    //MenuGeneralSetting generalSetting;
+    MenuGeneralSetting generalSetting;
 
   public:
     MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent);

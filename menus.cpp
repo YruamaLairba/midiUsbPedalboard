@@ -499,6 +499,102 @@ void MenuPresetSave::print()
 }
 
 
+//MenuGeneralSetting
+
+//ctor
+MenuGeneralSetting::MenuGeneralSetting(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager, pt_parent),
+    nbItems(2)
+    {}
+
+void MenuGeneralSetting::activate()
+{
+  this->reset();
+  manager->set_active(this);
+}
+
+bool MenuGeneralSetting::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems-1)
+  {
+    this->selection++;
+    res = true;
+  }
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+  return res;
+}
+
+bool MenuGeneralSetting::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+  return res;
+}
+
+#warning "don't forget submenu activation"
+bool MenuGeneralSetting::validate()
+{
+  switch(selection)
+  {
+    case 0:
+      break;
+    case 1:
+      break;
+  }
+}
+
+bool MenuGeneralSetting::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuGeneralSetting::reset()
+{
+  selection = 0;
+  displayOffset = 0;
+  return true;
+}
+
+void MenuGeneralSetting::print()
+{
+  for (int i = displayOffset; i< (displayOffset + 4) and i<nbItems; i++)
+  {
+    switch(i)
+    {
+      case 0:
+        Serial.print("Midi chan");
+        break;
+      case 1:
+        Serial.print("Exp cal");
+        break;
+    }
+    if (i == selection)
+    {
+      Serial.print("<<<");
+    }
+    Serial.print("\n\r");
+  }
+}
+
+
 
 //MenuMainConf
 
@@ -509,7 +605,7 @@ MenuMainConf::MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent)
     //swSelect(pt_manager, this),
     presetLoad(pt_manager, this),
     presetSave(pt_manager, this),
-    //generalSetting(pt_manager, this)
+    generalSetting(pt_manager, this),
     nbItems(4)
     {}
 
@@ -560,7 +656,7 @@ bool MenuMainConf::validate()
       res=true;
       break;
     case 3:
-      //generalSetting.activate();
+      generalSetting.activate();
       res=true;
       break;
   return res;
