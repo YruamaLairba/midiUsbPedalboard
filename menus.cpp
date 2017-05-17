@@ -112,8 +112,13 @@ void MenuFolder::print()
   }
 }
 
-//MenuSwConfig
-bool MenuSwConfig::next()
+//MenuFsConfig
+
+//ctor
+MenuFsConfig::MenuFsConfig(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager,pt_parent){}
+
+bool MenuFsConfig::next()
 {
   bool res = false;
   if (this->selection < this->nbItems -1)
@@ -124,7 +129,7 @@ bool MenuSwConfig::next()
   return res;
 }
 
-bool MenuSwConfig::prev()
+bool MenuFsConfig::prev()
 {
   bool res = false;
   if (this->selection > 0)
@@ -135,13 +140,14 @@ bool MenuSwConfig::prev()
   return res;
 }
 
-bool MenuSwConfig::validate()
+#warning "MenuFsConfig: activate submenu"
+bool MenuFsConfig::validate()
 {
   bool res = false;
   return res;
 }
 
-bool MenuSwConfig::cancel()
+bool MenuFsConfig::cancel()
 {
   bool res = false;
   if(parent != NULL)
@@ -152,23 +158,25 @@ bool MenuSwConfig::cancel()
   return res;
 }
 
-bool MenuSwConfig::reset()
+bool MenuFsConfig::reset()
 {
   selection = 0;
   return true;
 }
 
-void MenuSwConfig::print()
+void MenuFsConfig::print()
 {
-  
   for (int i = 0; i< nbItems; i++)
   {
     switch (i)
     {
-      case 0: Serial.print("FS Cmd");break;
-      case 1: Serial.print("FS Mode");break;
+      case 0:
+        Serial.print("FS Cmd");
+        break;
+      case 1:
+        Serial.print("FS Mode");
+        break;
     }
-    
     if (i == selection)
     {
       Serial.print("<<<");
@@ -246,7 +254,8 @@ void MenuExpConfig::print()
 
 //ctor
 MenuSwSelect::MenuSwSelect(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager, pt_parent){}
+  : MenuBase(pt_manager, pt_parent),
+    fsConfig(pt_manager, pt_parent){}
 
 bool MenuSwSelect::next()
 {
@@ -273,23 +282,20 @@ bool MenuSwSelect::prev()
 #warning "unfinished, need submenu"
 bool MenuSwSelect::validate()
 {
-  /*
   bool res = false;
   if(selection < 4)
   {
-    swConfig->set_swToConfig(selection);
-    swConfig->activate();
+    //fsConfig->set_swToConfig(selection);
+    fsConfig.activate();
     res = true;
   }
-  else if (selection < 5)
+  /*else if (selection < 5)
   {
     expConfig->set_swToConfig(0);
     expConfig->activate();
     res = true;
-  }
+  }*/
   return res;
-  */
-  return true;
 }
 
 bool MenuSwSelect::cancel()

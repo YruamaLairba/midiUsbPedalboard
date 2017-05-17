@@ -92,19 +92,17 @@ class MenuFolder : public MenuBase
 };
 
 
-
-class MenuSwConfig : public MenuBase
+//menu root for Footswitch configuration
+class MenuFsConfig : public MenuBase
 {
   private:
     static const uint8_t nbItems = 2;
-    uint8_t selectedSw;
     #warning: "fix me"
     //MenuBase* fsMode;
     //MenuBase* fsCommand;
+    //<a variable that represent footswitch that we modify>
   public:
-    MenuSwConfig(MenuManager* manager, MenuBase* parent):
-    MenuBase(manager,parent)
-    {}
+    MenuFsConfig(MenuManager* pt_manager, MenuBase* pt_parent);
 
     virtual bool next();
     virtual bool prev();
@@ -113,7 +111,7 @@ class MenuSwConfig : public MenuBase
     virtual bool reset();
     virtual void print();
 
-    void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
+    //void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
 };
 
 
@@ -148,7 +146,7 @@ class MenuSwSelect : public MenuBase
   private:
     static const int8_t nbItems = 5;
     #warning: "fix me"
-    //MenuSwConfig* swConfig;
+    MenuFsConfig fsConfig;
     //MenuExpConfig* expConfig;
 
   public:
@@ -156,10 +154,10 @@ class MenuSwSelect : public MenuBase
     MenuSwSelect(
       MenuManager* manager,
       MenuBase* parent,
-      MenuSwConfig* swConfig,
+      MenuFsConfig* fsConfig,
       MenuExpConfig* expConfig)
       : MenuBase(manager,parent),
-        swConfig(swConfig),
+        fsConfig(fsConfig),
         expConfig(expConfig){}
     */
     MenuSwSelect(MenuManager* pt_manager, MenuBase* pt_parent);
