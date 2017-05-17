@@ -604,7 +604,6 @@ void MenuGeneralSetting::print()
 //MenuMainConf
 
 //ctor
-#warning :"unfinished"
 MenuMainConf::MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent)
   : MenuBase(pt_manager,pt_parent),
     swSelect(pt_manager, this),
@@ -642,7 +641,6 @@ bool MenuMainConf::prev()
   return res;
 }
 
-#warning: "not finished"
 bool MenuMainConf::validate()
 {
   bool res = false;

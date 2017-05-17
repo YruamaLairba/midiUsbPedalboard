@@ -245,8 +245,6 @@ class MenuGeneralSetting : public MenuBase
 
 
 //menu mainConf
-
-#warning: "unfinished"
 class MenuMainConf : public MenuBase
 {
   private:
