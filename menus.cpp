@@ -281,7 +281,6 @@ bool MenuFsConfig::prev()
   return res;
 }
 
-#warning "MenuFsConfig: activate submenu"
 bool MenuFsConfig::validate()
 {
   switch (selection)
@@ -492,7 +491,6 @@ bool MenuExpConfig::prev()
   return res;
 }
 
-#warning "MenuExpConfig: don't forget submenu activation"
 bool MenuExpConfig::validate()
 {
   switch (selection)
@@ -574,7 +572,6 @@ bool MenuSwSelect::prev()
   return res;
 }
 
-#warning "unfinished, need submenu"
 bool MenuSwSelect::validate()
 {
   bool res = false;
@@ -676,7 +673,7 @@ bool MenuPresetLoad::prev()
   return res;
 }
 
-#warning "this is only a prototype"
+#warning "MenuPrestLoad: this is only a prototype"
 bool MenuPresetLoad::validate()
 {
   Serial.print("Preset ");
@@ -762,7 +759,7 @@ bool MenuPresetSave::prev()
   return res;
 }
 
-#warning "this is only a prototype"
+#warning "MenuPresetSave: this is only a prototype"
 bool MenuPresetSave::validate()
 {
   Serial.print("Preset ");
@@ -849,7 +846,7 @@ bool MenuGeneralSetting::prev()
   return res;
 }
 
-#warning "don't forget submenu activation"
+#warning "MenuGeneralSetting: don't forget submenu activation"
 bool MenuGeneralSetting::validate()
 {
   switch(selection)

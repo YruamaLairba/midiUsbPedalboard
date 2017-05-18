@@ -130,7 +130,6 @@ class MenuFsConfig : public MenuBase
 {
   private:
     static const uint8_t nbItems = 2;
-    #warning: "fix me"
     MenuFsCommand menuFsCommand;
     MenuFsMode menuFsMode;
     //<a variable that represent footswitch that we modify>
@@ -185,7 +184,6 @@ class MenuExpConfig : public MenuBase
 {
   private:
     static const uint8_t nbItems = 2;
-    #warning: "MenuExpConfig: don't forget submenu"
     MenuExpCommand menuExpCommand;
     MenuExpMode menuExpMode;
   public:
@@ -208,7 +206,6 @@ class MenuSwSelect : public MenuBase
 {
   private:
     static const int8_t nbItems = 5;
-    #warning: "fix me"
     MenuFsConfig fsConfig;
     MenuExpConfig expConfig;
 
@@ -284,7 +281,7 @@ class MenuPresetSave : public MenuBase
     virtual void print();
 };
 
-#warning "unifished, need submenu"
+#warning "MenuGeneralSetting: need submenu"
 class MenuGeneralSetting : public MenuBase
 {
   private:
