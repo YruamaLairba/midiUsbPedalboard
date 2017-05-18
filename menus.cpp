@@ -112,11 +112,89 @@ void MenuFolder::print()
   }
 }
 
+//MenuFsMode
+//ctor
+MenuFsMode::MenuFsMode(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager,pt_parent){}
+
+bool MenuFsMode::next()
+{
+  bool res = false;
+  if (this->selection < this->selectionMax)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuFsMode::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+#warning "MenuFsMode: not implemented yet"
+bool MenuFsMode::validate()
+{
+  bool res = false;
+  return res;
+}
+
+bool MenuFsMode::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuFsMode::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuFsMode::print()
+{
+  switch (selection)
+  {
+    case 0:
+      Serial.print("tog off");
+      break;
+    case 1:
+      Serial.print("tog on");
+      break;
+    case 2:
+      Serial.print("mom pre");
+      break;
+    case 3:
+      Serial.print("mom dp");
+      break;
+    case 4:
+      Serial.print("sing on");
+      break;
+    case 5:
+      Serial.print("sing off");
+      break;
+  }
+  Serial.print("\n\r");
+}
+
 //MenuFsConfig
 
 //ctor
 MenuFsConfig::MenuFsConfig(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent){}
+  : MenuBase(pt_manager,pt_parent),
+    menuFsMode(pt_manager,this){}
 
 bool MenuFsConfig::next()
 {
@@ -143,8 +221,13 @@ bool MenuFsConfig::prev()
 #warning "MenuFsConfig: activate submenu"
 bool MenuFsConfig::validate()
 {
-  bool res = false;
-  return res;
+  switch (selection)
+  {
+    case 1:
+      menuFsMode.activate();
+      break;
+  }
+  return true;
 }
 
 bool MenuFsConfig::cancel()
