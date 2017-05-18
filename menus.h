@@ -91,6 +91,23 @@ class MenuFolder : public MenuBase
 
 };
 
+//menu to select command associated to a footswitch
+class MenuFsCommand : public MenuBase
+{
+  private:
+    static const uint8_t selectionMax = 127;
+  public:
+    MenuFsCommand(MenuManager* pt_manager, MenuBase* pt_parent);
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+
+};
+
 //menu to select mode of a footswitch
 class MenuFsMode : public MenuBase
 {
@@ -114,7 +131,7 @@ class MenuFsConfig : public MenuBase
   private:
     static const uint8_t nbItems = 2;
     #warning: "fix me"
-    //MenuBase* fsCommand;
+    MenuFsCommand menuFsCommand;
     MenuFsMode menuFsMode;
     //<a variable that represent footswitch that we modify>
   public:

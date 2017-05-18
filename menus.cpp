@@ -112,6 +112,68 @@ void MenuFolder::print()
   }
 }
 
+//MenuFsCommand
+//ctor
+MenuFsCommand::MenuFsCommand(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager,pt_parent){}
+
+bool MenuFsCommand::next()
+{
+  bool res = false;
+  if (this->selection < this->selectionMax)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuFsCommand::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+#warning "MenuFsCommand: not implemented yet"
+bool MenuFsCommand::validate()
+{
+  bool res = false;
+  return res;
+}
+
+bool MenuFsCommand::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuFsCommand::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuFsCommand::print()
+{
+  if(selection <= 127)
+  {
+    Serial.print("CC");
+    Serial.print(selection,DEC);
+  }
+  Serial.print("\n\r");
+}
+
+
 //MenuFsMode
 //ctor
 MenuFsMode::MenuFsMode(MenuManager* pt_manager, MenuBase* pt_parent)
@@ -194,6 +256,7 @@ void MenuFsMode::print()
 //ctor
 MenuFsConfig::MenuFsConfig(MenuManager* pt_manager, MenuBase* pt_parent)
   : MenuBase(pt_manager,pt_parent),
+    menuFsCommand(pt_manager,this),
     menuFsMode(pt_manager,this){}
 
 bool MenuFsConfig::next()
@@ -223,6 +286,9 @@ bool MenuFsConfig::validate()
 {
   switch (selection)
   {
+    case 0:
+      menuFsCommand.activate();
+      break;
     case 1:
       menuFsMode.activate();
       break;
