@@ -334,10 +334,141 @@ void MenuFsConfig::print()
   }
 }
 
+//MenuExpCommand
+//ctor
+MenuExpCommand::MenuExpCommand(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager,pt_parent){}
+
+bool MenuExpCommand::next()
+{
+  bool res = false;
+  if (this->selection < this->selectionMax)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpCommand::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+#warning "MenuExpCommand: not implemented yet"
+bool MenuExpCommand::validate()
+{
+  bool res = false;
+  return res;
+}
+
+bool MenuExpCommand::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpCommand::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuExpCommand::print()
+{
+  if(selection <= 127)
+  {
+    Serial.print("CC");
+    Serial.print(selection,DEC);
+  }
+  else if (selection == 128)
+  {
+    Serial.print("PitchBend");
+  }
+  Serial.print("\n\r");
+}
+
+//MenuExpMode
+//ctor
+MenuExpMode::MenuExpMode(MenuManager* pt_manager, MenuBase* pt_parent)
+  : MenuBase(pt_manager,pt_parent){}
+
+bool MenuExpMode::next()
+{
+  bool res = false;
+  if (this->selection < this->selectionMax)
+  {
+    this->selection++;
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpMode::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  return res;
+}
+
+#warning "MenuExpMode: not implemented yet"
+bool MenuExpMode::validate()
+{
+  return true;
+}
+
+bool MenuExpMode::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuExpMode::reset()
+{
+  selection = 0;
+  return true;
+}
+
+void MenuExpMode::print()
+{
+  switch (selection)
+  {
+    case 0:
+      Serial.print("normal");
+      break;
+    case 1:
+      Serial.print("reverse");
+      break;
+  }
+  Serial.print("\n\r");
+}
+
 //MenuExpConfig
 //ctor
 MenuExpConfig::MenuExpConfig(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent){}
+  : MenuBase(pt_manager,pt_parent),
+    menuExpCommand(pt_manager,this),
+    menuExpMode(pt_manager,this){}
 
 bool MenuExpConfig::next()
 {
@@ -364,8 +495,15 @@ bool MenuExpConfig::prev()
 #warning "MenuExpConfig: don't forget submenu activation"
 bool MenuExpConfig::validate()
 {
-  bool res = false;
-  return res;
+  switch (selection)
+  {
+    case 0:
+      menuExpCommand.activate();
+      break;
+    case 1:
+      menuExpMode.activate();
+      break;
+  }
 }
 
 bool MenuExpConfig::cancel()

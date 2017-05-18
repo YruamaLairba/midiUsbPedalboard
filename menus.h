@@ -147,14 +147,47 @@ class MenuFsConfig : public MenuBase
     //void set_swToConfig(uint8_t swNumber){this->selectedSw = swNumber;};
 };
 
+//menu to select command associated to an expression pedal
+class MenuExpCommand : public MenuBase
+{
+  private:
+    static const uint8_t selectionMax = 128;
+  public:
+    MenuExpCommand(MenuManager* pt_manager, MenuBase* pt_parent);
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+
+};
+
+//menu to select mode of a expression pedal
+class MenuExpMode : public MenuBase
+{
+  private:
+    static const uint8_t selectionMax = 1;
+  public:
+    MenuExpMode(MenuManager* pt_manager, MenuBase* pt_parent);
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+
+};
 
 class MenuExpConfig : public MenuBase
 {
   private:
     static const uint8_t nbItems = 2;
     #warning: "MenuExpConfig: don't forget submenu"
-    //MenuBase* fsMode;
-    //MenuBase* fsCommand;
+    MenuExpCommand menuExpCommand;
+    MenuExpMode menuExpMode;
   public:
     MenuExpConfig(MenuManager* pt_manager, MenuBase* pt_parent);
 
