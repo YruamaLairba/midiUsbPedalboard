@@ -51,46 +51,6 @@ class  MenuBase
 };
 
 
-// class associating a label an a menu element
-class MenuFolder_Item
-{
-  private:
-    MenuBase* item;
-    const char * label;
-  public:
-    MenuFolder_Item(MenuBase* item, const char * label):
-    item(item),
-    label(label)
-    {}
-
-    MenuBase* get_item(){return item;}
-    const char* get_label(){return label;}
-};
-
-
-//a menu that contain submenu
-class MenuFolder : public MenuBase
-{
-  private:
-    MenuFolder_Item * items;
-    int8_t nbItems;
-  public:
-    MenuFolder(MenuManager* manager, MenuBase* parent, MenuFolder_Item * items,int8_t nbItems):
-    MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
-    items(items),
-    nbItems(nbItems)
-    {}
-    virtual void activate();
-
-    virtual bool next();
-    virtual bool prev();
-    virtual bool validate();
-    virtual bool cancel();
-    virtual bool reset();
-    virtual void print();
-
-};
-
 //menu to select command associated to a footswitch
 class MenuFsCommand : public MenuBase
 {
@@ -325,27 +285,5 @@ class MenuMainConf : public MenuBase
     virtual void print();
 
 };
-
-class MenuEnumSelect : public MenuBase
-{
-  private:
-    const char** items;
-    uint8_t nbItems;
-  public:
-    MenuEnumSelect(MenuManager* manager, MenuBase* parent, const char** items, uint8_t nbItems):
-    MenuBase(manager,parent),items(items),nbItems(nbItems){}
-
-    virtual void activate();
-
-    virtual bool next();
-    virtual bool prev();
-    virtual bool validate();
-    virtual bool cancel();
-    virtual bool reset();
-    virtual void print();
-
-};
-
-
 
 #endif //MENUS_H
