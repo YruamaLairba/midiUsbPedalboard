@@ -260,17 +260,22 @@ bool MenuFsConfig::reset()
 
 void MenuFsConfig::print()
 {
+  uint8_t fsNum = pt_menuSwSelect->get_selectedFsNum();
   for (int i = 0; i< nbItems; i++)
   {
     switch (i)
     {
       case 0:
-        Serial.print("FS Cmd");
+        Serial.print("FS");
+        Serial.print(fsNum, DEC);
+        Serial.print(" Cmd");
         break;
       case 1:
-        Serial.print("FS Mode");
+        Serial.print("FS");
+        Serial.print(fsNum, DEC);
+        Serial.print(" Mode");
         break;
-    }
+   }
     if (i == selection)
     {
       Serial.print("<<<");
@@ -488,15 +493,20 @@ bool MenuExpConfig::reset()
 
 void MenuExpConfig::print()
 {
+  uint8_t expNum = pt_menuSwSelect->get_selectedExpNum();
   for (int i = 0; i< nbItems; i++)
   {
     switch (i)
     {
       case 0:
-        Serial.print("EXP Cmd");
+        Serial.print("EXP");
+        Serial.print(expNum, DEC);
+        Serial.print(" Cmd");
         break;
       case 1:
-        Serial.print("EXP Mode");
+        Serial.print("EXP");
+        Serial.print(expNum, DEC);
+        Serial.print(" Mode");
         break;
     }
     if (i == selection)
