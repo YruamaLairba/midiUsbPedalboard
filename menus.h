@@ -52,17 +52,20 @@ class  MenuBase
     virtual void print() = 0;
 };
 
+class MenuSwSelect;
 
 //menu to select command associated to a footswitch
 class MenuFsCommand : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 127;
+    MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
   public:
     MenuFsCommand(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      MenuSwSelect* pt_menuSwSelect,
       Preset* pt_preset);
 
     virtual bool next();
@@ -79,11 +82,13 @@ class MenuFsMode : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 5;
+    MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
   public:
     MenuFsMode(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      MenuSwSelect* pt_menuSwSelect,
       Preset* pt_preset);
 
     virtual bool next();
@@ -102,12 +107,14 @@ class MenuFsConfig : public MenuBase
     static const uint8_t nbItems = 2;
     MenuFsCommand menuFsCommand;
     MenuFsMode menuFsMode;
+    MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
     //<a variable that represent footswitch that we modify>
   public:
     MenuFsConfig(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      MenuSwSelect* pt_menuSwSelect,
       Preset* pt_preset);
 
     virtual bool next();
@@ -125,11 +132,13 @@ class MenuExpCommand : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 128;
+    MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
   public:
     MenuExpCommand(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      MenuSwSelect* pt_menuSwSelect,
       Preset* pt_preset);
 
     virtual bool next();
@@ -146,11 +155,13 @@ class MenuExpMode : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 1;
+    MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
   public:
     MenuExpMode(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      MenuSwSelect* pt_menuSwSelect,
       Preset* pt_preset);
 
     virtual bool next();
@@ -168,11 +179,13 @@ class MenuExpConfig : public MenuBase
     static const uint8_t nbItems = 2;
     MenuExpCommand menuExpCommand;
     MenuExpMode menuExpMode;
+    MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
   public:
     MenuExpConfig(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      MenuSwSelect* pt_menuSwSelect,
       Preset* pt_preset);
     virtual bool next();
     virtual bool prev();

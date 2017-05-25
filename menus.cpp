@@ -45,8 +45,10 @@ void MenuBase::activate()
 MenuFsCommand::MenuFsCommand(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  MenuSwSelect* pt_menuSwSelect,
   Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
+    pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
 bool MenuFsCommand::next()
@@ -111,8 +113,10 @@ void MenuFsCommand::print()
 MenuFsMode::MenuFsMode(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  MenuSwSelect* pt_menuSwSelect,
   Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
+    pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
 bool MenuFsMode::next()
@@ -193,10 +197,12 @@ void MenuFsMode::print()
 MenuFsConfig::MenuFsConfig(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  MenuSwSelect* pt_menuSwSelect,
   Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
-    menuFsCommand(pt_manager,this, pt_preset),
-    menuFsMode(pt_manager,this, pt_preset),
+    menuFsCommand(pt_manager,this, pt_menuSwSelect, pt_preset),
+    menuFsMode(pt_manager,this, pt_menuSwSelect, pt_preset),
+    pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
 bool MenuFsConfig::next()
@@ -278,8 +284,10 @@ void MenuFsConfig::print()
 MenuExpCommand::MenuExpCommand(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  MenuSwSelect* pt_menuSwSelect,
   Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
+    pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
 bool MenuExpCommand::next()
@@ -347,8 +355,10 @@ void MenuExpCommand::print()
 MenuExpMode::MenuExpMode(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  MenuSwSelect* pt_menuSwSelect,
   Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
+    pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
 bool MenuExpMode::next()
@@ -415,10 +425,12 @@ void MenuExpMode::print()
 MenuExpConfig::MenuExpConfig(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  MenuSwSelect* pt_menuSwSelect,
   Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
-    menuExpCommand(pt_manager, this, pt_preset),
-    menuExpMode(pt_manager, this, pt_preset),
+    menuExpCommand(pt_manager, this, pt_menuSwSelect, pt_preset),
+    menuExpMode(pt_manager, this, pt_menuSwSelect, pt_preset),
+    pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
 bool MenuExpConfig::next()
@@ -454,6 +466,7 @@ bool MenuExpConfig::validate()
       menuExpMode.activate();
       break;
   }
+  return true;
 }
 
 bool MenuExpConfig::cancel()
@@ -502,8 +515,8 @@ MenuSwSelect::MenuSwSelect(
   MenuBase* pt_parent,
   Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
-    fsConfig(pt_manager, this, pt_preset),
-    expConfig(pt_manager, this, pt_preset),
+    fsConfig(pt_manager, this, this, pt_preset),
+    expConfig(pt_manager, this, this, pt_preset),
     pt_preset(pt_preset){}
 
 uint8_t MenuSwSelect::nbItems()
