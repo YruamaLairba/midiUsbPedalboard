@@ -58,8 +58,12 @@ class MenuFsCommand : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 127;
+    Preset* pt_preset;
   public:
-    MenuFsCommand(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuFsCommand(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
 
     virtual bool next();
     virtual bool prev();
@@ -75,8 +79,12 @@ class MenuFsMode : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 5;
+    Preset* pt_preset;
   public:
-    MenuFsMode(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuFsMode(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
 
     virtual bool next();
     virtual bool prev();
@@ -94,9 +102,13 @@ class MenuFsConfig : public MenuBase
     static const uint8_t nbItems = 2;
     MenuFsCommand menuFsCommand;
     MenuFsMode menuFsMode;
+    Preset* pt_preset;
     //<a variable that represent footswitch that we modify>
   public:
-    MenuFsConfig(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuFsConfig(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
 
     virtual bool next();
     virtual bool prev();
@@ -113,8 +125,12 @@ class MenuExpCommand : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 128;
+    Preset* pt_preset;
   public:
-    MenuExpCommand(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuExpCommand(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
 
     virtual bool next();
     virtual bool prev();
@@ -130,8 +146,12 @@ class MenuExpMode : public MenuBase
 {
   private:
     static const uint8_t selectionMax = 1;
+    Preset* pt_preset;
   public:
-    MenuExpMode(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuExpMode(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
 
     virtual bool next();
     virtual bool prev();
@@ -148,9 +168,12 @@ class MenuExpConfig : public MenuBase
     static const uint8_t nbItems = 2;
     MenuExpCommand menuExpCommand;
     MenuExpMode menuExpMode;
+    Preset* pt_preset;
   public:
-    MenuExpConfig(MenuManager* pt_manager, MenuBase* pt_parent);
-
+    MenuExpConfig(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
     virtual bool next();
     virtual bool prev();
     virtual bool validate();

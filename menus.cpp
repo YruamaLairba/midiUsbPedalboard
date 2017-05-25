@@ -42,8 +42,12 @@ void MenuBase::activate()
 
 //MenuFsCommand
 //ctor
-MenuFsCommand::MenuFsCommand(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent){}
+MenuFsCommand::MenuFsCommand(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
+  : MenuBase(pt_manager,pt_parent),
+    pt_preset(pt_preset){}
 
 bool MenuFsCommand::next()
 {
@@ -104,8 +108,12 @@ void MenuFsCommand::print()
 
 //MenuFsMode
 //ctor
-MenuFsMode::MenuFsMode(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent){}
+MenuFsMode::MenuFsMode(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
+  : MenuBase(pt_manager,pt_parent),
+    pt_preset(pt_preset){}
 
 bool MenuFsMode::next()
 {
@@ -182,10 +190,14 @@ void MenuFsMode::print()
 //MenuFsConfig
 
 //ctor
-MenuFsConfig::MenuFsConfig(MenuManager* pt_manager, MenuBase* pt_parent)
+MenuFsConfig::MenuFsConfig(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
-    menuFsCommand(pt_manager,this),
-    menuFsMode(pt_manager,this){}
+    menuFsCommand(pt_manager,this, pt_preset),
+    menuFsMode(pt_manager,this, pt_preset),
+    pt_preset(pt_preset){}
 
 bool MenuFsConfig::next()
 {
@@ -263,8 +275,12 @@ void MenuFsConfig::print()
 
 //MenuExpCommand
 //ctor
-MenuExpCommand::MenuExpCommand(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent){}
+MenuExpCommand::MenuExpCommand(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
+  : MenuBase(pt_manager,pt_parent),
+    pt_preset(pt_preset){}
 
 bool MenuExpCommand::next()
 {
@@ -328,8 +344,12 @@ void MenuExpCommand::print()
 
 //MenuExpMode
 //ctor
-MenuExpMode::MenuExpMode(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent){}
+MenuExpMode::MenuExpMode(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
+  : MenuBase(pt_manager,pt_parent),
+    pt_preset(pt_preset){}
 
 bool MenuExpMode::next()
 {
@@ -392,10 +412,14 @@ void MenuExpMode::print()
 
 //MenuExpConfig
 //ctor
-MenuExpConfig::MenuExpConfig(MenuManager* pt_manager, MenuBase* pt_parent)
-  : MenuBase(pt_manager,pt_parent),
-    menuExpCommand(pt_manager,this),
-    menuExpMode(pt_manager,this){}
+MenuExpConfig::MenuExpConfig(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
+  : MenuBase(pt_manager, pt_parent),
+    menuExpCommand(pt_manager, this, pt_preset),
+    menuExpMode(pt_manager, this, pt_preset),
+    pt_preset(pt_preset){}
 
 bool MenuExpConfig::next()
 {
@@ -478,8 +502,8 @@ MenuSwSelect::MenuSwSelect(
   MenuBase* pt_parent,
   Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
-    fsConfig(pt_manager, this),
-    expConfig(pt_manager, this),
+    fsConfig(pt_manager, this, pt_preset),
+    expConfig(pt_manager, this, pt_preset),
     pt_preset(pt_preset){}
 
 uint8_t MenuSwSelect::nbItems()
