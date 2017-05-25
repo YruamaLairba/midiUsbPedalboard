@@ -638,7 +638,7 @@ uint8_t MenuSwSelect::get_selectedExpNum()
   uint8_t nbFs = pt_preset->get_nbFsConfigs();
   uint8_t nbExp = pt_preset->get_nbExpConfigs();
   //normal case
-  if((selection > nbFs) and (selection < (nbFs + nbExp)))
+  if((selection >= nbFs) and (selection < (nbFs + nbExp)))
   {
     return selection - nbFs;
   }
