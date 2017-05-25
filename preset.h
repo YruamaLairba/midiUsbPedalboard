@@ -44,6 +44,9 @@ class Preset
     void set_expMode(uint8_t expNumber, ExpMode expMode);
     ExpCommand get_expCommand(uint8_t expNumber);
     void set_expCommand(uint8_t expNumber, ExpCommand expCommand);
+    uint8_t get_nbFsConfigs(){return nbFsConfigs;}
+    uint8_t get_nbExpConfigs(){return nbExpConfigs;}
+
     //void save(int8_t presetNumber);
     //void load(int8_t presetNumber);
     //uint8_t get_presetNumber();

@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <Arduino.h>// for Serial
 
+#include "preset.h"
+
 
 class MenuBase;
 
@@ -165,9 +167,10 @@ class MenuExpConfig : public MenuBase
 class MenuSwSelect : public MenuBase
 {
   private:
-    static const int8_t nbItems = 5;
     MenuFsConfig fsConfig;
     MenuExpConfig expConfig;
+    Preset* pt_preset;
+    uint8_t nbItems();
 
   public:
     /*
@@ -180,7 +183,10 @@ class MenuSwSelect : public MenuBase
         fsConfig(fsConfig),
         expConfig(expConfig){}
     */
-    MenuSwSelect(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuSwSelect(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
     //virtual void activate();
 
     virtual bool next();
@@ -188,7 +194,10 @@ class MenuSwSelect : public MenuBase
     virtual bool validate();
     virtual bool cancel();
     virtual bool reset();
-    virtual void print();  
+    virtual void print();
+
+    uint8_t get_selectedFsNum();
+    uint8_t get_selectedExpNum();
 };
 
 class MenuPresetLoad : public MenuBase
@@ -270,10 +279,13 @@ class MenuMainConf : public MenuBase
     MenuPresetLoad presetLoad;
     MenuPresetSave presetSave;
     MenuGeneralSetting generalSetting;
-    int8_t nbItems;
+    static const int8_t nbItems = 4;
 
   public:
-    MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuMainConf(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      Preset* pt_preset);
 
     virtual void activate();
 

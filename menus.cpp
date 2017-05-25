@@ -473,15 +473,34 @@ void MenuExpConfig::print()
 //MenuSwSelect
 
 //ctor
-MenuSwSelect::MenuSwSelect(MenuManager* pt_manager, MenuBase* pt_parent)
+MenuSwSelect::MenuSwSelect(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
     fsConfig(pt_manager, this),
-    expConfig(pt_manager, this){}
+    expConfig(pt_manager, this),
+    pt_preset(pt_preset){}
+
+uint8_t MenuSwSelect::nbItems()
+{
+  if (pt_preset != NULL)
+  {
+    uint8_t sum =
+      pt_preset->get_nbFsConfigs() +
+      pt_preset->get_nbExpConfigs();
+    return sum;
+  }
+  else
+  {
+    return 0;
+  }
+}
 
 bool MenuSwSelect::next()
 {
   bool res = false;
-  if (this->selection < this->nbItems -1)
+  if (this->selection < this->nbItems() -1)
   {
     this->selection++;
     res = true;
@@ -503,15 +522,15 @@ bool MenuSwSelect::prev()
 bool MenuSwSelect::validate()
 {
   bool res = false;
-  if(selection < 4)
+  uint8_t nbFs = pt_preset->get_nbFsConfigs();
+  uint8_t nbExp = pt_preset->get_nbExpConfigs();
+  if(selection < nbFs)
   {
-    //fsConfig->set_swToConfig(selection);
     fsConfig.activate();
     res = true;
   }
-  else if (selection < 5)
+  else if (selection < (nbFs + nbExp))
   {
-    //expConfig->set_swToConfig(0);
     expConfig.activate();
     res = true;
   }
@@ -537,25 +556,62 @@ bool MenuSwSelect::reset()
 
 void MenuSwSelect::print()
 {
-  for (int i = 0; i< nbItems; i++)
+  if (pt_preset != NULL)
   {
-    if (i<4)
+    for (int i = 0; i< nbItems(); i++)
     {
-      Serial.print("FS ");
-      Serial.print(i,DEC);
+      uint8_t nbFs = pt_preset->get_nbFsConfigs();
+      uint8_t nbExp = pt_preset->get_nbExpConfigs();
+      if (i < nbFs)
+      {
+        Serial.print("FS ");
+        Serial.print(i, DEC);
+      }
+      else if (i < (nbFs + nbExp))
+      {
+        Serial.print("Exp ");
+        Serial.print(i - nbFs, DEC);
+      }
+      if (i == selection)
+      {
+        Serial.print("<<<");
+      }
+      Serial.print("\n\r");
     }
-    else if (i == 4)
-    {
-      Serial.print("Exp");
-    }
-
-    if (i == selection)
-    {
-      Serial.print("<<<");
-    }
-    Serial.print("\n\r");
   }
 }
+
+uint8_t MenuSwSelect::get_selectedFsNum()
+{
+  uint8_t nbFs = pt_preset->get_nbFsConfigs();
+  //normal case
+  if(selection < nbFs)
+  {
+    return selection;
+  }
+  //error case
+  else
+  {
+    return -1;
+  }
+}
+
+uint8_t MenuSwSelect::get_selectedExpNum()
+{
+  uint8_t nbFs = pt_preset->get_nbFsConfigs();
+  uint8_t nbExp = pt_preset->get_nbExpConfigs();
+  //normal case
+  if((selection > nbFs) and (selection < (nbFs + nbExp)))
+  {
+    return selection - nbFs;
+  }
+  //error case
+  else
+  {
+    return -1;
+  }
+}
+
 
 //MenuPresetLoad
 
@@ -831,14 +887,15 @@ void MenuGeneralSetting::print()
 //MenuMainConf
 
 //ctor
-MenuMainConf::MenuMainConf(MenuManager* pt_manager, MenuBase* pt_parent)
+MenuMainConf::MenuMainConf(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
-    swSelect(pt_manager, this),
+    swSelect(pt_manager, this, pt_preset),
     presetLoad(pt_manager, this),
     presetSave(pt_manager, this),
-    generalSetting(pt_manager, this),
-    nbItems(4)
-    {}
+    generalSetting(pt_manager, this) {}
 
 void MenuMainConf::activate()
 {

@@ -1,5 +1,6 @@
 #include "menus.h"
 #include "footswitch.h"
+#include "preset.h"
 
 #define ROTARY_A 2
 #define ROTARY_B 3
@@ -15,9 +16,12 @@ uint8_t prec_button_ok;
 #define BUTTON_CANCEL 8
 uint8_t prec_button_cancel;
 
+
+Preset preset;
+
 extern MenuManager manager;
 
-MenuMainConf mainConf(&manager,NULL);
+MenuMainConf mainConf(&manager,NULL,&preset);
 MenuManager manager (&mainConf);
 
 void setup() {
