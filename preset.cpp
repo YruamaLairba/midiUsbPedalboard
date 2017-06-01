@@ -95,6 +95,14 @@ void Preset::set_expMode(uint8_t expNumber, ExpMode expMode)
     {
       expConfigs[expNumber].expMode = expMode;
       isModified = true;
+#ifdef DEBUG
+      Serial.print("setting exp mode: exp ");
+      Serial.print(expNumber,DEC);
+      Serial.print(" ,mode ");
+      Serial.print(expMode,DEC);
+      Serial.print("\n\r");
+#endif //DEBUG
+
     }
   }
   return;
@@ -120,6 +128,14 @@ void Preset::set_expCommand(uint8_t expNumber, ExpCommand expCommand)
     {
       expConfigs[expNumber].expCommand = expCommand;
       isModified = true;
+#ifdef DEBUG
+      Serial.print("setting exp command: exp ");
+      Serial.print(expNumber,DEC);
+      Serial.print(" ,mode ");
+      Serial.print(expCommand,DEC);
+      Serial.print("\n\r");
+#endif //DEBUG
+
     }
   }
   return;
