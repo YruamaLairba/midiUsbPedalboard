@@ -321,10 +321,11 @@ bool MenuExpCommand::prev()
   return res;
 }
 
-#warning "MenuExpCommand: not implemented yet"
 bool MenuExpCommand::validate()
 {
-  bool res = false;
+  pt_preset->set_expCommand(pt_menuSwSelect->get_selectedExpNum(),selection);
+  bool res = true;
+  manager->set_active(parent);
   return res;
 }
 
@@ -341,7 +342,8 @@ bool MenuExpCommand::cancel()
 
 bool MenuExpCommand::reset()
 {
-  selection = 0;
+  selection = pt_preset->get_expCommand(
+    pt_menuSwSelect->get_selectedExpNum());
   return true;
 }
 
