@@ -73,10 +73,11 @@ bool MenuFsCommand::prev()
   return res;
 }
 
-#warning "MenuFsCommand: not implemented yet"
 bool MenuFsCommand::validate()
 {
-  bool res = false;
+  pt_preset->set_fsCommand(pt_menuSwSelect->get_selectedFsNum(),selection);
+  bool res = true;
+  manager->set_active(parent);
   return res;
 }
 
@@ -93,7 +94,8 @@ bool MenuFsCommand::cancel()
 
 bool MenuFsCommand::reset()
 {
-  selection = 0;
+  selection = pt_preset->get_fsCommand(
+    pt_menuSwSelect->get_selectedFsNum());
   return true;
 }
 
