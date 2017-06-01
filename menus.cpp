@@ -143,10 +143,11 @@ bool MenuFsMode::prev()
   return res;
 }
 
-#warning "MenuFsMode: not implemented yet"
 bool MenuFsMode::validate()
 {
-  bool res = false;
+  pt_preset->set_fsMode(pt_menuSwSelect->get_selectedFsNum(),selection);
+  bool res = true;
+  manager->set_active(parent);
   return res;
 }
 
@@ -163,7 +164,8 @@ bool MenuFsMode::cancel()
 
 bool MenuFsMode::reset()
 {
-  selection = 0;
+  selection = pt_preset->get_fsMode(
+    pt_menuSwSelect->get_selectedFsNum());
   return true;
 }
 
