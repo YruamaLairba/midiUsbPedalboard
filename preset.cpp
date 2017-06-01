@@ -1,5 +1,9 @@
 #include "preset.h"
 
+#ifdef DEBUG
+#include <Arduino.h>
+#endif //DEBUG
+
 //ctor
 Preset::Preset(){}
 
@@ -27,6 +31,13 @@ void Preset::set_fsMode(uint8_t fsNumber, FsMode fsMode)
     {
       fsConfigs[fsNumber].fsMode = fsMode;
       isModified = true;
+#ifdef DEBUG
+      Serial.print("setting fs mode: fs ");
+      Serial.print(fsNumber,DEC);
+      Serial.print(" ,mode ");
+      Serial.print(fsMode,DEC);
+      Serial.print("\n\r");
+#endif //DEBUG
     }
   }
   return;
@@ -52,6 +63,13 @@ void Preset::set_fsCommand(uint8_t fsNumber, FsCommand fsCommand)
     {
       fsConfigs[fsNumber].fsCommand = fsCommand;
       isModified = true;
+#ifdef DEBUG
+      Serial.print("setting fs command: fs ");
+      Serial.print(fsNumber,DEC);
+      Serial.print(" ,command ");
+      Serial.print(fsCommand,DEC);
+      Serial.print("\n\r");
+#endif //DEBUG
     }
   }
   return;
