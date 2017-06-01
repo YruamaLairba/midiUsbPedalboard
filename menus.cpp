@@ -392,10 +392,12 @@ bool MenuExpMode::prev()
   return res;
 }
 
-#warning "MenuExpMode: not implemented yet"
 bool MenuExpMode::validate()
 {
-  return true;
+  pt_preset->set_expMode(pt_menuSwSelect->get_selectedExpNum(),selection);
+  bool res = true;
+  manager->set_active(parent);
+  return res;
 }
 
 bool MenuExpMode::cancel()
@@ -411,7 +413,8 @@ bool MenuExpMode::cancel()
 
 bool MenuExpMode::reset()
 {
-  selection = 0;
+  selection = pt_preset->get_expMode(
+    pt_menuSwSelect->get_selectedExpNum());
   return true;
 }
 
