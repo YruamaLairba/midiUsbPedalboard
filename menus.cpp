@@ -677,8 +677,7 @@ MenuPresetLoad::MenuPresetLoad(
   MenuBase* pt_parent,
   Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
-    pt_preset(pt_preset),
-    nbPreset(128)
+    pt_preset(pt_preset)
     {}
 
 void MenuPresetLoad::activate()
@@ -690,7 +689,7 @@ void MenuPresetLoad::activate()
 bool MenuPresetLoad::next()
 {
   bool res = false;
-  if (this->selection < this->nbPreset -1)
+  if (this->selection < pt_preset->get_nbPreset() -1)
   {
     this->selection++;
     res = true;
@@ -766,8 +765,7 @@ MenuPresetSave::MenuPresetSave(
   MenuBase* pt_parent,
   Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
-    pt_preset(pt_preset),
-    nbPreset(128)
+    pt_preset(pt_preset)
     {}
 
 void MenuPresetSave::activate()
@@ -779,7 +777,7 @@ void MenuPresetSave::activate()
 bool MenuPresetSave::next()
 {
   bool res = false;
-  if (this->selection < this->nbPreset -1)
+  if (this->selection < pt_preset->get_nbPreset() -1)
   {
     this->selection++;
     res = true;

@@ -247,7 +247,6 @@ class MenuPresetLoad : public MenuBase
     MenuBase* pt_parent;
     Preset* pt_preset;
     uint8_t displayOffset;
-    uint8_t nbPreset;
   public:
     //MenuPresetLoad(MenuManager* manager, MenuBase* parent, int8_t nbUserPreset,int8_t nbFactoryPreset):
     //MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
@@ -272,7 +271,6 @@ class MenuPresetSave : public MenuBase
     MenuBase* pt_parent;
     Preset* pt_preset;
     int8_t displayOffset;
-    uint8_t nbPreset;
   public:
     //MenuPresetSave(MenuManager* manager, MenuBase* parent, int8_t nbUserPreset,int8_t nbFactoryPreset):
     //MenuBase(manager,parent), //if nbItems is x, selectionMax is x-1
