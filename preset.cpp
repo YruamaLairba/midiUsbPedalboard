@@ -140,3 +140,29 @@ void Preset::set_expCommand(uint8_t expNumber, ExpCommand expCommand)
   }
   return;
 }
+
+#warning "Preset::save : this is only a prototype
+void Preset::save(uint8_t presetNumber)
+{
+#ifdef DEBUG
+  Serial.print("saving to preset ");
+  Serial.print(presetNumber,DEC);
+  Serial.print("\n\r");
+#endif //DEBUG
+//manipulate EEprom here
+  number = presetNumber;
+  isModified = false;
+}
+
+#warning "Preset::load : this is only a prototype
+void Preset::load(uint8_t presetNumber)
+{
+#ifdef DEBUG
+  Serial.print("loading preset ");
+  Serial.print(presetNumber,DEC);
+  Serial.print("\n\r");
+#endif //DEBUG
+//manipulate EEprom here
+  number = presetNumber;
+  isModified = false;
+}

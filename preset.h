@@ -47,14 +47,9 @@ class Preset
     uint8_t get_nbFsConfigs(){return nbFsConfigs;}
     uint8_t get_nbExpConfigs(){return nbExpConfigs;}
 
-    //void save(int8_t presetNumber);
-    //void load(int8_t presetNumber);
-    //uint8_t get_presetNumber();
-    //bool isMofified();
+    void save(uint8_t presetNumber);
+    void load(uint8_t presetNumber);
+    uint8_t get_presetNumber(){return number;};
+    bool isMofified(){return isModified;};
 };
-
-
-
-
-
 #endif //PRESET_H
