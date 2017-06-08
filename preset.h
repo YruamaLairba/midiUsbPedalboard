@@ -49,6 +49,7 @@ class Preset
 
     void save(uint8_t presetNumber);
     void load(uint8_t presetNumber);
+    uint8_t get_nbPreset(){return nbPreset;};
     uint8_t get_presetNumber(){return number;};
     bool isMofified(){return isModified;};
 };
