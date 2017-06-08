@@ -672,8 +672,12 @@ uint8_t MenuSwSelect::get_selectedExpNum()
 //MenuPresetLoad
 
 //ctor
-MenuPresetLoad::MenuPresetLoad(MenuManager* pt_manager, MenuBase* pt_parent)
+MenuPresetLoad::MenuPresetLoad(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
+    pt_preset(pt_preset),
     nbPreset(128)
     {}
 
@@ -716,9 +720,8 @@ bool MenuPresetLoad::prev()
 #warning "MenuPrestLoad: this is only a prototype"
 bool MenuPresetLoad::validate()
 {
-  Serial.print("Preset ");
-  Serial.print(selection,DEC);
-  Serial.print(" loaded\n\r");
+  pt_preset->load(selection);
+  manager->set_active(parent);
   return true;
 }
 
@@ -758,8 +761,12 @@ void MenuPresetLoad::print()
 //MenuPresetSave
 
 //ctor
-MenuPresetSave::MenuPresetSave(MenuManager* pt_manager, MenuBase* pt_parent)
+MenuPresetSave::MenuPresetSave(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  Preset* pt_preset)
   : MenuBase(pt_manager, pt_parent),
+    pt_preset(pt_preset),
     nbPreset(128)
     {}
 
@@ -802,10 +809,8 @@ bool MenuPresetSave::prev()
 #warning "MenuPresetSave: this is only a prototype"
 bool MenuPresetSave::validate()
 {
-  Serial.print("Preset ");
-  Serial.print(selection,DEC);
-  Serial.print(" saved\n\r");
-  return true;
+  pt_preset->save(selection);
+  manager->set_active(parent);
 }
 
 bool MenuPresetSave::cancel()
@@ -949,8 +954,8 @@ MenuMainConf::MenuMainConf(
   Preset* pt_preset)
   : MenuBase(pt_manager,pt_parent),
     swSelect(pt_manager, this, pt_preset),
-    presetLoad(pt_manager, this),
-    presetSave(pt_manager, this),
+    presetLoad(pt_manager, this, pt_preset),
+    presetSave(pt_manager, this, pt_preset),
     generalSetting(pt_manager, this) {}
 
 void MenuMainConf::activate()
