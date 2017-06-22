@@ -24,12 +24,12 @@ struct ExpConfig
 class Preset
 {
   private:
-    FsConfig fsConfigs [4];
     static const uint8_t nbFsConfigs = 4 ;
-    ExpConfig expConfigs [1];
     static const uint8_t nbExpConfigs = 1;
-    uint8_t number; //number of the currently loaded preset
     static const uint8_t nbPreset = 128;
+    FsConfig fsConfigs [nbFsConfigs];
+    ExpConfig expConfigs [nbExpConfigs];
+    uint8_t number; //number of the currently loaded preset
     bool isModified; //is the current preset modified ?
   public:
     Preset();
