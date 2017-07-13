@@ -1,6 +1,7 @@
 #include "menus.h"
 #include "footswitch.h"
 #include "preset.h"
+#include <MIDIUSB.h>
 
 #define ROTARY_A 2
 #define ROTARY_B 3
@@ -19,6 +20,11 @@ uint8_t prec_button_cancel;
 
 Preset preset;
 
+uint8_t fsValue[4];//on off, but not the raw digitalRead() value
+int16_t expValue[1];//
+
+uint8_t prec_fsRawValues[4];
+
 extern MenuManager manager;
 
 MenuMainConf mainConf(&manager,NULL,&preset);
@@ -30,7 +36,12 @@ void setup() {
   pinMode(ROTARY_A, INPUT_PULLUP);
   pinMode(ROTARY_B, INPUT_PULLUP);
   pinMode(BUTTON_OK, INPUT_PULLUP);
-  pinMode(BUTTON_CANCEL, INPUT_PULLUP);  
+  pinMode(BUTTON_CANCEL, INPUT_PULLUP);
+
+  pinMode(9,INPUT_PULLUP);
+  pinMode(10,INPUT_PULLUP);
+  pinMode(11,INPUT_PULLUP);
+  pinMode(12,INPUT_PULLUP);
 }
 
 void loop() {
@@ -90,5 +101,34 @@ void loop() {
     */
     //mainConf.print(&mainConf);
     //Serial.print(mainConf.selection,DEC);
+  }
+  //footswitch
+  uint8_t fsRawValues[4];
+  fsRawValues[0] = digitalRead(9);
+  fsRawValues[1] = digitalRead(10);
+  fsRawValues[2] = digitalRead(11);
+  fsRawValues[3] = digitalRead(12);
+
+  for(uint8_t i = 0; i < 4; i++)
+  {
+    uint8_t fsMode = preset.get_fsMode(i);
+    uint8_t fsCommand = preset.get_fsCommand(i);
+    switch(fsMode)
+    {
+      case 0:
+      case 1:
+        if((prec_fsRawValues[i] == LOW) and (fsRawValues[i] == HIGH))
+        {
+          fsValue[i] = ~fsValue[i];
+          if(fsCommand < 128)
+          {
+            //send midi CC throught USB
+            midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+            MidiUSB.sendMIDI(event);
+            MidiUSB.flush();
+          }
+        }
+    }
+    prec_fsRawValues[i]=fsRawValues[i];
   }
 }
