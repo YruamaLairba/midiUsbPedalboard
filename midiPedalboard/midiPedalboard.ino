@@ -42,6 +42,11 @@ void setup() {
   pinMode(10,INPUT_PULLUP);
   pinMode(11,INPUT_PULLUP);
   pinMode(12,INPUT_PULLUP);
+
+  pinMode(A0,OUTPUT);
+  pinMode(A1,OUTPUT);
+  pinMode(A2,OUTPUT);
+  pinMode(A3,OUTPUT);
 }
 
 void loop() {
@@ -117,9 +122,16 @@ void loop() {
     {
       case 0:
       case 1:
-        if((prec_fsRawValues[i] == LOW) and (fsRawValues[i] == HIGH))
+        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
         {
-          fsValue[i] = ~fsValue[i];
+          if (fsValue[i] == 0)
+          {
+            fsValue[i]=127;
+          }
+          else
+          {
+            fsValue[i]=0;
+          }
           if(fsCommand < 128)
           {
             //send midi CC throught USB
@@ -128,7 +140,68 @@ void loop() {
             MidiUSB.flush();
           }
         }
+        break;
+      case 2:
+        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        {
+          fsValue[i] = 127;
+          //send midi CC throught USB
+          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+          MidiUSB.sendMIDI(event);
+          MidiUSB.flush();
+        }
+        else if((prec_fsRawValues[i] == LOW) and (fsRawValues[i] == HIGH))
+        {
+          fsValue[i] = 0;
+          //send midi CC throught USB
+          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+          MidiUSB.sendMIDI(event);
+          MidiUSB.flush();
+        }
+        break;
+      case 3:
+        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        {
+          fsValue[i] = 0;
+          //send midi CC throught USB
+          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+          MidiUSB.sendMIDI(event);
+          MidiUSB.flush();
+        }
+        else if((prec_fsRawValues[i] == LOW) and (fsRawValues[i] == HIGH))
+        {
+          fsValue[i] = 127;
+          //send midi CC throught USB
+          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+          MidiUSB.sendMIDI(event);
+          MidiUSB.flush();
+        }
+        break;
+      case 4:
+        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        {
+          fsValue[i] = 127;
+          //send midi CC throught USB
+          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+          MidiUSB.sendMIDI(event);
+          MidiUSB.flush();
+        }
+        break;
+      case 5:
+        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        {
+          fsValue[i] = 0;
+          //send midi CC throught USB
+          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
+          MidiUSB.sendMIDI(event);
+          MidiUSB.flush();
+        }
     }
     prec_fsRawValues[i]=fsRawValues[i];
   }
+
+  digitalWrite(A0,fsValue[0]);
+  digitalWrite(A1,fsValue[1]);
+  digitalWrite(A2,fsValue[2]);
+  digitalWrite(A3,fsValue[3]);
 }
