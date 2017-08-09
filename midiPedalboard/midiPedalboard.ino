@@ -56,6 +56,15 @@ void loop() {
   uint8_t cur_rot_a = digitalRead(ROTARY_A);
   uint8_t cur_rot_b = digitalRead(ROTARY_B);
 
+  uint8_t cur_button_ok = digitalRead(BUTTON_OK);
+  uint8_t cur_button_cancel = digitalRead(BUTTON_CANCEL);
+
+  uint8_t fsRawValues[4];
+  fsRawValues[0] = digitalRead(9);
+  fsRawValues[1] = digitalRead(10);
+  fsRawValues[2] = digitalRead(11);
+  fsRawValues[3] = digitalRead(12);
+
   uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 | prec_rot_b << 3;
   //management of half cycle per indent encoder
   if (curtemp == 0b00000001 ||
@@ -76,7 +85,6 @@ void loop() {
   prec_rot_b = cur_rot_b;
 
   //validate
-  uint8_t cur_button_ok = digitalRead(BUTTON_OK);
   if (prec_button_ok == HIGH and cur_button_ok == LOW)
   {
     refresh = manager.validate(); 
@@ -84,7 +92,6 @@ void loop() {
   prec_button_ok = cur_button_ok;
 
   //cancel
-  uint8_t cur_button_cancel = digitalRead(BUTTON_CANCEL);
   if (prec_button_cancel == HIGH and cur_button_cancel == LOW)
   {
     refresh = manager.cancel(); 
@@ -107,13 +114,8 @@ void loop() {
     //mainConf.print(&mainConf);
     //Serial.print(mainConf.selection,DEC);
   }
-  //footswitch
-  uint8_t fsRawValues[4];
-  fsRawValues[0] = digitalRead(9);
-  fsRawValues[1] = digitalRead(10);
-  fsRawValues[2] = digitalRead(11);
-  fsRawValues[3] = digitalRead(12);
 
+  //footswitch
   for(uint8_t i = 0; i < 4; i++)
   {
     uint8_t fsMode = preset.get_fsMode(i);
