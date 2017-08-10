@@ -18,13 +18,17 @@ uint8_t prec_button_ok;
 uint8_t prec_button_cancel;
 
 
-Preset preset;
-
 uint8_t fsValue[4];//on off, but not the raw digitalRead() value
 int16_t expValue[1];//
 
+uint8_t button_ok_acc;
+uint8_t button_cancel_acc;
+
 uint8_t prec_fsRawValues[4];
 
+unsigned long last_millis;
+
+Preset preset;
 extern MenuManager manager;
 
 MenuMainConf mainConf(&manager,NULL,&preset);
@@ -56,14 +60,48 @@ void loop() {
   uint8_t cur_rot_a = digitalRead(ROTARY_A);
   uint8_t cur_rot_b = digitalRead(ROTARY_B);
 
-  uint8_t cur_button_ok = digitalRead(BUTTON_OK);
-  uint8_t cur_button_cancel = digitalRead(BUTTON_CANCEL);
+  //uint8_t cur_button_ok = digitalRead(BUTTON_OK);
+  static uint8_t cur_button_ok = 0;
+  //uint8_t cur_button_cancel = digitalRead(BUTTON_CANCEL);
+  static uint8_t cur_button_cancel = 0;
 
   uint8_t fsRawValues[4];
   fsRawValues[0] = digitalRead(9);
   fsRawValues[1] = digitalRead(10);
   fsRawValues[2] = digitalRead(11);
   fsRawValues[3] = digitalRead(12);
+
+  unsigned current_millis = millis();
+  if ((current_millis - last_millis) > 5)
+  {
+    if ((digitalRead(BUTTON_OK) == HIGH) and  (button_ok_acc < 4 ))
+    {
+      button_ok_acc++;
+      if (button_ok_acc >= 4) cur_button_ok = HIGH;
+    }
+    else if ((digitalRead(BUTTON_OK))== LOW and  (button_ok_acc > 0))
+    {
+      button_ok_acc--;
+      if (button_ok_acc <= 0) cur_button_ok = LOW;
+    }
+
+    if ((digitalRead(BUTTON_CANCEL) == HIGH) and  (button_cancel_acc < 8 ))
+    {
+      button_cancel_acc++;
+      if (button_cancel_acc >= 8) cur_button_cancel = HIGH;
+    }
+    else if ((digitalRead(BUTTON_CANCEL))== LOW and  (button_cancel_acc > 0))
+    {
+      button_cancel_acc--;
+      if (button_cancel_acc <= 0) cur_button_cancel = LOW;
+    }
+    /*uint8_t fsDebValues[4];
+    for (int i =0; i<4;i++)
+    {
+
+    }*/
+    last_millis = current_millis;
+  }
 
   uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 | prec_rot_b << 3;
   //management of half cycle per indent encoder
