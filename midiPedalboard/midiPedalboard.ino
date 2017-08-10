@@ -12,10 +12,12 @@ uint8_t prec_rot_b;
 //button ok
 #define BUTTON_OK 7
 uint8_t prec_button_ok;
+uint8_t cur_button_ok;
 
 //button cancel
 #define BUTTON_CANCEL 8
 uint8_t prec_button_cancel;
+uint8_t cur_button_cancel;
 
 
 uint8_t fsValue[4];//on off, but not the raw digitalRead() value
@@ -33,6 +35,25 @@ extern MenuManager manager;
 
 MenuMainConf mainConf(&manager,NULL,&preset);
 MenuManager manager (&mainConf);
+
+//function to avoid bounce and glitch issue on input
+void filterButton(
+  uint8_t raw_input,
+  uint8_t treshold,
+  uint8_t *acc,
+  uint8_t *filtered_input)
+{
+  if ((raw_input == HIGH) and  (*acc < treshold))
+  {
+    (*acc)++;
+    if (*acc >= treshold) *filtered_input = HIGH;
+  }
+  else if ((raw_input == LOW) and  (*acc > 0))
+  {
+    (*acc)--;
+    if (*acc <= 0) *filtered_input = LOW;
+  }
+}
 
 void setup() {
   // put your setup code here, to run once:
@@ -60,11 +81,6 @@ void loop() {
   uint8_t cur_rot_a = digitalRead(ROTARY_A);
   uint8_t cur_rot_b = digitalRead(ROTARY_B);
 
-  //uint8_t cur_button_ok = digitalRead(BUTTON_OK);
-  static uint8_t cur_button_ok = 0;
-  //uint8_t cur_button_cancel = digitalRead(BUTTON_CANCEL);
-  static uint8_t cur_button_cancel = 0;
-
   uint8_t fsRawValues[4];
   fsRawValues[0] = digitalRead(9);
   fsRawValues[1] = digitalRead(10);
@@ -74,27 +90,9 @@ void loop() {
   unsigned current_millis = millis();
   if ((current_millis - last_millis) > 5)
   {
-    if ((digitalRead(BUTTON_OK) == HIGH) and  (button_ok_acc < 4 ))
-    {
-      button_ok_acc++;
-      if (button_ok_acc >= 4) cur_button_ok = HIGH;
-    }
-    else if ((digitalRead(BUTTON_OK))== LOW and  (button_ok_acc > 0))
-    {
-      button_ok_acc--;
-      if (button_ok_acc <= 0) cur_button_ok = LOW;
-    }
-
-    if ((digitalRead(BUTTON_CANCEL) == HIGH) and  (button_cancel_acc < 8 ))
-    {
-      button_cancel_acc++;
-      if (button_cancel_acc >= 8) cur_button_cancel = HIGH;
-    }
-    else if ((digitalRead(BUTTON_CANCEL))== LOW and  (button_cancel_acc > 0))
-    {
-      button_cancel_acc--;
-      if (button_cancel_acc <= 0) cur_button_cancel = LOW;
-    }
+    filterButton(digitalRead(BUTTON_OK), 4, &button_ok_acc, &cur_button_ok);
+    filterButton(digitalRead(BUTTON_CANCEL), 4, &button_cancel_acc,
+                 &cur_button_cancel);
     /*uint8_t fsDebValues[4];
     for (int i =0; i<4;i++)
     {
