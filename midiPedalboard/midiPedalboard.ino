@@ -8,27 +8,35 @@
 
 uint8_t prec_rot_a;
 uint8_t prec_rot_b;
+uint8_t cur_rot_a;
+uint8_t cur_rot_b;
+uint8_t rot_a_acc;
+uint8_t rot_b_acc;
 
 //button ok
 #define BUTTON_OK 7
 uint8_t prec_button_ok;
 uint8_t cur_button_ok;
+uint8_t button_ok_acc;//used for debounce filter
 
 //button cancel
 #define BUTTON_CANCEL 8
 uint8_t prec_button_cancel;
 uint8_t cur_button_cancel;
-
-
-uint8_t fsValue[4];//on off, but not the raw digitalRead() value
-int16_t expValue[1];//
-
-uint8_t button_ok_acc;
 uint8_t button_cancel_acc;
 
+//footswitchs physical value
+uint8_t cur_fsRawValues[4];
 uint8_t prec_fsRawValues[4];
+uint8_t fsRawValues_acc[4];
 
-unsigned long last_millis;
+//footswitchs software value
+uint8_t fsValue[4];//on off, but not the raw digitalRead() value
+
+//expression pedal value
+int16_t expValue[1];
+
+unsigned long last_micros;
 
 Preset preset;
 extern MenuManager manager;
@@ -77,28 +85,24 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   bool refresh=false;
-  //rotary
-  uint8_t cur_rot_a = digitalRead(ROTARY_A);
-  uint8_t cur_rot_b = digitalRead(ROTARY_B);
 
-  uint8_t fsRawValues[4];
-  fsRawValues[0] = digitalRead(9);
-  fsRawValues[1] = digitalRead(10);
-  fsRawValues[2] = digitalRead(11);
-  fsRawValues[3] = digitalRead(12);
-
-  unsigned current_millis = millis();
-  if ((current_millis - last_millis) > 5)
+  //debounce filtering
+  unsigned current_micros = micros();
+  if ((current_micros - last_micros) > 100)
   {
-    filterButton(digitalRead(BUTTON_OK), 4, &button_ok_acc, &cur_button_ok);
-    filterButton(digitalRead(BUTTON_CANCEL), 4, &button_cancel_acc,
-                 &cur_button_cancel);
-    /*uint8_t fsDebValues[4];
-    for (int i =0; i<4;i++)
-    {
+    filterButton(digitalRead(ROTARY_A), 4, &rot_a_acc, &cur_rot_a);
+    filterButton(digitalRead(ROTARY_B), 4, &rot_b_acc, &cur_rot_b);
 
-    }*/
-    last_millis = current_millis;
+    filterButton(digitalRead(BUTTON_OK), 50, &button_ok_acc, &cur_button_ok);
+    filterButton(digitalRead(BUTTON_CANCEL), 50, &button_cancel_acc,
+                 &cur_button_cancel);
+
+    filterButton(digitalRead(9), 50, &fsRawValues_acc[0], &cur_fsRawValues[0]);
+    filterButton(digitalRead(10), 50, &fsRawValues_acc[1], &cur_fsRawValues[1]);
+    filterButton(digitalRead(11), 50, &fsRawValues_acc[2], &cur_fsRawValues[2]);
+    filterButton(digitalRead(12), 50, &fsRawValues_acc[3], &cur_fsRawValues[3]);
+
+    last_micros = current_micros;
   }
 
   uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 | prec_rot_b << 3;
@@ -133,7 +137,7 @@ void loop() {
     refresh = manager.cancel(); 
   }
   prec_button_cancel = cur_button_cancel;
-  
+
   if (refresh)
   {
     manager.print();
@@ -160,7 +164,7 @@ void loop() {
     {
       case 0:
       case 1:
-        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           if (fsValue[i] == 0)
           {
@@ -180,7 +184,7 @@ void loop() {
         }
         break;
       case 2:
-        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 127;
           //send midi CC throught USB
@@ -188,7 +192,7 @@ void loop() {
           MidiUSB.sendMIDI(event);
           MidiUSB.flush();
         }
-        else if((prec_fsRawValues[i] == LOW) and (fsRawValues[i] == HIGH))
+        else if((prec_fsRawValues[i] == LOW) and (cur_fsRawValues[i] == HIGH))
         {
           fsValue[i] = 0;
           //send midi CC throught USB
@@ -198,7 +202,7 @@ void loop() {
         }
         break;
       case 3:
-        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 0;
           //send midi CC throught USB
@@ -206,7 +210,7 @@ void loop() {
           MidiUSB.sendMIDI(event);
           MidiUSB.flush();
         }
-        else if((prec_fsRawValues[i] == LOW) and (fsRawValues[i] == HIGH))
+        else if((prec_fsRawValues[i] == LOW) and (cur_fsRawValues[i] == HIGH))
         {
           fsValue[i] = 127;
           //send midi CC throught USB
@@ -216,7 +220,7 @@ void loop() {
         }
         break;
       case 4:
-        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 127;
           //send midi CC throught USB
@@ -226,7 +230,7 @@ void loop() {
         }
         break;
       case 5:
-        if((prec_fsRawValues[i] == HIGH) and (fsRawValues[i] == LOW))
+        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 0;
           //send midi CC throught USB
@@ -235,7 +239,7 @@ void loop() {
           MidiUSB.flush();
         }
     }
-    prec_fsRawValues[i]=fsRawValues[i];
+    prec_fsRawValues[i]=cur_fsRawValues[i];
   }
 
   digitalWrite(A0,fsValue[0]);
