@@ -2,6 +2,7 @@
 #include "footswitch.h"
 #include "preset.h"
 #include <MIDIUSB.h>
+#include "display.h"
 
 #define ROTARY_A 2
 #define ROTARY_B 3
@@ -82,6 +83,10 @@ void setup() {
   pinMode(A1,OUTPUT);
   pinMode(A2,OUTPUT);
   pinMode(A3,OUTPUT);
+
+  display.begin(SSD1306_SWITCHCAPVCC);
+  display.display();
+  delay(500);
 }
 
 void loop() {
