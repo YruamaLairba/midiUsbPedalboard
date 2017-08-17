@@ -38,6 +38,8 @@ int16_t expValue[1];
 
 unsigned long last_micros;
 
+unsigned long debug_last_micros;
+
 Preset preset;
 extern MenuManager manager;
 
@@ -156,6 +158,7 @@ void loop() {
   }
 
   //footswitch
+  unsigned long debug_start_micros = micros();
   for(uint8_t i = 0; i < 4; i++)
   {
     uint8_t fsMode = preset.get_fsMode(i);
@@ -241,7 +244,14 @@ void loop() {
     }
     prec_fsRawValues[i]=cur_fsRawValues[i];
   }
-
+  unsigned long debug_end_micros = micros();
+  unsigned long debug_duration = debug_end_micros - debug_start_micros;
+  if (debug_duration > 1000)
+  {
+    Serial.print("debug_duration : ");
+    Serial.print(debug_duration,DEC);
+    Serial.print("\n\r");
+  }
   digitalWrite(A0,fsValue[0]);
   digitalWrite(A1,fsValue[1]);
   digitalWrite(A2,fsValue[2]);
