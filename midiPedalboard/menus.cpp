@@ -103,10 +103,10 @@ void MenuFsCommand::print()
 {
   if(selection <= 127)
   {
-    Serial.print("CC");
+    Serial.print(F("CC"));
     Serial.print(selection,DEC);
   }
-  Serial.print("\n\r");
+  Serial.print(F("\n\r"));
 }
 
 
@@ -174,25 +174,25 @@ void MenuFsMode::print()
   switch (selection)
   {
     case 0:
-      Serial.print("tog off");
+      Serial.print(F("tog off"));
       break;
     case 1:
-      Serial.print("tog on");
+      Serial.print(F("tog on"));
       break;
     case 2:
-      Serial.print("mom pre");
+      Serial.print(F("mom pre"));
       break;
     case 3:
-      Serial.print("mom dp");
+      Serial.print(F("mom dp"));
       break;
     case 4:
-      Serial.print("sing on");
+      Serial.print(F("sing on"));
       break;
     case 5:
-      Serial.print("sing off");
+      Serial.print(F("sing off"));
       break;
   }
-  Serial.print("\n\r");
+  Serial.print(F("\n\r"));
 }
 
 //MenuFsConfig
@@ -270,21 +270,21 @@ void MenuFsConfig::print()
     switch (i)
     {
       case 0:
-        Serial.print("FS");
+        Serial.print(F("FS"));
         Serial.print(fsNum, DEC);
-        Serial.print(" Cmd");
+        Serial.print(F(" Cmd"));
         break;
       case 1:
-        Serial.print("FS");
+        Serial.print(F("FS"));
         Serial.print(fsNum, DEC);
-        Serial.print(" Mode");
+        Serial.print(F(" Mode"));
         break;
    }
     if (i == selection)
     {
-      Serial.print("<<<");
+      Serial.print(F("<<<"));
     }
-    Serial.print("\n\r");
+    Serial.print(F("\n\r"));
   }
 }
 
@@ -351,14 +351,14 @@ void MenuExpCommand::print()
 {
   if(selection <= 127)
   {
-    Serial.print("CC");
+    Serial.print(F("CC"));
     Serial.print(selection,DEC);
   }
   else if (selection == 128)
   {
-    Serial.print("PitchBend");
+    Serial.print(F("PitchBend"));
   }
-  Serial.print("\n\r");
+  Serial.print(F("\n\r"));
 }
 
 //MenuExpMode
@@ -425,13 +425,13 @@ void MenuExpMode::print()
   switch (selection)
   {
     case 0:
-      Serial.print("normal");
+      Serial.print(F("normal"));
       break;
     case 1:
-      Serial.print("reverse");
+      Serial.print(F("reverse"));
       break;
   }
-  Serial.print("\n\r");
+  Serial.print(F("\n\r"));
 }
 
 //MenuExpConfig
@@ -508,21 +508,21 @@ void MenuExpConfig::print()
     switch (i)
     {
       case 0:
-        Serial.print("EXP");
+        Serial.print(F("EXP"));
         Serial.print(expNum, DEC);
-        Serial.print(" Cmd");
+        Serial.print(F(" Cmd"));
         break;
       case 1:
-        Serial.print("EXP");
+        Serial.print(F("EXP"));
         Serial.print(expNum, DEC);
-        Serial.print(" Mode");
+        Serial.print(F(" Mode"));
         break;
     }
     if (i == selection)
     {
-      Serial.print("<<<");
+      Serial.print(F("<<<"));
     }
-    Serial.print("\n\r");
+    Serial.print(F("\n\r"));
   }
 }
 
@@ -620,19 +620,19 @@ void MenuSwSelect::print()
       uint8_t nbExp = pt_preset->get_nbExpConfigs();
       if (i < nbFs)
       {
-        Serial.print("FS ");
+        Serial.print(F("FS "));
         Serial.print(i, DEC);
       }
       else if (i < (nbFs + nbExp))
       {
-        Serial.print("Exp ");
+        Serial.print(F("Exp "));
         Serial.print(i - nbFs, DEC);
       }
       if (i == selection)
       {
-        Serial.print("<<<");
+        Serial.print(F("<<<"));
       }
-      Serial.print("\n\r");
+      Serial.print(F("\n\r"));
     }
   }
 }
@@ -747,13 +747,13 @@ void MenuPresetLoad::print()
   
   for (int i = displayOffset; i< (displayOffset + 4); i++)
   {
-    Serial.print("Preset ");
+    Serial.print(F("Preset "));
     Serial.print(i,DEC);
     if (i == selection)
     {
-      Serial.print("<<<");
+      Serial.print(F("<<<"));
     }
-    Serial.print("\n\r");
+    Serial.print(F("\n\r"));
   }
 }
 
@@ -834,13 +834,13 @@ void MenuPresetSave::print()
   
   for (int i = displayOffset; i< (displayOffset + 4); i++)
   {
-    Serial.print("Preset ");
+    Serial.print(F("Preset "));
     Serial.print(i,DEC);
     if (i == selection)
     {
-      Serial.print("<<<");
+      Serial.print(F("<<<"));
     }
-    Serial.print("\n\r");
+    Serial.print(F("\n\r"));
   }
 }
 
@@ -927,17 +927,17 @@ void MenuGeneralSetting::print()
     switch(i)
     {
       case 0:
-        Serial.print("Midi chan");
+        Serial.print(F("Midi chan"));
         break;
       case 1:
-        Serial.print("Exp cal");
+        Serial.print(F("Exp cal"));
         break;
     }
     if (i == selection)
     {
-      Serial.print("<<<");
+      Serial.print(F("<<<"));
     }
-    Serial.print("\n\r");
+    Serial.print(F("\n\r"));
   }
 }
 
@@ -1033,25 +1033,25 @@ void MenuMainConf::print()
     switch(i)
     {
       case 0:
-        Serial.print("SW set");
+        Serial.print(F("SW set"));
         break;
       case 1:
-        Serial.print("Load Pres");
+        Serial.print(F("Load Pres"));
         break;
       case 2:
-        Serial.print("Save Pres");
+        Serial.print(F("Save Pres"));
         break;
       case 3:
-        Serial.print("Gen. set");
+        Serial.print(F("Gen. set"));
         break;
       default:
         break;
     }
     if (selection == i)
     {
-      Serial.print("<<<");
+      Serial.print(F("<<<"));
     }
-    Serial.print("\n\r");
+    Serial.print(F("\n\r"));
   }
 }
 
