@@ -965,10 +965,14 @@ void MenuMainConf::activate()
 bool MenuMainConf::next()
 {
   bool res = false;
-  if (this->selection < this->nbItems -1)
+  if (this->selection < this->nbItems - 1)
   {
     this->selection++;
     res = true;
+  }
+  if (selection >= (displayOffset + 4))
+  {
+    displayOffset++;
   }
   return res;
 }
@@ -981,8 +985,13 @@ bool MenuMainConf::prev()
     this->selection--;
     res = true;
   }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
   return res;
 }
+
 
 bool MenuMainConf::validate()
 {
@@ -1028,30 +1037,37 @@ bool MenuMainConf::reset()
 
 void MenuMainConf::print()
 {
-  for (int i = 0; i< nbItems; i++)
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = displayOffset; i< (displayOffset + 4); i++)
   {
-    switch(i)
+    if (selection == i)
+      {
+        display.setTextColor(BLACK,WHITE);
+      }
+      else
+      {
+        display.setTextColor(WHITE,BLACK);
+      }
+      switch(i)
     {
       case 0:
-        Serial.print(F("SW set"));
+        display.print(F("SW set"));
         break;
       case 1:
-        Serial.print(F("Load Pres"));
+        display.print(F("Load Pres"));
         break;
       case 2:
-        Serial.print(F("Save Pres"));
+        display.print(F("Save Pres"));
         break;
       case 3:
-        Serial.print(F("Gen. set"));
+        display.print(F("Gen. set"));
         break;
       default:
         break;
     }
-    if (selection == i)
-    {
-      Serial.print(F("<<<"));
-    }
-    Serial.print(F("\n\r"));
+   display.print(F("\n\r"));
   }
+  display.display();
 }
 

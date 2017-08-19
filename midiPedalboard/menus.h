@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <Arduino.h>// for Serial
 
+#include "display.h"
 #include "preset.h"
 
 
@@ -318,6 +319,7 @@ class MenuMainConf : public MenuBase
     MenuPresetLoad presetLoad;
     MenuPresetSave presetSave;
     MenuGeneralSetting generalSetting;
+    uint8_t displayOffset;
     static const int8_t nbItems = 4;
 
   public:
