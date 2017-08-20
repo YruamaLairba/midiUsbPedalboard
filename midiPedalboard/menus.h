@@ -207,6 +207,7 @@ class MenuSwSelect : public MenuBase
     MenuFsConfig fsConfig;
     MenuExpConfig expConfig;
     Preset* pt_preset;
+    uint8_t displayOffset;
     uint8_t nbItems();
 
   public:

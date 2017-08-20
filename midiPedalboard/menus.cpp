@@ -561,6 +561,10 @@ bool MenuSwSelect::next()
     this->selection++;
     res = true;
   }
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
   return res;
 }
 
@@ -571,6 +575,10 @@ bool MenuSwSelect::prev()
   {
     this->selection--;
     res = true;
+  }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
   }
   return res;
 }
@@ -612,29 +620,36 @@ bool MenuSwSelect::reset()
 
 void MenuSwSelect::print()
 {
+  display.clearDisplay();
+  display.setCursor(0,0);
   if (pt_preset != NULL)
   {
-    for (int i = 0; i< nbItems(); i++)
+    for (int i = displayOffset; i< (displayOffset + 4); i++)
     {
+      if (selection == i)
+      {
+        display.setTextColor(BLACK,WHITE);
+      }
+      else
+      {
+        display.setTextColor(WHITE,BLACK);
+      }
       uint8_t nbFs = pt_preset->get_nbFsConfigs();
       uint8_t nbExp = pt_preset->get_nbExpConfigs();
       if (i < nbFs)
       {
-        Serial.print(F("FS "));
-        Serial.print(i, DEC);
+        display.print(F("FS "));
+        display.print(i, DEC);
       }
       else if (i < (nbFs + nbExp))
       {
-        Serial.print(F("Exp "));
-        Serial.print(i - nbFs, DEC);
+        display.print(F("Exp "));
+        display.print(i - nbFs, DEC);
       }
-      if (i == selection)
-      {
-        Serial.print(F("<<<"));
-      }
-      Serial.print(F("\n\r"));
+      display.print(F("\n\r"));
     }
   }
+  display.display();
 }
 
 uint8_t MenuSwSelect::get_selectedFsNum()
