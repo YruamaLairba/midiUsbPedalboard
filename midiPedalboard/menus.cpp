@@ -922,23 +922,30 @@ bool MenuGeneralSetting::reset()
 
 void MenuGeneralSetting::print()
 {
+  display.clearDisplay();
+  display.setCursor(0,0);
   for (int i = displayOffset; i< (displayOffset + 4) and i<nbItems; i++)
   {
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
     switch(i)
     {
       case 0:
-        Serial.print(F("Midi chan"));
+        display.print(F("Midi chan"));
         break;
       case 1:
-        Serial.print(F("Exp cal"));
+        display.print(F("Exp cal"));
         break;
     }
-    if (i == selection)
-    {
-      Serial.print(F("<<<"));
-    }
-    Serial.print(F("\n\r"));
+    display.print(F("\n\r"));
   }
+  display.display();
 }
 
 
