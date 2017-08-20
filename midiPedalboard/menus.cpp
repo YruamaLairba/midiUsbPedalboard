@@ -265,27 +265,34 @@ bool MenuFsConfig::reset()
 void MenuFsConfig::print()
 {
   uint8_t fsNum = pt_menuSwSelect->get_selectedFsNum();
+  display.clearDisplay();
+  display.setCursor(0,0);
   for (int i = 0; i< nbItems; i++)
   {
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
     switch (i)
     {
       case 0:
-        Serial.print(F("FS"));
-        Serial.print(fsNum, DEC);
-        Serial.print(F(" Cmd"));
+        display.print(F("FS"));
+        display.print(fsNum, DEC);
+        display.print(F(" Cmd"));
         break;
       case 1:
-        Serial.print(F("FS"));
-        Serial.print(fsNum, DEC);
-        Serial.print(F(" Mode"));
+        display.print(F("FS"));
+        display.print(fsNum, DEC);
+        display.print(F(" Mode"));
         break;
-   }
-    if (i == selection)
-    {
-      Serial.print(F("<<<"));
     }
-    Serial.print(F("\n\r"));
+    display.print(F("\n\r"));
   }
+  display.display();
 }
 
 //MenuExpCommand
@@ -503,27 +510,34 @@ bool MenuExpConfig::reset()
 void MenuExpConfig::print()
 {
   uint8_t expNum = pt_menuSwSelect->get_selectedExpNum();
+  display.clearDisplay();
+  display.setCursor(0,0);
   for (int i = 0; i< nbItems; i++)
   {
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
     switch (i)
     {
       case 0:
-        Serial.print(F("EXP"));
-        Serial.print(expNum, DEC);
-        Serial.print(F(" Cmd"));
+        display.print(F("EXP"));
+        display.print(expNum, DEC);
+        display.print(F(" Cmd"));
         break;
       case 1:
-        Serial.print(F("EXP"));
-        Serial.print(expNum, DEC);
-        Serial.print(F(" Mode"));
+        display.print(F("EXP"));
+        display.print(expNum, DEC);
+        display.print(F(" Mode"));
         break;
     }
-    if (i == selection)
-    {
-      Serial.print(F("<<<"));
-    }
-    Serial.print(F("\n\r"));
+    display.print(F("\n\r"));
   }
+  display.display();
 }
 
 //MenuSwSelect
