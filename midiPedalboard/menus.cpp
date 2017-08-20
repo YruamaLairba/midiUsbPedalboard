@@ -59,7 +59,11 @@ bool MenuFsCommand::next()
     this->selection++;
     res = true;
   }
-  return res;
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+   return res;
 }
 
 bool MenuFsCommand::prev()
@@ -70,7 +74,11 @@ bool MenuFsCommand::prev()
     this->selection--;
     res = true;
   }
-  return res;
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+   return res;
 }
 
 bool MenuFsCommand::validate()
@@ -96,17 +104,32 @@ bool MenuFsCommand::reset()
 {
   selection = pt_preset->get_fsCommand(
     pt_menuSwSelect->get_selectedFsNum());
+  displayOffset = min(selection, (selectionMax - 3));
   return true;
 }
 
 void MenuFsCommand::print()
 {
-  if(selection <= 127)
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for(uint8_t i = displayOffset; i < (displayOffset + 4); i++)
   {
-    Serial.print(F("CC"));
-    Serial.print(selection,DEC);
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+     if(i <= 127)
+    {
+      display.print(F("CC"));
+      display.print(i, DEC);
+    }
+    display.print(F("\n\r"));
   }
-  Serial.print(F("\n\r"));
+  display.display();
 }
 
 
@@ -314,7 +337,11 @@ bool MenuExpCommand::next()
     this->selection++;
     res = true;
   }
-  return res;
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+ return res;
 }
 
 bool MenuExpCommand::prev()
@@ -324,6 +351,10 @@ bool MenuExpCommand::prev()
   {
     this->selection--;
     res = true;
+  }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
   }
   return res;
 }
@@ -351,21 +382,36 @@ bool MenuExpCommand::reset()
 {
   selection = pt_preset->get_expCommand(
     pt_menuSwSelect->get_selectedExpNum());
+  displayOffset = min(selection, (selectionMax - 3));
   return true;
 }
 
 void MenuExpCommand::print()
 {
-  if(selection <= 127)
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for(uint8_t i = displayOffset; i < (displayOffset + 4); i++)
   {
-    Serial.print(F("CC"));
-    Serial.print(selection,DEC);
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    if(i <= 127)
+    {
+      display.print(F("CC"));
+      display.print(i, DEC);
+    }
+    else if (i == 128)
+    {
+      display.print(F("PitchBend"));
+    }
+    display.print(F("\n\r"));
   }
-  else if (selection == 128)
-  {
-    Serial.print(F("PitchBend"));
-  }
-  Serial.print(F("\n\r"));
+  display.display();
 }
 
 //MenuExpMode
