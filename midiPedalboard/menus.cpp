@@ -675,6 +675,7 @@ bool MenuSwSelect::cancel()
 bool MenuSwSelect::reset()
 {
   selection = 0;
+  displayOffset = 0;
   return true;
 }
 
