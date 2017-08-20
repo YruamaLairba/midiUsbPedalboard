@@ -9,6 +9,7 @@ MONITOR_PORT = /dev/ttyACM0
 ARDUINO_QUIET = 1
 #USER_LIB_PATH := $(realpath ${HOME}/arduino/libraries)
 ARDUINO_LIBS = MIDIUSB SPI Wire Adafruit_GFX Adafruit_SSD1306
+OPTIMIZATION_LEVEL = s
 
 include ${ARDMK_DIR}/Arduino.mk
 
