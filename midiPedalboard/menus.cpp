@@ -744,17 +744,23 @@ bool MenuPresetLoad::reset()
 
 void MenuPresetLoad::print()
 {
-  
+  display.clearDisplay();
+  display.setCursor(0,0);
   for (int i = displayOffset; i< (displayOffset + 4); i++)
   {
-    Serial.print(F("Preset "));
-    Serial.print(i,DEC);
-    if (i == selection)
+    if (selection == i)
     {
-      Serial.print(F("<<<"));
+      display.setTextColor(BLACK,WHITE);
     }
-    Serial.print(F("\n\r"));
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Preset "));
+    display.print(i,DEC);
+    display.print(F("\n\r")); 
   }
+  display.display();
 }
 
 //MenuPresetSave
@@ -831,17 +837,23 @@ bool MenuPresetSave::reset()
 
 void MenuPresetSave::print()
 {
-  
+  display.clearDisplay();
+  display.setCursor(0,0);
   for (int i = displayOffset; i< (displayOffset + 4); i++)
   {
-    Serial.print(F("Preset "));
-    Serial.print(i,DEC);
-    if (i == selection)
+    if (selection == i)
     {
-      Serial.print(F("<<<"));
+      display.setTextColor(BLACK,WHITE);
     }
-    Serial.print(F("\n\r"));
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Preset "));
+    display.print(i,DEC);
+    display.print(F("\n\r")); 
   }
+  display.display();
 }
 
 
