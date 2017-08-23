@@ -86,6 +86,7 @@ class MenuFsMode : public MenuBase
     static const uint8_t selectionMax = 5;
     MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
+    uint8_t displayOffset;
   public:
     MenuFsMode(
       MenuManager* pt_manager,
@@ -160,6 +161,7 @@ class MenuExpMode : public MenuBase
     static const uint8_t selectionMax = 1;
     MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
+    uint8_t displayOffset;
   public:
     MenuExpMode(
       MenuManager* pt_manager,

@@ -152,7 +152,11 @@ bool MenuFsMode::next()
     this->selection++;
     res = true;
   }
-  return res;
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+   return res;
 }
 
 bool MenuFsMode::prev()
@@ -163,7 +167,11 @@ bool MenuFsMode::prev()
     this->selection--;
     res = true;
   }
-  return res;
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+ return res;
 }
 
 bool MenuFsMode::validate()
@@ -194,28 +202,42 @@ bool MenuFsMode::reset()
 
 void MenuFsMode::print()
 {
-  switch (selection)
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for(uint8_t i = displayOffset; i < (displayOffset + 4); i++)
   {
-    case 0:
-      Serial.print(F("tog off"));
-      break;
-    case 1:
-      Serial.print(F("tog on"));
-      break;
-    case 2:
-      Serial.print(F("mom pre"));
-      break;
-    case 3:
-      Serial.print(F("mom dp"));
-      break;
-    case 4:
-      Serial.print(F("sing on"));
-      break;
-    case 5:
-      Serial.print(F("sing off"));
-      break;
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+  switch (i)
+    {
+      case 0:
+        display.print(F("tog off"));
+        break;
+      case 1:
+        display.print(F("tog on"));
+        break;
+      case 2:
+        display.print(F("mom pre"));
+        break;
+      case 3:
+        display.print(F("mom dp"));
+        break;
+      case 4:
+        display.print(F("sing on"));
+        break;
+      case 5:
+        display.print(F("sing off"));
+        break;
+    }
+    display.print(F("\n\r"));
   }
-  Serial.print(F("\n\r"));
+  display.display();
 }
 
 //MenuFsConfig
@@ -433,7 +455,11 @@ bool MenuExpMode::next()
     this->selection++;
     res = true;
   }
-  return res;
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+ return res;
 }
 
 bool MenuExpMode::prev()
@@ -444,7 +470,11 @@ bool MenuExpMode::prev()
     this->selection--;
     res = true;
   }
-  return res;
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+ return res;
 }
 
 bool MenuExpMode::validate()
@@ -475,16 +505,30 @@ bool MenuExpMode::reset()
 
 void MenuExpMode::print()
 {
-  switch (selection)
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for(uint8_t i = displayOffset; i < (displayOffset + 4); i++)
   {
-    case 0:
-      Serial.print(F("normal"));
-      break;
-    case 1:
-      Serial.print(F("reverse"));
-      break;
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    switch (i)
+    {
+      case 0:
+        display.print(F("normal"));
+        break;
+      case 1:
+        display.print(F("reverse"));
+        break;
+    }
+    display.print(F("\n\r"));
   }
-  Serial.print(F("\n\r"));
+  display.display();
 }
 
 //MenuExpConfig
@@ -832,7 +876,7 @@ void MenuPresetLoad::print()
     {
       display.setTextColor(WHITE,BLACK);
     }
-    display.print(F("Preset "));
+    display.print(F("Lreset "));
     display.print(i,DEC);
     display.print(F("\n\r")); 
   }
