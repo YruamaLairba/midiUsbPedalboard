@@ -101,8 +101,8 @@ void loop() {
   unsigned current_micros = micros();
   if ((current_micros - last_micros) > 100)
   {
-    filterButton(digitalRead(ROTARY_A), 4, &rot_a_acc, &cur_rot_a);
-    filterButton(digitalRead(ROTARY_B), 4, &rot_b_acc, &cur_rot_b);
+    filterButton(digitalRead(ROTARY_A), 20, &rot_a_acc, &cur_rot_a);
+    filterButton(digitalRead(ROTARY_B), 20, &rot_b_acc, &cur_rot_b);
 
     filterButton(digitalRead(BUTTON_OK), 50, &button_ok_acc, &cur_button_ok);
     filterButton(digitalRead(BUTTON_CANCEL), 50, &button_cancel_acc,
