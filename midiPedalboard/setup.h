@@ -3,25 +3,25 @@
 #include <Arduino.h> // for A0 - A5 pin name
 
 //footswitch
-extern const uint8_t nbFs;
-extern const uint8_t fsPins[]; 
-extern const uint8_t fsLedPins[];
+const uint8_t nbFs = 4;
+const uint8_t fsPins[] = {9, 10, 11, 12}; //footswitch input pin
+const uint8_t fsLedPins[] = {A0, A1, A2, A3};//footswitch led output pin
 
 //expression pedal
-extern const uint8_t nbExp;
-extern const uint8_t expPins[];
+const uint8_t nbExp = 1;
+const uint8_t expPins[] = {A5};
 
 //OLED display
-extern const uint8_t;
-extern const uint8_t;
-extern const uint8_t;
+const uint8_t displayCs = 4;
+const uint8_t displayDc = 5;
+const uint8_t displayReset = 6;
 
 //rotary coder
-extern const uint8_t rotaryPinA;
-extern const uint8_t rotaryPinB;
+const uint8_t rotaryPinA = 2;
+const uint8_t rotaryPinB = 3;
 
 //ok and cancel buttons
-extern const uint8_t buttonOkPin;
-extern const uint8_t buttonCancelPin;
+const uint8_t buttonOkPin = 7;
+const uint8_t buttonCancelPin = 8;
 
 #endif //SETUP_H
