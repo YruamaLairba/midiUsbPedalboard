@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <Arduino.h>// for Serial
 
+#include "setup.h"
 #include "display.h"
 #include "preset.h"
 
@@ -208,11 +209,11 @@ class MenuExpConfig : public MenuBase
 class MenuSwSelect : public MenuBase
 {
   private:
+    static const uint8_t nbItems = nbFs + nbExp;
     MenuFsConfig fsConfig;
     MenuExpConfig expConfig;
     Preset* pt_preset;
     uint8_t displayOffset;
-    uint8_t nbItems();
 
   public:
     /*

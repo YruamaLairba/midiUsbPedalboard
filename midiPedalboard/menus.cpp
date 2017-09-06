@@ -642,25 +642,10 @@ MenuSwSelect::MenuSwSelect(
     expConfig(pt_manager, this, this, pt_preset),
     pt_preset(pt_preset){}
 
-uint8_t MenuSwSelect::nbItems()
-{
-  if (pt_preset != NULL)
-  {
-    uint8_t sum =
-      pt_preset->get_nbFsConfigs() +
-      pt_preset->get_nbExpConfigs();
-    return sum;
-  }
-  else
-  {
-    return 0;
-  }
-}
-
 bool MenuSwSelect::next()
 {
   bool res = false;
-  if (this->selection < this->nbItems() -1)
+  if (this->selection < this->nbItems -1)
   {
     this->selection++;
     res = true;
@@ -690,8 +675,6 @@ bool MenuSwSelect::prev()
 bool MenuSwSelect::validate()
 {
   bool res = false;
-  uint8_t nbFs = pt_preset->get_nbFsConfigs();
-  uint8_t nbExp = pt_preset->get_nbExpConfigs();
   if(selection < nbFs)
   {
     fsConfig.activate();
@@ -739,8 +722,6 @@ void MenuSwSelect::print()
       {
         display.setTextColor(WHITE,BLACK);
       }
-      uint8_t nbFs = pt_preset->get_nbFsConfigs();
-      uint8_t nbExp = pt_preset->get_nbExpConfigs();
       if (i < nbFs)
       {
         display.print(F("FS "));
@@ -759,7 +740,6 @@ void MenuSwSelect::print()
 
 uint8_t MenuSwSelect::get_selectedFsNum()
 {
-  uint8_t nbFs = pt_preset->get_nbFsConfigs();
   //normal case
   if(selection < nbFs)
   {
@@ -774,8 +754,6 @@ uint8_t MenuSwSelect::get_selectedFsNum()
 
 uint8_t MenuSwSelect::get_selectedExpNum()
 {
-  uint8_t nbFs = pt_preset->get_nbFsConfigs();
-  uint8_t nbExp = pt_preset->get_nbExpConfigs();
   //normal case
   if((selection >= nbFs) and (selection < (nbFs + nbExp)))
   {

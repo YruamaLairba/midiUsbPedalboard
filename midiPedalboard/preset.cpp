@@ -13,7 +13,7 @@ Preset::Preset(){}
 
 FsMode Preset::get_fsMode(uint8_t fsNumber)
 {
-  if (fsNumber < nbFsConfigs)
+  if (fsNumber < nbFs)
   {
     return fsConfigs[fsNumber].fsMode;
   }
@@ -25,7 +25,7 @@ FsMode Preset::get_fsMode(uint8_t fsNumber)
 
 void Preset::set_fsMode(uint8_t fsNumber, FsMode fsMode)
 {
-  if (fsNumber < nbFsConfigs)
+  if (fsNumber < nbFs)
   {
     if (fsConfigs[fsNumber].fsMode != fsMode)
     {
@@ -45,7 +45,7 @@ void Preset::set_fsMode(uint8_t fsNumber, FsMode fsMode)
 
 FsCommand Preset::get_fsCommand(uint8_t fsNumber)
 {
-  if (fsNumber < nbFsConfigs)
+  if (fsNumber < nbFs)
   {
     return fsConfigs[fsNumber].fsCommand;
   }
@@ -57,7 +57,7 @@ FsCommand Preset::get_fsCommand(uint8_t fsNumber)
 
 void Preset::set_fsCommand(uint8_t fsNumber, FsCommand fsCommand)
 {
-  if (fsNumber < nbFsConfigs)
+  if (fsNumber < nbFs)
   {
     if(fsConfigs[fsNumber].fsCommand != fsCommand)
     {
@@ -77,7 +77,7 @@ void Preset::set_fsCommand(uint8_t fsNumber, FsCommand fsCommand)
 
 ExpMode Preset::get_expMode(uint8_t expNumber)
 {
-  if (expNumber < nbExpConfigs)
+  if (expNumber < nbExp)
   {
     return expConfigs[expNumber].expMode;
   }
@@ -89,7 +89,7 @@ ExpMode Preset::get_expMode(uint8_t expNumber)
 
 void Preset::set_expMode(uint8_t expNumber, ExpMode expMode)
 {
-  if (expNumber < nbExpConfigs)
+  if (expNumber < nbExp)
   {
     if (expConfigs[expNumber].expMode != expMode)
     {
@@ -110,7 +110,7 @@ void Preset::set_expMode(uint8_t expNumber, ExpMode expMode)
 
 ExpCommand Preset::get_expCommand(uint8_t expNumber)
 {
-  if (expNumber < nbExpConfigs)
+  if (expNumber < nbExp)
   {
     return expConfigs[expNumber].expCommand;
   }
@@ -122,7 +122,7 @@ ExpCommand Preset::get_expCommand(uint8_t expNumber)
 
 void Preset::set_expCommand(uint8_t expNumber, ExpCommand expCommand)
 {
-  if (expNumber < nbExpConfigs)
+  if (expNumber < nbExp)
   {
     if (expConfigs[expNumber].expCommand != expCommand)
     {
