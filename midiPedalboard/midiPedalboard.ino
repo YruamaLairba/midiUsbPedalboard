@@ -1,12 +1,11 @@
+#include "setup.h"
 #include "menus.h"
 #include "footswitch.h"
 #include "preset.h"
 #include <MIDIUSB.h>
 #include "display.h"
 
-#define ROTARY_A 2
-#define ROTARY_B 3
-
+//rotary coder
 uint8_t prec_rot_a;
 uint8_t prec_rot_b;
 uint8_t cur_rot_a;
@@ -15,27 +14,25 @@ uint8_t rot_a_acc;
 uint8_t rot_b_acc;
 
 //button ok
-#define BUTTON_OK 7
 uint8_t prec_button_ok;
 uint8_t cur_button_ok;
 uint8_t button_ok_acc;//used for debounce filter
 
 //button cancel
-#define BUTTON_CANCEL 8
 uint8_t prec_button_cancel;
 uint8_t cur_button_cancel;
 uint8_t button_cancel_acc;
 
 //footswitchs physical value
-uint8_t cur_fsRawValues[4];
-uint8_t prec_fsRawValues[4];
-uint8_t fsRawValues_acc[4];
+uint8_t cur_fsRawValues[nbFs];
+uint8_t prec_fsRawValues[nbFs];
+uint8_t fsRawValues_acc[nbFs];
 
 //footswitchs software value
-uint8_t fsValue[4];//on off, but not the raw digitalRead() value
+uint8_t fsValue[nbFs];//on off, but not the raw digitalRead() value
 
 //expression pedal value
-int16_t expValue[1];
+int16_t expValue[nbExp];
 
 unsigned long last_micros;
 
@@ -69,20 +66,17 @@ void filterButton(
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  pinMode(ROTARY_A, INPUT_PULLUP);
-  pinMode(ROTARY_B, INPUT_PULLUP);
-  pinMode(BUTTON_OK, INPUT_PULLUP);
-  pinMode(BUTTON_CANCEL, INPUT_PULLUP);
+  pinMode(rotaryPinA, INPUT_PULLUP);
+  pinMode(rotaryPinB, INPUT_PULLUP);
+  pinMode(buttonOkPin, INPUT_PULLUP);
+  pinMode(buttonCancelPin, INPUT_PULLUP);
 
-  pinMode(9,INPUT_PULLUP);
-  pinMode(10,INPUT_PULLUP);
-  pinMode(11,INPUT_PULLUP);
-  pinMode(12,INPUT_PULLUP);
-
-  pinMode(A0,OUTPUT);
-  pinMode(A1,OUTPUT);
-  pinMode(A2,OUTPUT);
-  pinMode(A3,OUTPUT);
+  //footswitch and leds pins
+  for(uint8_t i=0; i<nbFs; i++)
+  {
+    pinMode(fsPins[i],INPUT_PULLUP);
+    pinMode(fsLedPins[i],OUTPUT);
+  }
 
   display.begin(SSD1306_SWITCHCAPVCC);
   display.display();
@@ -101,22 +95,25 @@ void loop() {
   unsigned current_micros = micros();
   if ((current_micros - last_micros) > 100)
   {
-    filterButton(digitalRead(ROTARY_A), 20, &rot_a_acc, &cur_rot_a);
-    filterButton(digitalRead(ROTARY_B), 20, &rot_b_acc, &cur_rot_b);
+    filterButton(digitalRead(rotaryPinA), 20, &rot_a_acc, &cur_rot_a);
+    filterButton(digitalRead(rotaryPinB), 20, &rot_b_acc, &cur_rot_b);
 
-    filterButton(digitalRead(BUTTON_OK), 50, &button_ok_acc, &cur_button_ok);
-    filterButton(digitalRead(BUTTON_CANCEL), 50, &button_cancel_acc,
+    filterButton(digitalRead(buttonOkPin), 50, &button_ok_acc, &cur_button_ok);
+    filterButton(digitalRead(buttonCancelPin), 50, &button_cancel_acc,
                  &cur_button_cancel);
 
-    filterButton(digitalRead(9), 50, &fsRawValues_acc[0], &cur_fsRawValues[0]);
-    filterButton(digitalRead(10), 50, &fsRawValues_acc[1], &cur_fsRawValues[1]);
-    filterButton(digitalRead(11), 50, &fsRawValues_acc[2], &cur_fsRawValues[2]);
-    filterButton(digitalRead(12), 50, &fsRawValues_acc[3], &cur_fsRawValues[3]);
+    //read footswitch input
+    for(uint8_t i=0; i<nbFs; i++)
+    {
+    filterButton(digitalRead(fsPins[i]), 50, &fsRawValues_acc[i],
+        &cur_fsRawValues[i]);
+    }
 
     last_micros = current_micros;
   }
 
-  uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 | prec_rot_b << 3;
+  uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 |
+    prec_rot_b << 3;
   //management of half cycle per indent encoder
   if (curtemp == 0b00000001 ||
       //curtemp == 0b00000111 ||
@@ -168,7 +165,7 @@ void loop() {
 
   //footswitch
   unsigned long debug_start_micros = micros();
-  for(uint8_t i = 0; i < 4; i++)
+  for(uint8_t i = 0; i < nbFs; i++)
   {
     uint8_t fsMode = preset.get_fsMode(i);
     uint8_t fsCommand = preset.get_fsCommand(i);
@@ -252,6 +249,7 @@ void loop() {
         }
     }
     prec_fsRawValues[i]=cur_fsRawValues[i];
+    digitalWrite(fsLedPins[i],fsValue[i]);
   }
   unsigned long debug_end_micros = micros();
   unsigned long debug_duration = debug_end_micros - debug_start_micros;
@@ -261,8 +259,4 @@ void loop() {
     Serial.print(debug_duration,DEC);
     Serial.print("\n\r");
   }
-  digitalWrite(A0,fsValue[0]);
-  digitalWrite(A1,fsValue[1]);
-  digitalWrite(A2,fsValue[2]);
-  digitalWrite(A3,fsValue[3]);
 }
