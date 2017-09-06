@@ -1,5 +1,5 @@
 #ifndef DISPLAY_H
-#define DIPLAY_H
+#define DISPLAY_H
 
 #include <SPI.h>
 #include <Wire.h>
