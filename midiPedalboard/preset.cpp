@@ -15,7 +15,7 @@ FsMode Preset::get_fsMode(uint8_t fsNumber)
 {
   if (fsNumber < nbFs)
   {
-    return fsConfigs[fsNumber].fsMode;
+    return eepromData.fsConfigs[fsNumber].fsMode;
   }
   else
   {
@@ -27,9 +27,9 @@ void Preset::set_fsMode(uint8_t fsNumber, FsMode fsMode)
 {
   if (fsNumber < nbFs)
   {
-    if (fsConfigs[fsNumber].fsMode != fsMode)
+    if (eepromData.fsConfigs[fsNumber].fsMode != fsMode)
     {
-      fsConfigs[fsNumber].fsMode = fsMode;
+      eepromData.fsConfigs[fsNumber].fsMode = fsMode;
       isModified = true;
 #ifdef DEBUG
       Serial.print("setting fs mode: fs ");
@@ -47,7 +47,7 @@ FsCommand Preset::get_fsCommand(uint8_t fsNumber)
 {
   if (fsNumber < nbFs)
   {
-    return fsConfigs[fsNumber].fsCommand;
+    return eepromData.fsConfigs[fsNumber].fsCommand;
   }
   else
   {
@@ -59,9 +59,9 @@ void Preset::set_fsCommand(uint8_t fsNumber, FsCommand fsCommand)
 {
   if (fsNumber < nbFs)
   {
-    if(fsConfigs[fsNumber].fsCommand != fsCommand)
+    if(eepromData.fsConfigs[fsNumber].fsCommand != fsCommand)
     {
-      fsConfigs[fsNumber].fsCommand = fsCommand;
+      eepromData.fsConfigs[fsNumber].fsCommand = fsCommand;
       isModified = true;
 #ifdef DEBUG
       Serial.print("setting fs command: fs ");
@@ -79,7 +79,7 @@ ExpMode Preset::get_expMode(uint8_t expNumber)
 {
   if (expNumber < nbExp)
   {
-    return expConfigs[expNumber].expMode;
+    return eepromData.expConfigs[expNumber].expMode;
   }
   else
   {
@@ -91,9 +91,9 @@ void Preset::set_expMode(uint8_t expNumber, ExpMode expMode)
 {
   if (expNumber < nbExp)
   {
-    if (expConfigs[expNumber].expMode != expMode)
+    if (eepromData.expConfigs[expNumber].expMode != expMode)
     {
-      expConfigs[expNumber].expMode = expMode;
+      eepromData.expConfigs[expNumber].expMode = expMode;
       isModified = true;
 #ifdef DEBUG
       Serial.print("setting exp mode: exp ");
@@ -112,7 +112,7 @@ ExpCommand Preset::get_expCommand(uint8_t expNumber)
 {
   if (expNumber < nbExp)
   {
-    return expConfigs[expNumber].expCommand;
+    return eepromData.expConfigs[expNumber].expCommand;
   }
   else
   {
@@ -124,9 +124,9 @@ void Preset::set_expCommand(uint8_t expNumber, ExpCommand expCommand)
 {
   if (expNumber < nbExp)
   {
-    if (expConfigs[expNumber].expCommand != expCommand)
+    if (eepromData.expConfigs[expNumber].expCommand != expCommand)
     {
-      expConfigs[expNumber].expCommand = expCommand;
+      eepromData.expConfigs[expNumber].expCommand = expCommand;
       isModified = true;
 #ifdef DEBUG
       Serial.print("setting exp command: exp ");
@@ -151,6 +151,7 @@ void Preset::save(uint8_t presetNumber)
 #endif //DEBUG
 //manipulate EEprom here
   number = presetNumber;
+  EEPROM.put(presetNumber*sizeof(eepromData),eepromData);
   isModified = false;
 }
 
@@ -164,5 +165,6 @@ void Preset::load(uint8_t presetNumber)
 #endif //DEBUG
 //manipulate EEprom here
   number = presetNumber;
+  EEPROM.get(presetNumber*sizeof(eepromData), eepromData);
   isModified = false;
 }

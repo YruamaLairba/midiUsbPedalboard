@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "setup.h"
 #include "footswitch.h"
+#include "EEPROM.h"
 
 typedef uint8_t FsMode;
 typedef uint8_t FsCommand;
@@ -25,9 +26,12 @@ struct ExpConfig
 class Preset
 {
   private:
-    static const uint8_t nbPreset = 128;
-    FsConfig fsConfigs [nbFs];
-    ExpConfig expConfigs [nbExp];
+    struct
+    {
+      FsConfig fsConfigs [nbFs];
+      ExpConfig expConfigs [nbExp];
+    }eepromData;
+    static const uint8_t nbPreset = (E2END + 1)/sizeof(eepromData);
     uint8_t number; //number of the currently loaded preset
     bool isModified; //is the current preset modified ?
   public:
