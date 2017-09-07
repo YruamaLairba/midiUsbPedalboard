@@ -197,6 +197,7 @@ bool MenuFsMode::reset()
 {
   selection = pt_preset->get_fsMode(
     pt_menuSwSelect->get_selectedFsNum());
+  displayOffset = min(selection, (selectionMax - 3));
   return true;
 }
 
