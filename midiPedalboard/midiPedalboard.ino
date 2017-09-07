@@ -31,6 +31,8 @@ uint8_t fsRawValues_acc[nbFs];
 //footswitchs software value
 uint8_t fsValue[nbFs];//on off, but not the raw digitalRead() value
 
+unsigned long leds_millis[nbFs]; //used to blink led
+
 //expression pedal value
 int16_t expValue[nbExp];
 
@@ -178,12 +180,14 @@ void loop() {
           if (fsValue[i] == 0)
           {
             fsValue[i]=127;
+            digitalWrite(fsLedPins[i],1);
           }
           else
           {
             fsValue[i]=0;
+            digitalWrite(fsLedPins[i],0);
           }
-          if(fsCommand < 128)
+         if(fsCommand < 128)
           {
             //send midi CC throught USB
             midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
@@ -196,6 +200,7 @@ void loop() {
         if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 127;
+          digitalWrite(fsLedPins[i],1);
           //send midi CC throught USB
           midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
           MidiUSB.sendMIDI(event);
@@ -204,6 +209,7 @@ void loop() {
         else if((prec_fsRawValues[i] == LOW) and (cur_fsRawValues[i] == HIGH))
         {
           fsValue[i] = 0;
+          digitalWrite(fsLedPins[i],0);
           //send midi CC throught USB
           midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
           MidiUSB.sendMIDI(event);
@@ -214,6 +220,7 @@ void loop() {
         if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 0;
+          digitalWrite(fsLedPins[i],0);
           //send midi CC throught USB
           midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
           MidiUSB.sendMIDI(event);
@@ -222,6 +229,7 @@ void loop() {
         else if((prec_fsRawValues[i] == LOW) and (cur_fsRawValues[i] == HIGH))
         {
           fsValue[i] = 127;
+          digitalWrite(fsLedPins[i],1);
           //send midi CC throught USB
           midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
           MidiUSB.sendMIDI(event);
@@ -232,25 +240,36 @@ void loop() {
         if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 127;
+          digitalWrite(fsLedPins[i],1);
+          leds_millis[i] = millis();
           //send midi CC throught USB
           midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
           MidiUSB.sendMIDI(event);
           MidiUSB.flush();
+        }
+        if (millis() - leds_millis[i] > 100)
+        {
+          digitalWrite(fsLedPins[i],0);
         }
         break;
       case 5:
         if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
         {
           fsValue[i] = 0;
+          digitalWrite(fsLedPins[i],1);
+          leds_millis[i] = millis();
           //send midi CC throught USB
           midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
           MidiUSB.sendMIDI(event);
           MidiUSB.flush();
         }
+        if (millis() - leds_millis[i] > 100)
+        {
+          digitalWrite(fsLedPins[i],0);
+        }
     }
     prec_fsRawValues[i]=cur_fsRawValues[i];
-    digitalWrite(fsLedPins[i],fsValue[i]);
-  }
+ }
   unsigned long debug_end_micros = micros();
   unsigned long debug_duration = debug_end_micros - debug_start_micros;
   if (debug_duration > 1000)
