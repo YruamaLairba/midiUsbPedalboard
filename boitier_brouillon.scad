@@ -62,7 +62,7 @@ module low_top() //top of low step
             //finger hole
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
-            translate([(pb_size_x/2)-(40/2),0]) square([40,thickness]);
+            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]);
         }
     }
 }
@@ -91,7 +91,7 @@ module low_front()
     linear_extrude(height=thickness) 
     {
         translate([thickness,0]) square([pb_size_x-2*thickness, low_step_height]);
-        translate([(pb_size_x/2)-(40/2),low_step_height]) square([40,thickness]);
+        translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
         translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
         translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);   
     }
