@@ -24,7 +24,7 @@ linear_extrude(height=5)
             translate([20,20]) circle(d=fsHole);
             translate([pb_size_x-20,20]) circle(d=fsHole);
             translate([20,60-20]) circle(d=ledHole);
-            translate([pb_size_x-20,60-20]) circle(d=ledHole); 
+            translate([pb_size_x-20,60-20]) circle(d=ledHole);           
         }
     }
     translate([0,60+60]) difference()
@@ -54,6 +54,9 @@ module low_top() //top of low step
             translate([pb_size_x-20,20]) circle(d=fsHole);
             translate([20,60-20]) circle(d=ledHole);
             translate([pb_size_x-20,60-20]) circle(d=ledHole); 
+            //finger hole
+            translate([0,30-(20/2)]) square([5,20]); //left
+            translate([pb_size_x-5,30-(20/2)]) square([5,20]); //right
         }
     }
 }
@@ -98,6 +101,8 @@ module left()
     {
         square([20,60]);
         translate([0,60]) square([20+15,pb_size_y-60]);
+        //finger
+        translate([20,30-(20/2)]) square([5,20]);
     }
 }
 
@@ -107,6 +112,8 @@ module right()
     {
         square([20,60]);
         translate([0,60]) square([20+15,pb_size_y-60]);
+        //finger
+        translate([20,30-(20/2)]) square([5,20]);
     }
 }
 
@@ -122,7 +129,7 @@ module right()
     color("green") translate([5,pb_size_y,0]) rotate([90,0,0]) rear();
     
     color("red",alpha=0.2) translate([5,0,0]) rotate([0,-90,0]) left();
-    color("blue",alpha=0.2) translate([pb_size_x,0,0]) rotate([0,-90,0]) right();
+    color("red",alpha=0.2) translate([pb_size_x,0,0]) rotate([0,-90,0]) right();
     
     
 
