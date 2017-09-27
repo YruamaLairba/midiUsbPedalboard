@@ -2,14 +2,14 @@ module contact()
 {
     rotate([90,0,0]) union()
     {
-        difference()
+        linear_extrude(height =1,center=true)  difference()
         {
-            union() linear_extrude(height =1,center=true)
+            union()
             {
                 square([5,3 ]);
                 translate([5,5/2]) circle(d=5);
             }
-            translate([5,5/2]) cylinder(d=2,h=2,center=true);
+            translate([5,5/2]) circle(d=2,center=true);
         }    
      }
  }
