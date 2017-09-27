@@ -29,7 +29,8 @@ linear_extrude(height=thickness)
             translate([20,20]) circle(d=fsHole);
             translate([pb_size_x-20,20]) circle(d=fsHole);
             translate([20,60-20]) circle(d=ledHole);
-            translate([pb_size_x-20,60-20]) circle(d=ledHole);           
+            translate([pb_size_x-20,60-20]) circle(d=ledHole); 
+            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;       
         }
     }
     translate([0,60+60]) difference()
@@ -105,6 +106,7 @@ module high_front()
         //translate([(pb_size_x/2)-(40/2),high_step_height]) square([40,thickness]);
         translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
         translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
+        translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
     }
 }
 
