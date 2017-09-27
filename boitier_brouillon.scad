@@ -14,6 +14,9 @@ pb_size_x = 120;
 pb_size_y = 180;
 pb_size_z = 45;
 
+low_step_height= 25;
+high_step_height= low_step_height +15;
+
 module high_top()
 linear_extrude(height=thickness) 
 {
@@ -87,27 +90,27 @@ module low_front()
 {
     linear_extrude(height=thickness)
    {
-       square([pb_size_x-2*thickness, 20]);
-       translate([(pb_size_x/2-thickness)-(40/2),20]) square([40,thickness]);
+       square([pb_size_x-2*thickness, low_step_height]);
+       translate([(pb_size_x/2-thickness)-(40/2),low_step_height]) square([40,thickness]);
    }
 }
 
 module high_front()
 {
-    linear_extrude(height=thickness) square([pb_size_x-2*thickness,20+15]);
+    linear_extrude(height=thickness) square([pb_size_x-2*thickness,high_step_height]);
 }
 
 module rear()
 {
-    linear_extrude(height=thickness) square([pb_size_x-2*thickness,20+15]);
+    linear_extrude(height=thickness) square([pb_size_x-2*thickness,high_step_height]);
 }
 
 module left()
 {
     linear_extrude(height=thickness)
     {
-        square([20,60]);
-        translate([0,60]) square([20+15,pb_size_y-60]);
+        square([low_step_height,60]);
+        translate([0,60]) square([high_step_height,pb_size_y-60]);
         //finger
         translate([20,30-(20/2)]) square([thickness,20]);
     }
@@ -117,8 +120,8 @@ module right()
 {
     linear_extrude(height=thickness)
     {
-        square([20,60]);
-        translate([0,60]) square([20+15,pb_size_y-60]);
+        square([low_step_height,60]);
+        translate([0,60]) square([high_step_height,pb_size_y-60]);
         //finger
         translate([20,30-(20/2)]) square([thickness,20]);
     }
@@ -128,9 +131,9 @@ module right()
 //translate([-pb_size_x/2,-pb_size_y/2])
 {
     //color("red",0.5) cube([pb_size_x,pb_size_y,pb_size_z]);
-    color("blue",alpha=0.2) translate([0,0,20]) low_top();
-    translate([0,0,20+15])  high_top();
-    color([0.8,0.8,0.8,0.3]) translate([0,120,20+15+thickness]) plastic_cover();
+    color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top();
+    translate([0,0,high_step_height])  high_top();
+    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
     translate([thickness,thickness,0]) rotate([90,0,0]) low_front();
     color("green") translate([thickness,60+thickness,0]) rotate([90,0,0]) high_front();
     color("green") translate([thickness,pb_size_y,0]) rotate([90,0,0]) rear();
@@ -142,5 +145,5 @@ module right()
 
 }
 
-%translate([20,20,-4]) footswitch();
+%translate([20,20,0]) footswitch();
 
