@@ -39,11 +39,12 @@ linear_extrude(height=thickness)
             square([pb_size_x,60]);
         }
         {
-                        //screen hole
+             //screen hole
             translate([pb_size_x/2 -10 ,60-30,2.5]) square([screen_size_x,screen_size_y],center=true);
             translate([pb_size_x/2 - 40,60-30,2.5]) circle(d=5,center=true);
             translate([pb_size_x/2 + 20,60-30,2.5]) circle(d=5,center=true);
             translate([pb_size_x/2 +40,60-30,2.5]) circle(d=5,center=true);
+            translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);
         }
     }
 }
@@ -117,6 +118,7 @@ module rear()
         translate([5,0]) square([pb_size_x-2*thickness,high_step_height]);
         translate([0,high_step_height/3]) square([thickness, high_step_height/3]);
         translate([pb_size_x-thickness,high_step_height/3]) square([thickness, high_step_height/3]); 
+        translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
     }
       
 }
