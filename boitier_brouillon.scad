@@ -57,8 +57,11 @@ module low_top() //top of low step
 {
     linear_extrude(height=thickness) difference()
     {
+        union()
         {
             square([pb_size_x,60]);
+            //finger
+            translate([(pb_size_x/2)-(pb_size_x/6),60]) square([pb_size_x/3,thickness]);
         }
         {
             translate([20,20]) circle(d=fsHole);
@@ -105,13 +108,19 @@ module low_front()
 
 module high_front()
 {
-    linear_extrude(height=thickness) union()
+    linear_extrude(height=thickness) difference()
     {
-        translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
-        //translate([(pb_size_x/2)-(40/2),high_step_height]) square([40,thickness]);
-        translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
-        translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
-        translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
+        union()
+        {
+            translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
+            //translate([(pb_size_x/2)-(40/2),high_step_height]) square([40,thickness]);
+            translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
+            translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
+            translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
+        }
+        {
+            translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
+        }
     }
 }
 
@@ -174,7 +183,7 @@ module right()
     translate([0,0,high_step_height])  high_top();
     
     translate([0,thickness,0]) rotate([90,0,0]) low_front();
-    color("green") translate([0,60+thickness,0]) rotate([90,0,0]) high_front();
+    color("green",alpha=0.5) translate([0,60+thickness,0]) rotate([90,0,0]) high_front();
     color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear();
     
     color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left();
