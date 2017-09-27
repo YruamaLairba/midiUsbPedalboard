@@ -190,10 +190,14 @@ module right()
     color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right();
     
     color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
-    
-    
-
 }
 
-%translate([20,20,0]) footswitch();
+%union(){
+    translate([20,20,0]) footswitch();
+    translate([pb_size_x-20,20,0]) footswitch();
+    translate([20,60+20,15]) footswitch();
+    translate([pb_size_x-20,60+20,15]) footswitch();
+}
+
+
 
