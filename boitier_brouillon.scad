@@ -30,6 +30,8 @@ linear_extrude(height=thickness)
             translate([pb_size_x-20,20]) circle(d=fsHole);
             translate([20,60-20]) circle(d=ledHole);
             translate([pb_size_x-20,60-20]) circle(d=ledHole); 
+            translate([0,30-(20/2)]) square([thickness,20]); //left
+            translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;       
         }
     }
@@ -44,6 +46,8 @@ linear_extrude(height=thickness)
             translate([pb_size_x/2 - 40,60-30,2.5]) circle(d=5,center=true);
             translate([pb_size_x/2 + 20,60-30,2.5]) circle(d=5,center=true);
             translate([pb_size_x/2 +40,60-30,2.5]) circle(d=5,center=true);
+            translate([0,30-(20/2)]) square([thickness,20]); //left
+            translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);
         }
     }
@@ -132,6 +136,8 @@ module left()
             translate([0,60]) square([high_step_height,pb_size_y-60]);
             //finger
             translate([low_step_height,30-(20/2)]) square([thickness,20]);
+            translate([high_step_height,60+30-(20/2)]) square([thickness,20]);
+            translate([high_step_height,60+60+30-(20/2)]) square([thickness,20]);
         }
         {
             translate([low_step_height/3,0]) square([low_step_height/3,thickness]);
@@ -150,6 +156,8 @@ module right()
             translate([0,60]) square([high_step_height,pb_size_y-60]);
             //finger
             translate([low_step_height,30-(20/2)]) square([thickness,20]);
+            translate([high_step_height,60+30-(20/2)]) square([thickness,20]);
+            translate([high_step_height,60+60+30-(20/2)]) square([thickness,20]);
         }
         {
             translate([low_step_height/3,0]) square([low_step_height/3,thickness]);
@@ -164,13 +172,15 @@ module right()
     //color("red",0.5) cube([pb_size_x,pb_size_y,pb_size_z]);
     color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top();
     translate([0,0,high_step_height])  high_top();
-    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
+    
     translate([0,thickness,0]) rotate([90,0,0]) low_front();
     color("green") translate([0,60+thickness,0]) rotate([90,0,0]) high_front();
     color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear();
     
     color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left();
     color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right();
+    
+    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
     
     
 
