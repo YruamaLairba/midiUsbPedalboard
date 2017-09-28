@@ -18,6 +18,8 @@ pb_size_z = 45;
 low_step_height= 25;
 high_step_height= low_step_height +15;
 
+fs_side_dist=20;//distance between side and fs hole center
+
 module high_top()
 linear_extrude(height=thickness) 
 {
@@ -27,10 +29,11 @@ linear_extrude(height=thickness)
             square([pb_size_x,60]);
         }
         {
-            translate([20,20]) circle(d=fsHole);
-            translate([pb_size_x-20,20]) circle(d=fsHole);
-            translate([20,60-20]) circle(d=ledHole);
-            translate([pb_size_x-20,60-20]) circle(d=ledHole); 
+            translate([fs_side_dist,20]) circle(d=fsHole);
+            translate([pb_size_x-fs_side_dist,20]) circle(d=fsHole);
+            translate([fs_side_dist,60-20]) circle(d=ledHole);
+            translate([pb_size_x-fs_side_dist,60-20]) circle(d=ledHole); 
+            //finger hole
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;       
@@ -65,10 +68,10 @@ module low_top() //top of low step
             translate([(pb_size_x/2)-(pb_size_x/6),60]) square([pb_size_x/3,thickness]);
         }
         {
-            translate([20,20]) circle(d=fsHole);
-            translate([pb_size_x-20,20]) circle(d=fsHole);
-            translate([20,60-20]) circle(d=ledHole);
-            translate([pb_size_x-20,60-20]) circle(d=ledHole); 
+            translate([fs_side_dist,20]) circle(d=fsHole);
+            translate([pb_size_x-fs_side_dist,20]) circle(d=fsHole);
+            translate([fs_side_dist,60-20]) circle(d=ledHole);
+            translate([pb_size_x-fs_side_dist,60-20]) circle(d=ledHole); 
             //finger hole
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
@@ -194,10 +197,10 @@ module right()
 }
 
 %union(){
-    translate([20,20,0]) footswitch();
-    translate([pb_size_x-20,20,0]) footswitch();
-    translate([20,60+20,15]) footswitch();
-    translate([pb_size_x-20,60+20,15]) footswitch();
+    translate([fs_side_dist,20,0]) footswitch();
+    translate([pb_size_x-fs_side_dist,20,0]) footswitch();
+    translate([fs_side_dist,60+20,15]) footswitch();
+    translate([pb_size_x-fs_side_dist,60+20,15]) footswitch();
 }
 
 %union()
