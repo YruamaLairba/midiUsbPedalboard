@@ -1,4 +1,5 @@
 use <footswitch.scad>;
+use <angle_bracket.scad>;
 
 fsHole=12;//diameter
 ledHole=5;//diameter
@@ -199,5 +200,28 @@ module right()
     translate([pb_size_x-20,60+20,15]) footswitch();
 }
 
-
-
+%union()
+{
+    translate([pb_size_x/2,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
+    
+    translate([pb_size_x/2,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
+    //translate([40,60,low_step_height]) rotate([90,0,0]) angle_bracket();
+    //translate([pb_size_x-40,60,low_step_height]) rotate([90,0,0]) angle_bracket();
+    
+    translate([pb_size_x/2,60+thickness,high_step_height]) rotate([180,0,0]) angle_bracket_double();
+    
+    
+    
+    
+     translate([thickness,51,low_step_height])rotate([90,0,90]) angle_bracket_simple();
+     translate([pb_size_x-thickness,51,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
+    
+     translate([thickness,51+60,high_step_height])rotate([90,0,90]) angle_bracket_simple();
+     translate([pb_size_x-thickness,51+60,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
+    
+     translate([thickness,9+120,high_step_height])rotate([90,0,90]) angle_bracket_simple();
+     translate([pb_size_x-thickness,9+120,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
+    
+      translate([thickness+9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
+     translate([pb_size_x-thickness-9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
+}
