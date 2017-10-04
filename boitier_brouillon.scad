@@ -4,21 +4,21 @@ use <angle_bracket.scad>;
 fsHole=12;//diameter
 ledHole=5;//diameter
 
-thickness=5;
+thickness=3;
 
 //screen_size_x=26;
 //screen_size_y=19;
 screen_size_x =28;
 screen_size_y =28;
 
-pb_size_x = 120;
+pb_size_x = 140;
 pb_size_y = 180;
 pb_size_z = 45;
 
 low_step_height= 25;
 high_step_height= low_step_height +15;
 
-fs_side_dist=20;//distance between side and fs hole center
+fs_side_dist=30;//distance between side and fs hole center
 
 module high_top()
 linear_extrude(height=thickness) 
@@ -136,7 +136,7 @@ module rear()
 {
     linear_extrude(height=thickness)
     {
-        translate([5,0]) square([pb_size_x-2*thickness,high_step_height]);
+        translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
         //side fingers
         translate([0,high_step_height/3]) square([thickness, high_step_height/3]);
         translate([pb_size_x-thickness,high_step_height/3]) square([thickness, high_step_height/3]);
@@ -236,13 +236,13 @@ module bottom()
 
     color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
 
-    color("grey",alpha=0.5) translate([0,0,-thickness]) bottom();
+    //color("grey",alpha=0.5) translate([0,0,-thickness]) bottom();
 }
 
 //footswitch
 %union(){
-    translate([fs_side_dist,20,0]) footswitch();
-    translate([pb_size_x-fs_side_dist,20,0]) footswitch();
+    translate([fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
+    translate([pb_size_x-fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
     translate([fs_side_dist,60+20,15]) footswitch();
     translate([pb_size_x-fs_side_dist,60+20,15]) footswitch();
 }
@@ -268,4 +268,10 @@ module bottom()
 
     translate([thickness+9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
     translate([pb_size_x-thickness-9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
+    
+    translate([thickness+8,thickness,0])rotate([0,0,180]) angle_bracket_simple();
+    translate([pb_size_x-(thickness+8),thickness,0])rotate([0,0,180]) angle_bracket_simple();
+    
+    translate([thickness+8,pb_size_y-thickness,0])rotate([0,0,0]) angle_bracket_simple();
+    translate([pb_size_x-(thickness+8),pb_size_y-thickness,0])rotate([0,0,0]) angle_bracket_simple();
 }
