@@ -36,7 +36,7 @@ linear_extrude(height=thickness)
             //finger hole
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
-            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;       
+            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;
         }
     }
     translate([0,60+60]) difference()
@@ -79,7 +79,7 @@ module low_top() //top of low step
         }
     }
 }
- 
+
 module plastic_cover()
 {
     linear_extrude(height=2) difference()
@@ -87,7 +87,7 @@ module plastic_cover()
        {
            square([pb_size_x,60]);
        }
-       { 
+       {
            translate([pb_size_x/2 -10 ,60-30])
            {
                translate([2-screen_size_x/2,2-screen_size_y/2]) circle(d=2);
@@ -104,9 +104,13 @@ module low_front()
     linear_extrude(height=thickness) 
     {
         translate([thickness,0]) square([pb_size_x-2*thickness, low_step_height]);
+        //top finger
         translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
+        //bottom finger
+        translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
+        //side fingers
         translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
-        translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);   
+        translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
     }
 }
 
@@ -133,11 +137,14 @@ module rear()
     linear_extrude(height=thickness)
     {
         translate([5,0]) square([pb_size_x-2*thickness,high_step_height]);
+        //side fingers
         translate([0,high_step_height/3]) square([thickness, high_step_height/3]);
-        translate([pb_size_x-thickness,high_step_height/3]) square([thickness, high_step_height/3]); 
+        translate([pb_size_x-thickness,high_step_height/3]) square([thickness, high_step_height/3]);
+        //top finger
         translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
+        //bottom finger
+        translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
     }
-      
 }
 
 module left()
@@ -147,10 +154,14 @@ module left()
         union(){
             square([low_step_height,60]);
             translate([0,60]) square([high_step_height,pb_size_y-60]);
-            //finger
+            //top finger
             translate([low_step_height,30-(20/2)]) square([thickness,20]);
             translate([high_step_height,60+30-(20/2)]) square([thickness,20]);
             translate([high_step_height,60+60+30-(20/2)]) square([thickness,20]);
+            //bottom finger
+            translate([-thickness,30-(20/2)]) square([thickness,20]);
+            translate([-thickness,60+30-(20/2)]) square([thickness,20]);
+            translate([-thickness,60+60+30-(20/2)]) square([thickness,20]);
         }
         {
             translate([low_step_height/3,0]) square([low_step_height/3,thickness]);
@@ -167,15 +178,45 @@ module right()
         union(){
             square([low_step_height,60]);
             translate([0,60]) square([high_step_height,pb_size_y-60]);
-            //finger
+            //top finger
             translate([low_step_height,30-(20/2)]) square([thickness,20]);
             translate([high_step_height,60+30-(20/2)]) square([thickness,20]);
             translate([high_step_height,60+60+30-(20/2)]) square([thickness,20]);
+            //bottom finger
+            translate([-thickness,30-(20/2)]) square([thickness,20]);
+            translate([-thickness,60+30-(20/2)]) square([thickness,20]);
+            translate([-thickness,60+60+30-(20/2)]) square([thickness,20]);
         }
         {
+            //finger hole
             translate([low_step_height/3,0]) square([low_step_height/3,thickness]);
             translate([low_step_height/3,60]) square([low_step_height/3,thickness]);
             translate([high_step_height/3,pb_size_y-thickness]) square([high_step_height/3, thickness,]);
+        }
+    }
+}
+
+module bottom()
+{
+    linear_extrude(height=thickness) difference()
+    {
+        union()
+        {
+            square([pb_size_x,pb_size_y]);
+        }
+        {
+            //front finger hole
+            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]);
+            //rear finger hole
+            translate([(pb_size_x/2)-(pb_size_x/6),pb_size_y-thickness]) square([pb_size_x/3,thickness]);
+            //left side fingers
+            translate([0,30-(20/2)]) square([thickness,20]);
+            translate([0,60+30-(20/2)]) square([thickness,20]);
+            translate([0,60+60+30-(20/2)]) square([thickness,20]);
+            //right side fingers
+            translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]);
+            translate([pb_size_x-thickness,60+30-(20/2)]) square([thickness,20]);
+            translate([pb_size_x-thickness,60+60+30-(20/2)]) square([thickness,20]);
         }
     }
 }
@@ -185,17 +226,20 @@ module right()
     //color("red",0.5) cube([pb_size_x,pb_size_y,pb_size_z]);
     color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top();
     translate([0,0,high_step_height])  high_top();
-    
+
     translate([0,thickness,0]) rotate([90,0,0]) low_front();
     color("green",alpha=0.5) translate([0,60+thickness,0]) rotate([90,0,0]) high_front();
     color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear();
-    
+
     color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left();
     color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right();
-    
+
     color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
+
+    color("grey",alpha=0.5) translate([0,0,-thickness]) bottom();
 }
 
+//footswitch
 %union(){
     translate([fs_side_dist,20,0]) footswitch();
     translate([pb_size_x-fs_side_dist,20,0]) footswitch();
@@ -203,28 +247,25 @@ module right()
     translate([pb_size_x-fs_side_dist,60+20,15]) footswitch();
 }
 
+
+//angle bracket
 %union()
 {
     translate([pb_size_x/2,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
-    
     translate([pb_size_x/2,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
     //translate([40,60,low_step_height]) rotate([90,0,0]) angle_bracket();
     //translate([pb_size_x-40,60,low_step_height]) rotate([90,0,0]) angle_bracket();
-    
+
     translate([pb_size_x/2,60+thickness,high_step_height]) rotate([180,0,0]) angle_bracket_double();
-    
-    
-    
-    
-     translate([thickness,51,low_step_height])rotate([90,0,90]) angle_bracket_simple();
-     translate([pb_size_x-thickness,51,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
-    
-     translate([thickness,51+60,high_step_height])rotate([90,0,90]) angle_bracket_simple();
-     translate([pb_size_x-thickness,51+60,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
-    
-     translate([thickness,9+120,high_step_height])rotate([90,0,90]) angle_bracket_simple();
-     translate([pb_size_x-thickness,9+120,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
-    
-      translate([thickness+9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
-     translate([pb_size_x-thickness-9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
+
+    translate([thickness,51,low_step_height])rotate([90,0,90]) angle_bracket_simple();
+    translate([pb_size_x-thickness,51,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
+    translate([thickness,51+60,high_step_height])rotate([90,0,90]) angle_bracket_simple();
+    translate([pb_size_x-thickness,51+60,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
+
+    translate([thickness,9+120,high_step_height])rotate([90,0,90]) angle_bracket_simple();
+    translate([pb_size_x-thickness,9+120,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
+
+    translate([thickness+9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
+    translate([pb_size_x-thickness-9,3*60-thickness,high_step_height])rotate([90,0,0]) angle_bracket_simple();
 }
