@@ -1,6 +1,6 @@
 thickness1=2.5;
 thickness2=3.3;
-hole=2;//diameter
+hole=3.5;//diameter
 $fs=0.1;
 
 module angle_bracket_double()
@@ -18,8 +18,8 @@ module angle_bracket_double()
                         square([30,20]);
                     }
                     {
-                        translate([30/4+thickness1/4,20/2-hole]) circle(d=hole);
-                        translate([30-(30+thickness1)/4,20/2-hole]) circle(d=hole);
+                        translate([30/4+thickness1/4,20/2-hole/2]) circle(d=hole);
+                        translate([30-(30+thickness1)/4,20/2-hole/2]) circle(d=hole);
                     }
                 }
             }
@@ -32,8 +32,8 @@ module angle_bracket_double()
                         square([30,20]);
                     }
                     {
-                        translate([30/4+thickness1/4,20/2+hole]) circle(d=hole);
-                        translate([30-(30+thickness1)/4,20/2+hole]) circle(d=hole);
+                        translate([30/4+thickness1/4,20/2+hole/2]) circle(d=hole);
+                        translate([30-(30+thickness1)/4,20/2+hole/2]) circle(d=hole);
                     }
                 }
             }
@@ -72,7 +72,7 @@ module angle_bracket_simple()
                         square([16,20]);
                     }
                     {
-                        translate([16/2,20/2-hole]) circle(d=hole);
+                        translate([16/2,20/2-hole/2]) circle(d=hole);
 
                     }
                 }
@@ -86,7 +86,7 @@ module angle_bracket_simple()
                         square([16,20]);
                     }
                     {
-                        translate([16/2,20/2+hole]) circle(d=hole);
+                        translate([16/2,20/2+hole/2]) circle(d=hole);
                     }
                 }
             }
