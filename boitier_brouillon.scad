@@ -269,8 +269,23 @@ module bottom_3D()
     }
 }
 
-//translate([-pb_size_x/2,-pb_size_y/2])
+//2D projection
 union(){
+    low_top_2D();
+    translate([0,10]) high_top_2D();
+    
+    translate([0,-35]) low_front_2D();
+    translate([145,-40]) high_front_2D();
+    
+    #translate([180,255]) rotate([0,0,90]) left_2D();  
+    translate([180,200]) rotate([0,0,90]) right_2D();
+
+    translate([145,10]) bottom_2D();
+}
+
+//translate([-pb_size_x/2,-pb_size_y/2])
+//box in 3D
+*union(){
     //color("red",0.5) cube([pb_size_x,pb_size_y,pb_size_z]);
     color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top_3D();
     translate([0,0,high_step_height])  high_top_3D();
@@ -288,7 +303,7 @@ union(){
 }
 
 //footswitch
-%union(){
+*%union(){
     translate([fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
     translate([pb_size_x-fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
     translate([fs_side_dist,60+20,high_step_height-low_step_height]) rotate([0,0,0]) footswitch();
@@ -297,7 +312,7 @@ union(){
 
 
 //angle bracket
-%union()
+*%union()
 {
     translate([pb_size_x/2,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
     translate([pb_size_x/2,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
