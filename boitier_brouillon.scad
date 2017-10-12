@@ -4,7 +4,7 @@ use <angle_bracket.scad>;
 fsHole=12;//diameter
 ledHole=8;//diameter
 
-thickness=3;
+thickness=5;
 
 //screen_size_x=26;
 //screen_size_y=19;
@@ -20,8 +20,10 @@ high_step_height= low_step_height +15;
 
 fs_side_dist=30;//distance between side and fs hole center
 
-module high_top()
-linear_extrude(height=thickness)
+module high_top_3D()
+linear_extrude(height=thickness) high_top_2D();
+
+module high_top_2D()
 {
     color("blue") translate([0,60])difference()
     {
@@ -57,9 +59,15 @@ linear_extrude(height=thickness)
     }
 }
 
-module low_top() //top of low step
+//top of low step
+module low_top_3D() 
 {
-    linear_extrude(height=thickness) difference()
+    linear_extrude(height=thickness) low_top_2D();
+}
+
+module low_top_2D()
+{
+    difference()
     {
         union()
         {
@@ -82,9 +90,13 @@ module low_top() //top of low step
     }
 }
 
-module plastic_cover()
+module plastic_cover_3D()
 {
-    linear_extrude(height=2) difference()
+    linear_extrude(height=3)  plastic_cover_2D();
+}
+module plastic_cover_2D()
+{
+    difference()
     {
        {
            square([pb_size_x,60]);
@@ -101,28 +113,35 @@ module plastic_cover()
    }
 }
 
-module low_front()
+module low_front_3D()
 {
-    linear_extrude(height=thickness)
-    {
-        translate([thickness,0]) square([pb_size_x-2*thickness, low_step_height]);
-        //top finger
-        translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
-        //bottom finger
-        translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
-        //side fingers
-        translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
-        translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
-    }
+    linear_extrude(height=thickness) low_front_2D();
+}
+ 
+ module low_front_2D()    
+{
+    translate([thickness,0]) square([pb_size_x-2*thickness, low_step_height]);
+    //top finger
+    translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
+    //bottom finger
+    translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
+    //side fingers
+    translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
+    translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
 }
 
-module high_front()
+module high_front_3D()
 {
+    linear_extrude(height=thickness) high_front_2D();
+}
+ 
+module high_front_2D()
+{   
     module cable_hole()
     {
         polygon(points=[[-20,0],[-10,10],[10,10],[20,0]]);
     }
-    linear_extrude(height=thickness) difference()
+    difference()
     {
         union()
         {
@@ -143,24 +162,32 @@ module high_front()
     }
 }
 
-module rear()
+module rear_3D()
 {
-    linear_extrude(height=thickness)
-    {
-        translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
-        //side fingers
-        translate([0,high_step_height/3]) square([thickness, high_step_height/3]);
-        translate([pb_size_x-thickness,high_step_height/3]) square([thickness, high_step_height/3]);
-        //top finger
-        translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
-        //bottom finger
-        translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
-    }
+    linear_extrude(height=thickness) rear_2D();
+}
+    
+module rear_2D()
+{
+    translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
+    //side fingers
+    translate([0,high_step_height/3]) square([thickness, high_step_height/3]);
+    translate([pb_size_x-thickness,high_step_height/3]) square([thickness, high_step_height/3]);
+    //top finger
+    translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
+    //bottom finger
+    translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
 }
 
-module left()
+
+module left_3D()
 {
-    linear_extrude(height=thickness) difference()
+    linear_extrude(height=thickness) left_2D();
+}
+
+module left_2D()
+{
+    difference()
     {
         union(){
             square([low_step_height,60]);
@@ -182,9 +209,14 @@ module left()
     }
 }
 
-module right()
+module right_3D()
 {
-    linear_extrude(height=thickness) difference()
+    linear_extrude(height=thickness) right_2D();
+}
+
+module right_2D()
+{
+    difference()
     {
         union(){
             square([low_step_height,60]);
@@ -207,9 +239,14 @@ module right()
     }
 }
 
-module bottom()
+module bottom_3D()
 {
-    linear_extrude(height=thickness) difference()
+    linear_extrude(height=thickness) bottom_2D();
+}
+ 
+ module bottom_2D()
+{
+    difference()
     {
         union()
         {
@@ -233,29 +270,29 @@ module bottom()
 }
 
 //translate([-pb_size_x/2,-pb_size_y/2])
-{
+union(){
     //color("red",0.5) cube([pb_size_x,pb_size_y,pb_size_z]);
-    color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top();
-    translate([0,0,high_step_height])  high_top();
+    color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top_3D();
+    translate([0,0,high_step_height])  high_top_3D();
 
-    translate([0,thickness,0]) rotate([90,0,0]) low_front();
-    color("green",alpha=0.5) translate([0,60+thickness,0]) rotate([90,0,0]) high_front();
-    //color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear();
+    translate([0,thickness,0]) rotate([90,0,0]) low_front_3D();
+    color("green",alpha=0.5) translate([0,60+thickness,0]) rotate([90,0,0]) high_front_3D();
+    color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear_3D();
 
-    color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left();
-    color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right();
+    color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left_3D();
+    color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right_3D();
 
-    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover();
+    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover_3D();
 
-    //color("grey",alpha=0.5) translate([0,0,-thickness]) bottom();
+    color("grey",alpha=0.5) translate([0,0,-thickness]) bottom_3D();
 }
 
 //footswitch
 %union(){
     translate([fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
     translate([pb_size_x-fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
-    translate([fs_side_dist,60+20,15]) rotate([0,0,0]) footswitch();
-    translate([pb_size_x-fs_side_dist,60+20,15]) rotate([0,0,90]) footswitch();
+    translate([fs_side_dist,60+20,high_step_height-low_step_height]) rotate([0,0,0]) footswitch();
+    translate([pb_size_x-fs_side_dist,60+20,high_step_height-low_step_height]) rotate([0,0,90]) footswitch();
 }
 
 
