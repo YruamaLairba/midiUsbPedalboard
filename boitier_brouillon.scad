@@ -1,6 +1,7 @@
 use <footswitch.scad>;
 use <angle_bracket.scad>;
 
+$fn=80;
 //Holes diameter
 fsHole=12;//spec 12, measured 11.8 on fs
 ledHole=7.8;//spec 8? measured 7.6 on Led
@@ -15,8 +16,8 @@ thickness=5;
 
 //screen_size_x=26;
 //screen_size_y=19;
-screen_size_x =28;
-screen_size_y =28;
+screen_size_x =28;//measured 26.65, pcb 28mm
+screen_size_y =19.4;//measured 19.3
 
 
 pb_size_x = 140;
@@ -56,13 +57,24 @@ module high_top_2D()
         }
         {
              //screen hole
-            translate([pb_size_x/2 -10 ,60-30]) square([screen_size_x,screen_size_y],center=true);
+            translate([pb_size_x/2 -10 ,60-30])
+            {
+                square([screen_size_x,screen_size_y],center=true);
+                translate([0,-screen_size_y/2]) square([12.5,8],center=true);
+                translate([0,screen_size_y/2]) square([17,8],center=true);
+                translate([11.75,11.75]) circle(d=screenHole);
+                translate([-11.75,11.75]) circle(d=screenHole);
+                translate([11.75,-11.75]) circle(d=screenHole);
+                translate([-11.75,-11.75]) circle(d=screenHole);
+            }
+
             translate([pb_size_x/2 - 40,60-30]) circle(d=rotaryHole,center=true);
             translate([pb_size_x/2 + 20,60-30]) circle(d=swHole,center=true);
             translate([pb_size_x/2 +40,60-30]) circle(d=swHole,center=true);
+            //finge hole
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
-            translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);
+            translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);//top
         }
     }
 }
@@ -112,10 +124,10 @@ module plastic_cover_2D()
        {
            translate([pb_size_x/2 -10 ,60-30])
            {
-               translate([2-screen_size_x/2,2-screen_size_y/2]) circle(d=2);
-               translate([2-screen_size_x/2,screen_size_y/2-2]) circle(d=2);
-               translate([screen_size_x/2-2,2-screen_size_y/2]) circle(d=2);
-               translate([screen_size_x/2-2,screen_size_y/2-2]) circle(d=2);
+               translate([2-screen_size_x/2,2-screen_size_y/2]) circle(d=screenHole);
+               translate([2-screen_size_x/2,screen_size_y/2-2]) circle(d=screenHole);
+               translate([screen_size_x/2-2,2-screen_size_y/2]) circle(d=screenHole);
+               translate([screen_size_x/2-2,screen_size_y/2-2]) circle(d=screenHole);
            }
        }
    }
