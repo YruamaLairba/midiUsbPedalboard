@@ -54,10 +54,10 @@ module high_top_2D()
         }
         {
              //screen hole
-            translate([pb_size_x/2 -10 ,60-30,2.5]) square([screen_size_x,screen_size_y],center=true);
-            translate([pb_size_x/2 - 40,60-30,2.5]) circle(d=rotaryHole,center=true);
-            translate([pb_size_x/2 + 20,60-30,2.5]) circle(d=swHole,center=true);
-            translate([pb_size_x/2 +40,60-30,2.5]) circle(d=swHole,center=true);
+            translate([pb_size_x/2 -10 ,60-30]) square([screen_size_x,screen_size_y],center=true);
+            translate([pb_size_x/2 - 40,60-30]) circle(d=rotaryHole,center=true);
+            translate([pb_size_x/2 + 20,60-30]) circle(d=swHole,center=true);
+            translate([pb_size_x/2 +40,60-30]) circle(d=swHole,center=true);
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);
