@@ -1,8 +1,13 @@
 use <footswitch.scad>;
 use <angle_bracket.scad>;
 
-fsHole=12;//diameter
-ledHole=8;//diameter
+//Holes diameter
+fsHole=12;//spec 12, measured 11.8 on fs
+ledHole=7.8;//spec 8? measured 7.6 on Led
+rotaryHole=8;//spec 8 ? measured 7.8 on rotary coder
+swHole=7;//spec 7, measured 6.8 on swHole
+//M4Hole=4;//spec 4, measured 3.9 on screw
+//USBHole=3;//spec 3 ? measured 2.9 on USb screw
 
 thickness=5;
 
@@ -10,6 +15,7 @@ thickness=5;
 //screen_size_y=19;
 screen_size_x =28;
 screen_size_y =28;
+
 
 pb_size_x = 140;
 pb_size_y = 180;
@@ -25,7 +31,7 @@ linear_extrude(height=thickness) high_top_2D();
 
 module high_top_2D()
 {
-    color("blue") translate([0,60])difference()
+    color("blue") translate([0,60]) difference()
     {
         {
             square([pb_size_x,60]);
@@ -49,9 +55,9 @@ module high_top_2D()
         {
              //screen hole
             translate([pb_size_x/2 -10 ,60-30,2.5]) square([screen_size_x,screen_size_y],center=true);
-            translate([pb_size_x/2 - 40,60-30,2.5]) circle(d=5,center=true);
-            translate([pb_size_x/2 + 20,60-30,2.5]) circle(d=5,center=true);
-            translate([pb_size_x/2 +40,60-30,2.5]) circle(d=5,center=true);
+            translate([pb_size_x/2 - 40,60-30,2.5]) circle(d=rotaryHole,center=true);
+            translate([pb_size_x/2 + 20,60-30,2.5]) circle(d=swHole,center=true);
+            translate([pb_size_x/2 +40,60-30,2.5]) circle(d=swHole,center=true);
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);
@@ -277,7 +283,7 @@ union(){
     translate([0,-35]) low_front_2D();
     translate([145,-40]) high_front_2D();
     
-    #translate([180,255]) rotate([0,0,90]) left_2D();  
+    translate([180,255]) rotate([0,0,90]) left_2D();
     translate([180,200]) rotate([0,0,90]) right_2D();
 
     translate([145,10]) bottom_2D();
