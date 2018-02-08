@@ -6,8 +6,10 @@ fsHole=12;//spec 12, measured 11.8 on fs
 ledHole=7.8;//spec 8? measured 7.6 on Led
 rotaryHole=8;//spec 8 ? measured 7.8 on rotary coder
 swHole=7;//spec 7, measured 6.8 on swHole
+screenHole=2.5;//spec 2.5 ? measured 2.4 on screw
 //M4Hole=4;//spec 4, measured 3.9 on screw
 //USBHole=3;//spec 3 ? measured 2.9 on USb screw
+
 
 thickness=5;
 
