@@ -148,14 +148,25 @@ module low_front_3D()
  
  module low_front_2D()    
 {
-    translate([thickness,0]) square([pb_size_x-2*thickness, low_step_height]);
-    //top finger
-    translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
-    //bottom finger
-    translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
-    //side fingers
-    translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
-    translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
+    difference() {
+        union(){
+            translate([thickness,0]) square([pb_size_x-2*thickness, low_step_height]);
+        //top finger
+            translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
+        //bottom finger
+            translate([(pb_size_x/2)-(pb_size_x/6),-thickness]) square([pb_size_x/3,thickness]);
+        //side fingers
+            translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
+            translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
+        }
+        {
+            //M4 holes
+            translate([8+thickness,12]) circle(d=M4Hole);
+            translate([pb_size_x-8-thickness,12]) circle(d=M4Hole);
+            translate([pb_size_x/2-7, low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+7, low_step_height-12]) circle(d=M4Hole);
+        }
+    }
 }
 
 module high_front_3D()
