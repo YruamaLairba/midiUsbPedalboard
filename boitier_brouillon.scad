@@ -197,6 +197,11 @@ module high_front_2D()
             //hole for cable
             translate([fs_side_dist,0]) cable_hole();
             translate([pb_size_x-fs_side_dist,0]) cable_hole();
+            //M4 holes
+            translate([pb_size_x/2-7,low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+7,low_step_height-12]) circle(d=M4Hole);
+            translate([12+thickness,high_step_height-8]) circle(d=M4Hole);
+            translate([pb_size_x-12-thickness,high_step_height-8]) circle(d=M4Hole);
         }
     }
 }
