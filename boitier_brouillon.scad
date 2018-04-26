@@ -332,6 +332,11 @@ module bottom_3D()
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]);
             translate([pb_size_x-thickness,60+30-(20/2)]) square([thickness,20]);
             translate([pb_size_x-thickness,60+60+30-(20/2)]) square([thickness,20]);
+            //M4 holes
+            translate([8+thickness,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x-8-thickness,12+thickness]) circle(d=M4Hole);
+            translate([8+thickness,pb_size_y-12-thickness]) circle(d=M4Hole);
+            translate([pb_size_x-8-thickness,pb_size_y-12-thickness]) circle(d=M4Hole);
         }
     }
 }
