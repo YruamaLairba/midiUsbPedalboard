@@ -37,27 +37,11 @@ module high_top_2D()
     color("blue") translate([0,60]) difference()
     {
         {
-            square([pb_size_x,60]);
+            square([pb_size_x,60*2]);
         }
         {
-            translate([fs_side_dist,20]) circle(d=fsHole);
-            translate([pb_size_x-fs_side_dist,20]) circle(d=fsHole);
-            translate([fs_side_dist,60-20]) circle(d=ledHole);
-            translate([pb_size_x-fs_side_dist,60-20]) circle(d=ledHole);
-            //finger hole
-            translate([0,30-(20/2)]) square([thickness,20]); //left
-            translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
-            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;
-        }
-    }
-    translate([0,60+60]) difference()
-    {
-        {
-            square([pb_size_x,60]);
-        }
-        {
-             //screen hole
-            translate([pb_size_x/2 -10 ,60-30])
+            //screen hole
+            translate([pb_size_x/2 -10 ,60+30])
             {
                 square([screen_size_x,screen_size_y],center=true);
                 translate([0,-screen_size_y/2]) square([12.5,8],center=true);
@@ -68,13 +52,25 @@ module high_top_2D()
                 translate([-11.75,-11.75]) circle(d=screenHole);
             }
 
-            translate([pb_size_x/2 - 40,60-30]) circle(d=rotaryHole,center=true);
-            translate([pb_size_x/2 + 20,60-30]) circle(d=swHole,center=true);
-            translate([pb_size_x/2 +40,60-30]) circle(d=swHole,center=true);
-            //finge hole
+            translate([pb_size_x/2 - 40,60+30]) circle(d=rotaryHole,center=true);
+            translate([pb_size_x/2 + 20,60+30]) circle(d=swHole,center=true);
+            translate([pb_size_x/2 +40,60+30]) circle(d=swHole,center=true);
+
+            //finger hole
+            translate([0,60+30-(20/2)]) square([thickness,20]); //left
+            translate([pb_size_x-thickness,60+30-(20/2)]) square([thickness,20]); //right
+            translate([(pb_size_x/2)-(pb_size_x/6),60+60-thickness]) square([pb_size_x/3,thickness]);//top
+
+
+            translate([fs_side_dist,20]) circle(d=fsHole);
+            translate([pb_size_x-fs_side_dist,20]) circle(d=fsHole);
+            translate([fs_side_dist,60-20]) circle(d=ledHole);
+            translate([pb_size_x-fs_side_dist,60-20]) circle(d=ledHole);
+
+            //finger hole
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
-            translate([(pb_size_x/2)-(pb_size_x/6),60-thickness]) square([pb_size_x/3,thickness]);//top
+            translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;
         }
     }
 }
