@@ -8,7 +8,7 @@ ledHole=7.8;//spec 8? measured 7.6 on Led
 rotaryHole=8;//spec 8 ? measured 7.8 on rotary coder
 swHole=7;//spec 7, measured 6.8 on swHole
 screenHole=2.5;//spec 2.5 ? measured 2.4 on screw
-//M4Hole=4;//spec 4, measured 3.9 on screw
+M4Hole=4;//spec 4, measured 3.9 on screw
 //USBHole=3;//spec 3 ? measured 2.9 on USb screw
 
 
@@ -106,6 +106,14 @@ module low_top_2D()
             translate([0,30-(20/2)]) square([thickness,20]); //left
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]);
+            //M4Hole
+            translate([pb_size_x/2-7,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x/2+7,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x/2-7,60-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+7,60-12]) circle(d=M4Hole);
+
+            translate([12+thickness,60-8]) circle(d=M4Hole);
+            translate([pb_size_x-12-thickness,60-8]) circle(d=M4Hole);
         }
     }
 }
@@ -342,8 +350,8 @@ union(){
 
     //translate([pb_size_x/2,60+thickness,high_step_height]) rotate([180,0,0]) angle_bracket_double();
 
-    translate([thickness,51,low_step_height])rotate([90,0,90]) angle_bracket_simple();
-    translate([pb_size_x-thickness,51,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
+    translate([thickness,52,low_step_height])rotate([90,0,90]) angle_bracket_simple();
+    translate([pb_size_x-thickness,52,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
     translate([thickness,51+60,high_step_height])rotate([90,0,90]) angle_bracket_simple();
     translate([pb_size_x-thickness,51+60,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
 
