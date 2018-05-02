@@ -72,10 +72,10 @@ module high_top_2D()
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]) ;
             //M4 holes
-            translate([thickness+12,60-9]) circle(d=M4Hole);
-            translate([thickness+12,60+9]) circle(d=M4Hole);
-            translate([pb_size_x-thickness-12,60-9]) circle(d=M4Hole);
-            translate([pb_size_x-thickness-12,60+9]) circle(d=M4Hole);
+            translate([thickness+12,60-7]) circle(d=M4Hole);
+            translate([thickness+12,60+7]) circle(d=M4Hole);
+            translate([pb_size_x-thickness-12,60-7]) circle(d=M4Hole);
+            translate([pb_size_x-thickness-12,60+7]) circle(d=M4Hole);
         }
     }
 }
