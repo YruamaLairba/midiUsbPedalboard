@@ -397,11 +397,9 @@ union(){
 
     translate([thickness,52,low_step_height])rotate([90,0,90]) angle_bracket_simple();
     translate([pb_size_x-thickness,52,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
-    translate([thickness,51+60,high_step_height])rotate([90,0,90]) angle_bracket_simple();
-    translate([pb_size_x-thickness,51+60,high_step_height])rotate([90,0,-90]) angle_bracket_simple();
 
-    translate([thickness,9+120,high_step_height])rotate([90,0,90]) angle_bracket_simple();
-    translate([pb_size_x-thickness,9+120,high_step_height]) rotate([90,0,-90]) angle_bracket_simple();
+    translate([thickness,120,high_step_height])rotate([90,0,90]) angle_bracket_double();
+    translate([pb_size_x-thickness,120,high_step_height]) rotate([90,0,-90]) angle_bracket_double();
 
     //translate([thickness+8,3*60-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
     //translate([pb_size_x-thickness-8,3*60-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
