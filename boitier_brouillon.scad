@@ -115,13 +115,18 @@ module low_top_2D()
             translate([pb_size_x-thickness,30-(20/2)]) square([thickness,20]); //right
             translate([(pb_size_x/2)-(pb_size_x/6),0]) square([pb_size_x/3,thickness]);
             //M4Hole
-            translate([pb_size_x/2-7,12+thickness]) circle(d=M4Hole);
-            translate([pb_size_x/2+7,12+thickness]) circle(d=M4Hole);
-            translate([pb_size_x/2-7,60-12]) circle(d=M4Hole);
-            translate([pb_size_x/2+7,60-12]) circle(d=M4Hole);
-
-            translate([12+thickness,60-8]) circle(d=M4Hole);
-            translate([pb_size_x-12-thickness,60-8]) circle(d=M4Hole);
+            translate([pb_size_x/2+15.5-7,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x/2+15.5+7,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x/2-15.5-7,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x/2-15.5+7,12+thickness]) circle(d=M4Hole);
+            translate([pb_size_x/2-18-7,60-12]) circle(d=M4Hole);
+            translate([pb_size_x/2-18+7,60-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+18-7,60-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+18+7,60-12]) circle(d=M4Hole);
+            translate([12+thickness,60-15-7]) circle(d=M4Hole);
+            translate([12+thickness,60-15+7]) circle(d=M4Hole);
+            translate([pb_size_x-12-thickness,60-15-7]) circle(d=M4Hole);
+            translate([pb_size_x-12-thickness,60-15+7]) circle(d=M4Hole);
         }
     }
 }
