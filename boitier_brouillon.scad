@@ -12,7 +12,7 @@ M4Hole=4;//spec 4, measured 3.9 on screw
 //USBHole=3;//spec 3 ? measured 2.9 on USb screw
 
 
-thickness=5;
+thickness=3;
 
 //screen_size_x=26;
 //screen_size_y=19;
@@ -25,7 +25,7 @@ pb_size_y = 180;
 pb_size_z = 45;
 
 low_step_height= 30-thickness;
-high_step_height= low_step_height +15;
+high_step_height= low_step_height +16+thickness;
 
 fs_side_dist=30;//distance between side and fs hole center
 
@@ -391,14 +391,13 @@ union(){
     translate([pb_size_x/2+15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
     translate([pb_size_x/2-18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
     translate([pb_size_x/2+18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
+    translate([pb_size_x/2-35,180-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
+    translate([pb_size_x/2+30,180-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_double();
     //translate([pb_size_x/2,60+thickness,high_step_height]) rotate([180,0,0]) angle_bracket_double();
     //translate([40,60,low_step_height]) rotate([90,0,0]) angle_bracket();
     //translate([pb_size_x-40,60,low_step_height]) rotate([90,0,0]) angle_bracket();
 
     //translate([pb_size_x/2,60+thickness,high_step_height]) rotate([180,0,0]) angle_bracket_double();
-
-    translate([thickness,52,low_step_height])rotate([90,0,90]) angle_bracket_simple();
-    translate([pb_size_x-thickness,52,low_step_height])rotate([90,0,-90]) angle_bracket_simple();
 
     translate([thickness,120+20,high_step_height])rotate([90,0,90]) angle_bracket_double();
     translate([pb_size_x-thickness,120+20,high_step_height]) rotate([90,0,-90]) angle_bracket_double();
@@ -408,11 +407,18 @@ union(){
     //translate([thickness+8,3*60-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
     //translate([pb_size_x-thickness-8,3*60-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
 
+    translate([thickness,45,low_step_height])rotate([90,0,90]) angle_bracket_double();
+    translate([pb_size_x-thickness,45,low_step_height])rotate([90,0,-90]) angle_bracket_double();
+
+
     translate([thickness+8,thickness,0]) rotate([0,0,180]) angle_bracket_simple();
     translate([pb_size_x-(thickness+8),thickness,0]) rotate([0,0,180]) angle_bracket_simple();
 
     translate([thickness+8,pb_size_y-thickness,0]) rotate([0,0,0]) angle_bracket_simple();
     translate([pb_size_x-(thickness+8),pb_size_y-thickness,0]) rotate([0,0,0]) angle_bracket_simple();
+
+    *translate([thickness,60,low_step_height-8])rotate([0,90,0]) angle_bracket_simple();
+    *translate([pb_size_x-thickness,60,low_step_height-8])rotate([0,-90,0]) angle_bracket_simple();
 
     translate([thickness,60+thickness,high_step_height-8]) rotate([0,-90,180]) angle_bracket_simple();
     translate([pb_size_x-thickness,60+thickness,high_step_height-8]) rotate([0,90,180]) angle_bracket_simple();
