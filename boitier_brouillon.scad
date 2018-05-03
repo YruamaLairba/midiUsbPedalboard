@@ -176,8 +176,10 @@ module low_front_3D()
             //M4 holes
             translate([8+thickness,12]) circle(d=M4Hole);
             translate([pb_size_x-8-thickness,12]) circle(d=M4Hole);
-            translate([pb_size_x/2-7, low_step_height-12]) circle(d=M4Hole);
-            translate([pb_size_x/2+7, low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2-15.5-7, low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2-15.5+7, low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+15.5-7, low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+15.5+7, low_step_height-12]) circle(d=M4Hole);
         }
     }
 }
