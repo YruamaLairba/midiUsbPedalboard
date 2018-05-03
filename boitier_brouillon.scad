@@ -191,10 +191,6 @@ module high_front_3D()
  
 module high_front_2D()
 {   
-    module cable_hole()
-    {
-        polygon(points=[[-20,0],[-10,10],[10,10],[20,0]]);
-    }
     difference()
     {
         union()
@@ -210,11 +206,13 @@ module high_front_2D()
             //translate([thickness+23,low_step_height]) square([25,thickness]);
             //translate([pb_size_x-(thickness+23+25),low_step_height]) square([25,thickness]);
             //hole for cable
-            translate([fs_side_dist,0]) cable_hole();
-            translate([pb_size_x-fs_side_dist,0]) cable_hole();
+            translate([fs_side_dist-5,low_step_height/2]) square([10,5], center=true);
+            translate([pb_size_x-fs_side_dist+5,low_step_height/2]) square([10,5], center=true);
             //M4 holes
-            translate([pb_size_x/2-7,low_step_height-12]) circle(d=M4Hole);
-            translate([pb_size_x/2+7,low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2-18-7,low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2-18+7,low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+18-7,low_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+18+7,low_step_height-12]) circle(d=M4Hole);
             translate([12+thickness,high_step_height-8]) circle(d=M4Hole);
             translate([pb_size_x-12-thickness,high_step_height-8]) circle(d=M4Hole);
         }
