@@ -316,10 +316,13 @@ module right_2D()
             translate([low_step_height/3,60]) square([low_step_height/3,thickness]);
             translate([high_step_height/3,pb_size_y-thickness]) square([high_step_height/3, thickness,]);
             //M4 holes
-            translate([low_step_height-12,60-8]) circle(d=M4Hole);
+            translate([low_step_height-12,45-7]) circle(d=M4Hole);
+            translate([low_step_height-12,45+7]) circle(d=M4Hole);
             translate([high_step_height-8,60+12+thickness]) circle(d=M4Hole);
-            translate([high_step_height-12,60+60-9]) circle(d=M4Hole);
-            translate([high_step_height-12,60+60+9]) circle(d=M4Hole);
+            translate([high_step_height-12,120-15-7]) circle(d=M4Hole);
+            translate([high_step_height-12,120-15+7]) circle(d=M4Hole);
+            translate([high_step_height-12,120+20-7]) circle(d=M4Hole);
+            translate([high_step_height-12,120+20+7]) circle(d=M4Hole);
             translate([high_step_height-8,60*3-12-thickness]) circle(d=M4Hole);
         }
     }
