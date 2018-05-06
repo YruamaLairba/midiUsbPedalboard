@@ -243,6 +243,9 @@ module rear_2D()
             translate([pb_size_x-12-thickness,high_step_height-8]) circle(d=M4Hole);
             translate([8+thickness,12]) circle(d=M4Hole);
             translate([pb_size_x-8-thickness,12]) circle(d=M4Hole);
+            translate([pb_size_x/2-35,high_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+30-7,high_step_height-12]) circle(d=M4Hole);
+            translate([pb_size_x/2+30+7,high_step_height-12]) circle(d=M4Hole);
         }
     }
 }
