@@ -7,6 +7,7 @@
 #include "setup.h"
 #include "display.h"
 #include "preset.h"
+#include "footswitch.h"
 
 
 class MenuBase;

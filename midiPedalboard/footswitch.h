@@ -10,12 +10,12 @@ struct fsMode
 {
   enum 
   {
-    toggle_on, MIN = toggle_on,
-    toggle_off,
-    momentary_on,
-    momentary_off,
-    single_on,
-    single_off,MAX = single_off
+    toggle_off, MIN = toggle_off, //mode toggle, switch is off
+    toggle_on, //mode toggle, switch is on
+    momentary_off, //mode momentarily off, normally on
+    momentary_on, //mode momentarily on, normally off
+    single_off, //only a "off" message
+    single_on,MAX = single_on //only a "on" message
   };
 };
 

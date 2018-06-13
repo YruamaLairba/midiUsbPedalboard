@@ -217,23 +217,23 @@ void MenuFsMode::print()
     }
   switch (i)
     {
-      case 0:
+      case fsMode::toggle_off:
         display.print(F("tog off"));
         break;
-      case 1:
+      case fsMode::toggle_on:
         display.print(F("tog on"));
         break;
-      case 2:
-        display.print(F("mom pre"));
+      case fsMode::momentary_off:
+        display.print(F("mom (off)"));
         break;
-      case 3:
-        display.print(F("mom dp"));
+      case fsMode::momentary_on:
+        display.print(F("mom (on)"));
         break;
-      case 4:
-        display.print(F("sing on"));
-        break;
-      case 5:
+      case fsMode::single_off:
         display.print(F("sing off"));
+        break;
+      case fsMode::single_on:
+        display.print(F("sing on"));
         break;
     }
     display.print(F("\n\r"));
