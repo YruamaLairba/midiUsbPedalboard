@@ -7,13 +7,6 @@
 #include "rotary_encoder.h"
 
 //rotary coder
-uint8_t prec_rot_a;
-uint8_t prec_rot_b;
-uint8_t cur_rot_a;
-uint8_t cur_rot_b;
-uint8_t rot_a_acc;
-uint8_t rot_b_acc;
-
 RotaryEncoder rot(rotaryPinA,rotaryPinB);
 
 //button ok
@@ -71,10 +64,7 @@ void filterButton(
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-/*
-  pinMode(rotaryPinA, INPUT_PULLUP);
-  pinMode(rotaryPinB, INPUT_PULLUP);
-*/
+
   pinMode(buttonOkPin, INPUT_PULLUP);
   pinMode(buttonCancelPin, INPUT_PULLUP);
   //footswitch and leds pins
@@ -101,9 +91,6 @@ void loop() {
   unsigned current_micros = micros();
   if ((current_micros - last_micros) > 100)
   {
-    filterButton(digitalRead(rotaryPinA), 20, &rot_a_acc, &cur_rot_a);
-    filterButton(digitalRead(rotaryPinB), 20, &rot_b_acc, &cur_rot_b);
-
     filterButton(digitalRead(buttonOkPin), 50, &button_ok_acc, &cur_button_ok);
     filterButton(digitalRead(buttonCancelPin), 50, &button_cancel_acc,
                  &cur_button_cancel);
@@ -118,27 +105,6 @@ void loop() {
     last_micros = current_micros;
   }
 
-  /*
-  uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 |
-    prec_rot_b << 3;
-  //management of half cycle per indent encoder
-  if (curtemp == 0b00000001 ||
-      //curtemp == 0b00000111 ||
-      //curtemp == 0b00001000 ||
-      curtemp == 0b00001110)
-  {
-    refresh = manager.next();
-  }
-  else if (curtemp == 0b00000010 ||
-           //curtemp == 0b00000100 ||
-           //curtemp == 0b00001011 ||
-           curtemp == 0b00001101)
-  {
-    refresh = manager.prev();
-  }
-  prec_rot_a = cur_rot_a;
-  prec_rot_b = cur_rot_b;
-  */
   int tmp = rot.read();
   if(tmp < 0) refresh=manager.prev();
   else if(tmp > 0) refresh=manager.next();
