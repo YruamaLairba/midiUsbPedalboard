@@ -4,6 +4,7 @@
 #include "preset.h"
 #include <MIDIUSB.h>
 #include "display.h"
+#include "rotary_encoder.h"
 
 //rotary coder
 uint8_t prec_rot_a;
@@ -12,6 +13,8 @@ uint8_t cur_rot_a;
 uint8_t cur_rot_b;
 uint8_t rot_a_acc;
 uint8_t rot_b_acc;
+
+RotaryEncoder rot(rotaryPinA,rotaryPinB);
 
 //button ok
 uint8_t prec_button_ok;
@@ -68,11 +71,12 @@ void filterButton(
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+/*
   pinMode(rotaryPinA, INPUT_PULLUP);
   pinMode(rotaryPinB, INPUT_PULLUP);
+*/
   pinMode(buttonOkPin, INPUT_PULLUP);
   pinMode(buttonCancelPin, INPUT_PULLUP);
-
   //footswitch and leds pins
   for(uint8_t i=0; i<nbFs; i++)
   {
@@ -114,6 +118,7 @@ void loop() {
     last_micros = current_micros;
   }
 
+  /*
   uint8_t curtemp = cur_rot_a | cur_rot_b << 1 | prec_rot_a << 2 |
     prec_rot_b << 3;
   //management of half cycle per indent encoder
@@ -133,6 +138,10 @@ void loop() {
   }
   prec_rot_a = cur_rot_a;
   prec_rot_b = cur_rot_b;
+  */
+  int tmp = rot.read();
+  if(tmp < 0) refresh=manager.prev();
+  else if(tmp > 0) refresh=manager.next();
 
   //validate
   if (prec_button_ok == HIGH and cur_button_ok == LOW)
