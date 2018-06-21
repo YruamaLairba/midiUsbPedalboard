@@ -9,6 +9,10 @@
 //rotary coder
 RotaryEncoder rot(rotaryPinA,rotaryPinB);
 
+//fooswitch
+Footswitch fs[nbFs];
+
+
 //button ok
 uint8_t prec_button_ok;
 uint8_t cur_button_ok;
@@ -67,12 +71,19 @@ void setup() {
 
   pinMode(buttonOkPin, INPUT_PULLUP);
   pinMode(buttonCancelPin, INPUT_PULLUP);
-  //footswitch and leds pins
+
+  //footswitch class initialisation
   for(uint8_t i=0; i<nbFs; i++)
   {
-    pinMode(fsPins[i],INPUT_PULLUP);
-    pinMode(fsLedPins[i],OUTPUT);
+    fs[i].setup(fsPins[i], fsLedPins[i]);
   }
+
+  //footswitch and leds pins
+  //for(uint8_t i=0; i<nbFs; i++)
+  //{
+  //  pinMode(fsPins[i],INPUT_PULLUP);
+  //  pinMode(fsLedPins[i],OUTPUT);
+  //}
 
   display.begin(SSD1306_SWITCHCAPVCC);
   display.display();
@@ -140,6 +151,13 @@ void loop() {
     //Serial.print(mainConf.selection,DEC);
   }
 
+  for(uint8_t i = 0; i < nbFs; i++)
+  {
+    fs[i].read();
+  }
+
+
+  #if 0
   //footswitch
   unsigned long debug_start_micros = micros();
   for(uint8_t i = 0; i < nbFs; i++)
@@ -254,4 +272,5 @@ void loop() {
     Serial.print(debug_duration,DEC);
     Serial.print("\n\r");
   }
+  #endif //0
 }

@@ -2,6 +2,7 @@
 #define FOOTSWITCH_H
 
 #include <stdint.h>
+#include <Arduino.h>
 
 //#warning "fix me"
 typedef uint8_t fsCommand_t;
@@ -19,18 +20,29 @@ struct fsMode
   };
 };
 
-class footswitch
+class Footswitch
 {
   private:
-    uint8_t command;
-    uint8_t mode;
-  
-  public:
-    uint8_t get_command() {return command;};
-    void set_command(uint8_t command){this->command = command;};
+    uint8_t command_;
+    uint8_t mode_;
 
-    uint8_t get_mode(){return mode;};
-    void set_mode(uint8_t mode){this->mode = mode;};  
+    uint8_t fs_pin_; //input pin
+    uint8_t led_pin_; //output pin for the led
+
+    uint8_t old_fs_pin_val_; //HIGH or LOW
+
+    uint8_t fs_val_;//virtual value of the pin
+    unsigned long led_millis;//used to make led flash or blink
+
+  public:
+    Footswitch();
+    void setup(uint8_t fs_pin, uint8_t led_pin);
+    uint8_t get_command() {return command_;};
+    void set_command(uint8_t command){command_ = command;};
+    uint8_t read();
+
+    uint8_t get_mode(){return mode_;};
+    void set_mode(uint8_t mode){mode_ = mode;};  
 };
 
 
