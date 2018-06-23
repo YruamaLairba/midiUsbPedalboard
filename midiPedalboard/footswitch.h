@@ -32,17 +32,24 @@ class Footswitch
     uint8_t old_fs_pin_val_; //HIGH or LOW
 
     uint8_t fs_val_;//virtual value of the pin
-    unsigned long led_millis;//used to make led flash or blink
+    unsigned long led_millis_;//used to make led flash or blink
+    unsigned long debounce_millis_;//for debouncing
 
   public:
     Footswitch();
     void setup(uint8_t fs_pin, uint8_t led_pin);
     uint8_t get_command() {return command_;};
     void set_command(uint8_t command){command_ = command;};
-    uint8_t read();
 
     uint8_t get_mode(){return mode_;};
-    void set_mode(uint8_t mode){mode_ = mode;};  
+    void set_mode(uint8_t mode);
+    //void set_mode(uint8_t mode){mode_ = mode;};
+
+    //return 1 when fs change to on
+    //return -1 when fs change to off
+    //return 0 when fs state doesn't change
+    int8_t read();
+  
 };
 
 

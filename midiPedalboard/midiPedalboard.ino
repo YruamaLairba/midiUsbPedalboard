@@ -1,8 +1,8 @@
+#include <MIDIUSB.h>
 #include "setup.h"
 #include "menus.h"
 #include "footswitch.h"
 #include "preset.h"
-#include <MIDIUSB.h>
 #include "display.h"
 #include "rotary_encoder.h"
 
@@ -77,6 +77,13 @@ void setup() {
   {
     fs[i].setup(fsPins[i], fsLedPins[i]);
   }
+
+  fs[0].set_mode(fsMode::momentary_on);
+  fs[1].set_mode(fsMode::momentary_off);
+  fs[2].set_mode(fsMode::toggle_on);
+  fs[3].set_mode(fsMode::toggle_off);
+
+
 
   //footswitch and leds pins
   //for(uint8_t i=0; i<nbFs; i++)
