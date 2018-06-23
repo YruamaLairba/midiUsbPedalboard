@@ -11,5 +11,6 @@ ARDUINO_QUIET = 1
 ARDUINO_LIBS = MIDIUSB SPI Wire Adafruit_GFX Adafruit_SSD1306 EEPROM
 OPTIMIZATION_LEVEL = s
 
+CXXFLAGS= -Wall -Wextra -Wsign-conversion -pedantic -fdiagnostics-show-option
 include ${ARDMK_DIR}/Arduino.mk
 
