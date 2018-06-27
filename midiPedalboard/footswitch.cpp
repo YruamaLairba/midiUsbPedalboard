@@ -53,7 +53,7 @@ int8_t Footswitch::read()
   unsigned long cur_millis = millis();
   int8_t result = 0;
 
-  if( cur_millis - debounce_millis_ >= 1000)
+  if( cur_millis - debounce_millis_ >= debounceTime_)
   {
     switch(mode_)
     {
@@ -111,6 +111,36 @@ int8_t Footswitch::read()
           digitalWrite(led_pin_, LOW);
         }
         break;
+      case fsMode::single_off:
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          debounce_millis_ = cur_millis;
+          result = -1;
+          digitalWrite(led_pin_, HIGH);
+          led_millis_ = cur_millis;
+        }
+        //when led_millis_ timeout
+        if(cur_millis - led_millis_ > ledTime_)
+        {
+          digitalWrite(led_pin_, LOW);
+        }
+        break;
+      case fsMode::single_on:
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          debounce_millis_ = cur_millis;
+          result = 1;
+          digitalWrite(led_pin_, HIGH);
+          led_millis_ = cur_millis;
+        }
+        //when led_millis_ timeout
+        if(cur_millis - led_millis_ > ledTime_)
+        {
+          digitalWrite(led_pin_, LOW);
+        }
+      break;
     }
     old_fs_pin_val_ = cur_fs_pin_val;
   }

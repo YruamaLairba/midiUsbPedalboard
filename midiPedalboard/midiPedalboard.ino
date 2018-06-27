@@ -80,8 +80,8 @@ void setup() {
 
   fs[0].set_mode(fsMode::momentary_on);
   fs[1].set_mode(fsMode::momentary_off);
-  fs[2].set_mode(fsMode::toggle_on);
-  fs[3].set_mode(fsMode::toggle_off);
+  fs[2].set_mode(fsMode::single_off);
+  fs[3].set_mode(fsMode::single_on);
 
 
 

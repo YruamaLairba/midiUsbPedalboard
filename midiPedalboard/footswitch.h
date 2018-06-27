@@ -23,6 +23,8 @@ struct fsMode
 class Footswitch
 {
   private:
+    static const unsigned long debounceTime_ = 100;
+    static const unsigned long ledTime_ = 100;
     uint8_t command_;
     uint8_t mode_;
 
