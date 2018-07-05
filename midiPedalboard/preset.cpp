@@ -7,6 +7,11 @@
 //ctor
 Preset::Preset(){}
 
+Preset::Preset(Footswitch* fs_tab,uint8_t nb_fs)
+  : fs_tab_(fs_tab)
+  ,nb_fs_(nb_fs)
+{}
+
 //void Preset::init()
 //{
 //}
@@ -15,7 +20,7 @@ FsMode Preset::get_fsMode(uint8_t fsNumber)
 {
   if (fsNumber < nbFs)
   {
-    return eepromData.fsConfigs[fsNumber].fsMode;
+    return eepromData.fsConfigs[fsNumber].mode;
   }
   else
   {
@@ -27,9 +32,9 @@ void Preset::set_fsMode(uint8_t fsNumber, FsMode fsMode)
 {
   if (fsNumber < nbFs)
   {
-    if (eepromData.fsConfigs[fsNumber].fsMode != fsMode)
+    if (eepromData.fsConfigs[fsNumber].mode != fsMode)
     {
-      eepromData.fsConfigs[fsNumber].fsMode = fsMode;
+      eepromData.fsConfigs[fsNumber].mode = fsMode;
       isModified = true;
 #ifdef DEBUG
       Serial.print("setting fs mode: fs ");
@@ -47,7 +52,7 @@ FsCommand Preset::get_fsCommand(uint8_t fsNumber)
 {
   if (fsNumber < nbFs)
   {
-    return eepromData.fsConfigs[fsNumber].fsCommand;
+    return eepromData.fsConfigs[fsNumber].command;
   }
   else
   {
@@ -59,9 +64,9 @@ void Preset::set_fsCommand(uint8_t fsNumber, FsCommand fsCommand)
 {
   if (fsNumber < nbFs)
   {
-    if(eepromData.fsConfigs[fsNumber].fsCommand != fsCommand)
+    if(eepromData.fsConfigs[fsNumber].command != fsCommand)
     {
-      eepromData.fsConfigs[fsNumber].fsCommand = fsCommand;
+      eepromData.fsConfigs[fsNumber].command = fsCommand;
       isModified = true;
 #ifdef DEBUG
       Serial.print("setting fs command: fs ");
@@ -150,8 +155,23 @@ void Preset::save(uint8_t presetNumber)
   Serial.print("\n\r");
 #endif //DEBUG
 //manipulate EEprom here
+
   number = presetNumber;
-  EEPROM.put(presetNumber*sizeof(eepromData),eepromData);
+  PresetData data;
+  //fs
+  for(uint8_t i=0; i< min(nb_fs_,nbFs); i++)
+  {
+    data.fsConfigs[i] = fs_tab_[i].get_config();
+  }
+  //exp pedal
+#warning "TODO"
+  /*
+  for(i=0; i< min(nb_exp_,nbExp); i++)
+  {
+    data.expConfigs[i] = exp_tab_[i].get_config();
+  }
+  */
+  EEPROM.put(presetNumber*sizeof(data),data);
   isModified = false;
 }
 
@@ -165,6 +185,20 @@ void Preset::load(uint8_t presetNumber)
 #endif //DEBUG
 //manipulate EEprom here
   number = presetNumber;
+  PresetData data;
   EEPROM.get(presetNumber*sizeof(eepromData), eepromData);
+  //fs
+  for(uint8_t i=0; i< min(nb_fs_,nbFs); i++)
+  {
+    fs_tab_[i].set_config(data.fsConfigs[i]);
+  }
+  //exp pedal
+#warning "TODO"
+  /*
+  for(i=0; i< min(nb_exp,nbExp); i++)
+  {
+    exp_tab_[i].set_config(data.expConfigs[i]);
+  }
+  */
   isModified = false;
 }

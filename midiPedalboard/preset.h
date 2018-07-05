@@ -8,11 +8,6 @@
 
 typedef uint8_t FsMode;
 typedef uint8_t FsCommand;
-struct FsConfig
-{
-  FsMode fsMode;
-  FsCommand fsCommand;
-};
 
 typedef uint8_t ExpMode;
 typedef uint8_t ExpCommand;
@@ -22,10 +17,19 @@ struct ExpConfig
   ExpCommand expCommand;
 };
 
+struct PresetData
+{
+  FsConfig fsConfigs [nbFs];
+  ExpConfig expConfigs [nbExp];
+};
+
+
 #warning "replace litteral values by an abstract value"
 class Preset
 {
   private:
+    Footswitch* fs_tab_;
+    uint8_t nb_fs_;
     struct
     {
       FsConfig fsConfigs [nbFs];
@@ -36,6 +40,7 @@ class Preset
     bool isModified; //is the current preset modified ?
   public:
     Preset();
+    Preset(Footswitch* fs_tab, uint8_t nb_fs);
 
     //void init(); //for startup initialization
 

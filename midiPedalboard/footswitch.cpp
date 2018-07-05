@@ -47,6 +47,20 @@ void Footswitch::set_mode(uint8_t mode)
   }
 }
 
+FsConfig Footswitch::get_config()
+{
+  FsConfig res;
+  res.command = get_command();
+  res.mode = get_mode();
+  return res;
+}
+
+void Footswitch::set_config(FsConfig conf)
+{
+  set_command(conf.command);
+  set_mode(conf.mode);
+}
+
 int8_t Footswitch::read()
 {
   uint8_t cur_fs_pin_val= digitalRead(fs_pin_);

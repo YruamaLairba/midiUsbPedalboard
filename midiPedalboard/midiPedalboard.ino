@@ -11,7 +11,7 @@ RotaryEncoder rot(rotaryPinA,rotaryPinB);
 
 //fooswitch
 Footswitch fs[nbFs];
-
+Preset preset(fs, nbFs);
 
 //button ok
 uint8_t prec_button_ok;
@@ -40,7 +40,7 @@ unsigned long last_micros;
 
 unsigned long debug_last_micros;
 
-Preset preset;
+
 extern MenuManager manager;
 
 MenuMainConf mainConf(&manager,NULL,&preset);

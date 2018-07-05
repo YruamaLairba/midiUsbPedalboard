@@ -20,6 +20,12 @@ struct fsMode
   };
 };
 
+struct FsConfig
+{
+  uint8_t command;
+  uint8_t mode;
+};
+
 class Footswitch
 {
   private:
@@ -45,13 +51,16 @@ class Footswitch
 
     uint8_t get_mode(){return mode_;};
     void set_mode(uint8_t mode);
+
+    FsConfig get_config();
+    void set_config(FsConfig conf);
+
     //void set_mode(uint8_t mode){mode_ = mode;};
 
     //return 1 when fs change to on
     //return -1 when fs change to off
     //return 0 when fs state doesn't change
     int8_t read();
-  
 };
 
 
