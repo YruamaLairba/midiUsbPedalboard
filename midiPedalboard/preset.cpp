@@ -186,7 +186,7 @@ void Preset::load(uint8_t presetNumber)
 //manipulate EEprom here
   number = presetNumber;
   PresetData data;
-  EEPROM.get(presetNumber*sizeof(eepromData), eepromData);
+  EEPROM.get(presetNumber*sizeof(data), data);
   //fs
   for(uint8_t i=0; i< min(nb_fs_,nbFs); i++)
   {
