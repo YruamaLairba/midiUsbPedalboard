@@ -160,7 +160,19 @@ void loop() {
 
   for(uint8_t i = 0; i < nbFs; i++)
   {
-    fs[i].read();
+    int8_t val = fs[i].read();
+    if (val == 1)
+    {
+      midiEventPacket_t event = {0x0B,0xB0|0x00,fs[i].get_command(),127};
+      MidiUSB.sendMIDI(event);
+      MidiUSB.flush();
+    }
+    else if (val == -1)
+    {
+      midiEventPacket_t event = {0x0B,0xB0|0x00,fs[i].get_command(),0};
+      MidiUSB.sendMIDI(event);
+      MidiUSB.flush();
+    }
   }
 
 
