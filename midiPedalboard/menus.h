@@ -64,13 +64,17 @@ class MenuFsCommand : public MenuBase
     static const uint8_t selectionMax = 127;
     MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
+    Footswitch* fs_tab;
+    uint8_t nb_fs;
     uint8_t displayOffset;
   public:
     MenuFsCommand(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
       MenuSwSelect* pt_menuSwSelect,
-      Preset* pt_preset);
+      Preset* pt_preset,
+      Footswitch* fs,
+      uint8_t nb_fs);
 
     virtual bool next();
     virtual bool prev();
@@ -88,13 +92,17 @@ class MenuFsMode : public MenuBase
     static const uint8_t selectionMax = 5;
     MenuSwSelect* pt_menuSwSelect;
     Preset* pt_preset;
+    Footswitch* fs_tab;
+    uint8_t nb_fs;
     uint8_t displayOffset;
   public:
     MenuFsMode(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
       MenuSwSelect* pt_menuSwSelect,
-      Preset* pt_preset);
+      Preset* pt_preset,
+      Footswitch* fs,
+      uint8_t nb_fs);
 
     virtual bool next();
     virtual bool prev();
@@ -120,7 +128,9 @@ class MenuFsConfig : public MenuBase
       MenuManager* pt_manager,
       MenuBase* pt_parent,
       MenuSwSelect* pt_menuSwSelect,
-      Preset* pt_preset);
+      Preset* pt_preset,
+      Footswitch* fs,
+      uint8_t nb_fs);
 
     virtual bool next();
     virtual bool prev();
@@ -230,7 +240,9 @@ class MenuSwSelect : public MenuBase
     MenuSwSelect(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
-      Preset* pt_preset);
+      Preset* pt_preset,
+      Footswitch* fs,
+      uint8_t nb_fs);
     //virtual void activate();
 
     virtual bool next();
@@ -333,7 +345,9 @@ class MenuMainConf : public MenuBase
     MenuMainConf(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
-      Preset* pt_preset);
+      Preset* pt_preset,
+      Footswitch* pt_fs,
+      uint8_t nb_fs);
 
     virtual void activate();
 

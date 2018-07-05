@@ -46,10 +46,14 @@ MenuFsCommand::MenuFsCommand(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
   MenuSwSelect* pt_menuSwSelect,
-  Preset* pt_preset)
+  Preset* pt_preset,
+  Footswitch* fs,
+  uint8_t nb_fs)
   : MenuBase(pt_manager,pt_parent),
     pt_menuSwSelect(pt_menuSwSelect),
-    pt_preset(pt_preset){}
+    pt_preset(pt_preset),
+    fs_tab(fs),
+    nb_fs(nb_fs){}
 
 bool MenuFsCommand::next()
 {
@@ -83,7 +87,7 @@ bool MenuFsCommand::prev()
 
 bool MenuFsCommand::validate()
 {
-  pt_preset->set_fsCommand(pt_menuSwSelect->get_selectedFsNum(),selection);
+  fs_tab[pt_menuSwSelect->get_selectedFsNum()].set_command(selection);
   bool res = true;
   manager->set_active(parent);
   return res;
@@ -139,10 +143,14 @@ MenuFsMode::MenuFsMode(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
   MenuSwSelect* pt_menuSwSelect,
-  Preset* pt_preset)
+  Preset* pt_preset,
+  Footswitch* fs,
+  uint8_t nb_fs)
   : MenuBase(pt_manager,pt_parent),
     pt_menuSwSelect(pt_menuSwSelect),
-    pt_preset(pt_preset){}
+    pt_preset(pt_preset),
+    fs_tab(fs),
+    nb_fs(nb_fs){}
 
 bool MenuFsMode::next()
 {
@@ -176,7 +184,7 @@ bool MenuFsMode::prev()
 
 bool MenuFsMode::validate()
 {
-  pt_preset->set_fsMode(pt_menuSwSelect->get_selectedFsNum(),selection);
+  fs_tab[pt_menuSwSelect->get_selectedFsNum()].set_mode(selection);
   bool res = true;
   manager->set_active(parent);
   return res;
@@ -248,10 +256,12 @@ MenuFsConfig::MenuFsConfig(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
   MenuSwSelect* pt_menuSwSelect,
-  Preset* pt_preset)
+  Preset* pt_preset,
+  Footswitch* fs,
+  uint8_t nb_fs)
   : MenuBase(pt_manager,pt_parent),
-    menuFsCommand(pt_manager,this, pt_menuSwSelect, pt_preset),
-    menuFsMode(pt_manager,this, pt_menuSwSelect, pt_preset),
+    menuFsCommand(pt_manager,this, pt_menuSwSelect, pt_preset, fs, nb_fs),
+    menuFsMode(pt_manager,this, pt_menuSwSelect, pt_preset, fs, nb_fs),
     pt_menuSwSelect(pt_menuSwSelect),
     pt_preset(pt_preset){}
 
@@ -637,9 +647,11 @@ void MenuExpConfig::print()
 MenuSwSelect::MenuSwSelect(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
-  Preset* pt_preset)
+  Preset* pt_preset,
+  Footswitch* fs,
+  uint8_t nb_fs)
   : MenuBase(pt_manager, pt_parent),
-    fsConfig(pt_manager, this, this, pt_preset),
+    fsConfig(pt_manager, this, this, pt_preset, fs, nb_fs),
     expConfig(pt_manager, this, this, pt_preset),
     pt_preset(pt_preset){}
 
@@ -1067,9 +1079,11 @@ void MenuGeneralSetting::print()
 MenuMainConf::MenuMainConf(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
-  Preset* pt_preset)
+  Preset* pt_preset,
+  Footswitch* fs,
+  uint8_t nb_fs)
   : MenuBase(pt_manager,pt_parent),
-    swSelect(pt_manager, this, pt_preset),
+    swSelect(pt_manager, this, pt_preset, fs, nb_fs),
     presetLoad(pt_manager, this, pt_preset),
     presetSave(pt_manager, this, pt_preset),
     generalSetting(pt_manager, this) {}

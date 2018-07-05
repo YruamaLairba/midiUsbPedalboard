@@ -43,7 +43,7 @@ unsigned long debug_last_micros;
 
 extern MenuManager manager;
 
-MenuMainConf mainConf(&manager,NULL,&preset);
+MenuMainConf mainConf(&manager,NULL,&preset,fs,nbFs);
 MenuManager manager (&mainConf);
 
 //function to avoid bounce and glitch issue on input
@@ -77,12 +77,12 @@ void setup() {
   {
     fs[i].setup(fsPins[i], fsLedPins[i]);
   }
-
+  /*
   fs[0].set_mode(fsMode::momentary_on);
   fs[1].set_mode(fsMode::momentary_off);
   fs[2].set_mode(fsMode::single_off);
   fs[3].set_mode(fsMode::single_on);
-
+  */
 
 
   //footswitch and leds pins
