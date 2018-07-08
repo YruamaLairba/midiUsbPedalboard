@@ -67,17 +67,21 @@ int8_t Footswitch::read()
   unsigned long cur_millis = millis();
   int8_t result = 0;
 
-  if( cur_millis - debounce_millis_ >= debounceTime_)
+  switch(mode_)
   {
-    switch(mode_)
-    {
-      case fsMode::toggle_off:
-      case fsMode::toggle_on:
+    case fsMode::toggle_off:
+    case fsMode::toggle_on:
+      {
+        if( cur_millis - debounce_millis_ >= debounceTime_)
         {
+          //deboucing
+          if(cur_fs_pin_val != old_fs_pin_val_)
+          {
+            debounce_millis_ = cur_millis;
+          }
           //on press
           if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
           {
-            debounce_millis_ = cur_millis;
             if(fs_val_==0)
             {
               result=1;
@@ -91,9 +95,12 @@ int8_t Footswitch::read()
               fs_val_=0;
             }
           }
-          break;
         }
-      case fsMode::momentary_off:
+        break;
+      }
+    case fsMode::momentary_off:
+      if( cur_millis - debounce_millis_ >= debounceTime_)
+      {
         //on press
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
@@ -108,56 +115,73 @@ int8_t Footswitch::read()
           result = 1;
           digitalWrite(led_pin_, HIGH);
         }
-        break;
-      case fsMode::momentary_on:
-        //on press
-        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
-        {
-          debounce_millis_ = cur_millis;
-          result = 1;
-          digitalWrite(led_pin_, HIGH);
-        }
-        //on release
-        else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
-        {
-          debounce_millis_ = cur_millis;
-          result = -1;
-          digitalWrite(led_pin_, LOW);
-        }
-        break;
-      case fsMode::single_off:
-        //on press
-        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
-        {
-          debounce_millis_ = cur_millis;
-          result = -1;
-          digitalWrite(led_pin_, HIGH);
-          led_millis_ = cur_millis;
-        }
-        //when led_millis_ timeout
-        if(cur_millis - led_millis_ > ledTime_)
-        {
-          digitalWrite(led_pin_, LOW);
-        }
-        break;
-      case fsMode::single_on:
-        //on press
-        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
-        {
-          debounce_millis_ = cur_millis;
-          result = 1;
-          digitalWrite(led_pin_, HIGH);
-          led_millis_ = cur_millis;
-        }
-        //when led_millis_ timeout
-        if(cur_millis - led_millis_ > ledTime_)
-        {
-          digitalWrite(led_pin_, LOW);
-        }
+      }
       break;
-    }
-    old_fs_pin_val_ = cur_fs_pin_val;
+    case fsMode::momentary_on:
+      if( cur_millis - debounce_millis_ >= debounceTime_)
+      {
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          debounce_millis_ = cur_millis;
+          result = 1;
+          digitalWrite(led_pin_, HIGH);
+        }
+        //on release
+        else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
+        {
+          debounce_millis_ = cur_millis;
+          result = -1;
+          digitalWrite(led_pin_, LOW);
+        }
+      }
+      break;
+    case fsMode::single_off:
+      if( cur_millis - debounce_millis_ >= debounceTime_)
+      {
+        //deboucing
+        if(cur_fs_pin_val != old_fs_pin_val_)
+        {
+          debounce_millis_ = cur_millis;
+        }
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          result = -1;
+          digitalWrite(led_pin_, HIGH);
+          led_millis_ = cur_millis;
+        }
+      }
+      //when led_millis_ timeout
+      if(cur_millis - led_millis_ > ledTime_)
+      {
+        digitalWrite(led_pin_, LOW);
+      }
+      break;
+    case fsMode::single_on:
+      if( cur_millis - debounce_millis_ >= debounceTime_)
+      {
+        //deboucing
+        if(cur_fs_pin_val != old_fs_pin_val_)
+        {
+          debounce_millis_ = cur_millis;
+        }
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          result = 1;
+          digitalWrite(led_pin_, HIGH);
+          led_millis_ = cur_millis;
+        }
+      }
+      //when led_millis_ timeout
+      if(cur_millis - led_millis_ > ledTime_)
+      {
+        digitalWrite(led_pin_, LOW);
+      }
+    break;
   }
-    return result;
+  old_fs_pin_val_ = cur_fs_pin_val;
+  return result;
 }
 
