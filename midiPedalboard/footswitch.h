@@ -57,9 +57,9 @@ class Footswitch
 
     //void set_mode(uint8_t mode){mode_ = mode;};
 
-    //return 1 when fs change to on
-    //return -1 when fs change to off
-    //return 0 when fs state doesn't change
+    //return 127 when fs change to on
+    //return 0 when fs change to off
+    //return -1 when fs state doesn't change
     int8_t read();
 };
 

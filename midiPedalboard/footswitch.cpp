@@ -65,7 +65,7 @@ int8_t Footswitch::read()
 {
   uint8_t cur_fs_pin_val= digitalRead(fs_pin_);
   unsigned long cur_millis = millis();
-  int8_t result = 0;
+  int8_t result = -1;
 
   switch(mode_)
   {
@@ -84,15 +84,15 @@ int8_t Footswitch::read()
           {
             if(fs_val_==0)
             {
-              result=1;
+              result = 127;
               digitalWrite(led_pin_, HIGH);
-              fs_val_=1;
+              fs_val_ = 1;
             }
             else
             {
-              result=-1;
+              result = 0;
               digitalWrite(led_pin_, LOW);
-              fs_val_=0;
+              fs_val_ = 0;
             }
           }
         }
@@ -105,14 +105,14 @@ int8_t Footswitch::read()
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
           debounce_millis_ = cur_millis;
-          result = -1;
+          result = 0;
           digitalWrite(led_pin_, LOW);
         }
         //on release
         else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
         {
           debounce_millis_ = cur_millis;
-          result = 1;
+          result = 127;
           digitalWrite(led_pin_, HIGH);
         }
       }
@@ -124,14 +124,14 @@ int8_t Footswitch::read()
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
           debounce_millis_ = cur_millis;
-          result = 1;
+          result = 127;
           digitalWrite(led_pin_, HIGH);
         }
         //on release
         else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
         {
           debounce_millis_ = cur_millis;
-          result = -1;
+          result = 0;
           digitalWrite(led_pin_, LOW);
         }
       }
@@ -147,7 +147,7 @@ int8_t Footswitch::read()
         //on press
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
-          result = -1;
+          result = 0;
           digitalWrite(led_pin_, HIGH);
           led_millis_ = cur_millis;
         }
@@ -169,7 +169,7 @@ int8_t Footswitch::read()
         //on press
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
-          result = 1;
+          result = 127;
           digitalWrite(led_pin_, HIGH);
           led_millis_ = cur_millis;
         }
