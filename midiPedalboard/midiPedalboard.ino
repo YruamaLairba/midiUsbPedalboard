@@ -77,20 +77,6 @@ void setup() {
   {
     fs[i].setup(fsPins[i], fsLedPins[i]);
   }
-  /*
-  fs[0].set_mode(fsMode::momentary_on);
-  fs[1].set_mode(fsMode::momentary_off);
-  fs[2].set_mode(fsMode::single_off);
-  fs[3].set_mode(fsMode::single_on);
-  */
-
-
-  //footswitch and leds pins
-  //for(uint8_t i=0; i<nbFs; i++)
-  //{
-  //  pinMode(fsPins[i],INPUT_PULLUP);
-  //  pinMode(fsLedPins[i],OUTPUT);
-  //}
 
   display.begin(SSD1306_SWITCHCAPVCC);
   display.display();
@@ -144,18 +130,6 @@ void loop() {
   if (refresh)
   {
     manager.print();
-    /*
-    Menu * const* tmp = mainConf.items;
-    Serial.print((int)&mainConf,HEX);Serial.print("\n\r");
-    Serial.print((int)*(mainConf.items),HEX);Serial.print("\n\r");
-    Serial.print((int)(mainConf.items),HEX);Serial.print("\n\r");
-    Serial.print((int)tmp[0],HEX);Serial.print("\n\r");
-    Serial.print((int)mainConf_items,HEX);Serial.print("\n\r");
-    Serial.print((int)*(mainConf_items),HEX);Serial.print("\n\r");
-    Serial.print((int)&(mainConf_items),HEX);Serial.print("\n\r");
-    */
-    //mainConf.print(&mainConf);
-    //Serial.print(mainConf.selection,DEC);
   }
 
   for(uint8_t i = 0; i < nbFs; i++)
@@ -168,122 +142,4 @@ void loop() {
       MidiUSB.flush();
     }
   }
-
-
-  #if 0
-  //footswitch
-  unsigned long debug_start_micros = micros();
-  for(uint8_t i = 0; i < nbFs; i++)
-  {
-    uint8_t fsMode = preset.get_fsMode(i);
-    uint8_t fsCommand = preset.get_fsCommand(i);
-    switch(fsMode)
-    {
-      case fsMode::toggle_off:
-      case fsMode::toggle_on:
-        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
-        {
-          if (fsValue[i] == 0)
-          {
-            fsValue[i]=127;
-            digitalWrite(fsLedPins[i],1);
-          }
-          else
-          {
-            fsValue[i]=0;
-            digitalWrite(fsLedPins[i],0);
-          }
-         if(fsCommand < 128)
-          {
-            //send midi CC throught USB
-            midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-            MidiUSB.sendMIDI(event);
-            MidiUSB.flush();
-          }
-        }
-        break;
-      case fsMode::momentary_off:
-        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
-        {
-          fsValue[i] = 0;
-          digitalWrite(fsLedPins[i],0);
-          //send midi CC throught USB
-          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-          MidiUSB.sendMIDI(event);
-          MidiUSB.flush();
-        }
-        else if((prec_fsRawValues[i] == LOW) and (cur_fsRawValues[i] == HIGH))
-        {
-          fsValue[i] = 127;
-          digitalWrite(fsLedPins[i],1);
-          //send midi CC throught USB
-          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-          MidiUSB.sendMIDI(event);
-          MidiUSB.flush();
-        }
-        break;
-      case fsMode::momentary_on:
-        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
-        {
-          fsValue[i] = 127;
-          digitalWrite(fsLedPins[i],1);
-          //send midi CC throught USB
-          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-          MidiUSB.sendMIDI(event);
-          MidiUSB.flush();
-        }
-        else if((prec_fsRawValues[i] == LOW) and (cur_fsRawValues[i] == HIGH))
-        {
-          fsValue[i] = 0;
-          digitalWrite(fsLedPins[i],0);
-          //send midi CC throught USB
-          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-          MidiUSB.sendMIDI(event);
-          MidiUSB.flush();
-        }
-        break;
-      case fsMode::single_off:
-        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
-        {
-          fsValue[i] = 0;
-          digitalWrite(fsLedPins[i],1);
-          leds_millis[i] = millis();
-          //send midi CC throught USB
-          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-          MidiUSB.sendMIDI(event);
-          MidiUSB.flush();
-        }
-        if (millis() - leds_millis[i] > 100)
-        {
-          digitalWrite(fsLedPins[i],0);
-        }
-        break;
-      case fsMode::single_on:
-        if((prec_fsRawValues[i] == HIGH) and (cur_fsRawValues[i] == LOW))
-        {
-          fsValue[i] = 127;
-          digitalWrite(fsLedPins[i],1);
-          leds_millis[i] = millis();
-          //send midi CC throught USB
-          midiEventPacket_t event = {0x0B,0xB0|0x00,fsCommand,fsValue[i]};
-          MidiUSB.sendMIDI(event);
-          MidiUSB.flush();
-        }
-        if (millis() - leds_millis[i] > 100)
-        {
-          digitalWrite(fsLedPins[i],0);
-        }
-        break;
-    }
-    prec_fsRawValues[i]=cur_fsRawValues[i];
-  }
-  unsigned long debug_end_micros = micros();
-  unsigned long debug_duration = debug_end_micros - debug_start_micros;
-  if (debug_duration > 1000)
-  {
-    Serial.print("debug_duration : ");
-    Serial.print(debug_duration,DEC);
-    Serial.print("\n\r");
-  }
-  #endif //0
 }
