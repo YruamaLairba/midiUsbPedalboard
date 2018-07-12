@@ -106,8 +106,7 @@ bool MenuFsCommand::cancel()
 
 bool MenuFsCommand::reset()
 {
-  selection = pt_preset->get_fsCommand(
-    pt_menuSwSelect->get_selectedFsNum());
+  selection = fs_tab[pt_menuSwSelect->get_selectedFsNum()].get_command();
   displayOffset = min(selection, (selectionMax - 3));
   return true;
 }
@@ -203,8 +202,7 @@ bool MenuFsMode::cancel()
 
 bool MenuFsMode::reset()
 {
-  selection = pt_preset->get_fsMode(
-    pt_menuSwSelect->get_selectedFsNum());
+  selection = fs_tab[pt_menuSwSelect->get_selectedFsNum()].get_mode();
   displayOffset = min(selection, (selectionMax - 3));
   return true;
 }
@@ -394,7 +392,8 @@ bool MenuExpCommand::prev()
 
 bool MenuExpCommand::validate()
 {
-  pt_preset->set_expCommand(pt_menuSwSelect->get_selectedExpNum(),selection);
+#warning "TODO"
+  //pt_preset->set_expCommand(pt_menuSwSelect->get_selectedExpNum(),selection);
   bool res = true;
   manager->set_active(parent);
   return res;
@@ -413,8 +412,10 @@ bool MenuExpCommand::cancel()
 
 bool MenuExpCommand::reset()
 {
-  selection = pt_preset->get_expCommand(
-    pt_menuSwSelect->get_selectedExpNum());
+#warning "TODO"
+  selection = 0;
+  //selection = pt_preset->get_expCommand(
+    //pt_menuSwSelect->get_selectedExpNum());
   displayOffset = min(selection, (selectionMax - 3));
   return true;
 }
@@ -490,7 +491,8 @@ bool MenuExpMode::prev()
 
 bool MenuExpMode::validate()
 {
-  pt_preset->set_expMode(pt_menuSwSelect->get_selectedExpNum(),selection);
+#warning "TODO"
+  //pt_preset->set_expMode(pt_menuSwSelect->get_selectedExpNum(),selection);
   bool res = true;
   manager->set_active(parent);
   return res;
@@ -509,8 +511,10 @@ bool MenuExpMode::cancel()
 
 bool MenuExpMode::reset()
 {
-  selection = pt_preset->get_expMode(
-    pt_menuSwSelect->get_selectedExpNum());
+#warning "TODO"
+  //selection should become expMode of the selected Exp
+  selection = 0;
+    //pt_menuSwSelect->get_selectedExpNum()
   return true;
 }
 

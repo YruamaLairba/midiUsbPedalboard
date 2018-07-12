@@ -30,12 +30,7 @@ class Preset
   private:
     Footswitch* fs_tab_;
     uint8_t nb_fs_;
-    struct
-    {
-      FsConfig fsConfigs [nbFs];
-      ExpConfig expConfigs [nbExp];
-    }eepromData;
-    static const uint8_t nbPreset = (E2END + 1)/sizeof(eepromData);
+    static const uint8_t nbPreset = (E2END + 1)/sizeof(PresetData);
     uint8_t number; //number of the currently loaded preset
     bool isModified; //is the current preset modified ?
   public:
@@ -43,15 +38,6 @@ class Preset
     Preset(Footswitch* fs_tab, uint8_t nb_fs);
 
     //void init(); //for startup initialization
-
-    FsMode get_fsMode(uint8_t fsNumber);
-    void set_fsMode(uint8_t fsNumber, FsMode fsMode);
-    FsCommand get_fsCommand(uint8_t fsNumber);
-    void set_fsCommand(uint8_t fsNumber, FsCommand fsCommand);
-    ExpMode get_expMode(uint8_t expNumber);
-    void set_expMode(uint8_t expNumber, ExpMode expMode);
-    ExpCommand get_expCommand(uint8_t expNumber);
-    void set_expCommand(uint8_t expNumber, ExpCommand expCommand);
 
     void save(uint8_t presetNumber);
     void load(uint8_t presetNumber);
