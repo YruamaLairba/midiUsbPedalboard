@@ -971,14 +971,110 @@ void MenuPresetSave::print()
   display.display();
 }
 
+//MenuMidiChannel
+MenuMidiChannel::MenuMidiChannel(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  GlobalSetting* pt_global_setting)
+  : MenuBase(pt_manager, pt_parent),
+    pt_global_setting(pt_global_setting),
+    nbItems(16)
+{}
+
+void MenuMidiChannel::activate()
+{
+  this->reset();
+  manager->set_active(this);
+}
+
+bool MenuMidiChannel::next()
+{
+  bool res = false;
+  if (this->selection < this->nbItems-1)
+  {
+    this->selection++;
+    res = true;
+  }
+  if (selection >= (displayOffset + 4 ))
+  {
+    displayOffset++;
+  }
+  return res;
+}
+
+bool MenuMidiChannel::prev()
+{
+  bool res = false;
+  if (this->selection > 0)
+  {
+    this->selection--;
+    res = true;
+  }
+  if (selection < displayOffset)
+  {
+    displayOffset--;
+  }
+  return res;
+}
+
+bool MenuMidiChannel::validate()
+{
+  pt_global_setting->set_midi_channel(selection);
+  manager->set_active(parent);
+  return true;
+}
+
+bool MenuMidiChannel::cancel()
+{
+  bool res = false;
+  if(parent != NULL)
+  {
+    manager->set_active(parent);
+    res = true;
+  }
+  return res;
+}
+
+bool MenuMidiChannel::reset()
+{
+  selection = pt_global_setting->get_midi_channel();
+  displayOffset = min(selection, (nbItems - 4));
+  return true;
+}
+
+void MenuMidiChannel::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = displayOffset; i< (displayOffset + 4) and i<nbItems; i++)
+  {
+    if (selection == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Chan "));
+    display.print(i+1,DEC);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 
 //MenuGeneralSetting
 
 //ctor
-MenuGeneralSetting::MenuGeneralSetting(MenuManager* pt_manager, MenuBase* pt_parent)
+MenuGeneralSetting::MenuGeneralSetting(
+  MenuManager* pt_manager,
+  MenuBase* pt_parent,
+  GlobalSetting* pt_global_setting)
   : MenuBase(pt_manager, pt_parent),
+    midiChannel(pt_manager, this, pt_global_setting),
     nbItems(2)
-    {}
+{}
 
 void MenuGeneralSetting::activate()
 {
@@ -1022,6 +1118,7 @@ bool MenuGeneralSetting::validate()
   switch(selection)
   {
     case 0:
+      midiChannel.activate();
       break;
     case 1:
       break;
@@ -1083,6 +1180,7 @@ void MenuGeneralSetting::print()
 MenuMainConf::MenuMainConf(
   MenuManager* pt_manager,
   MenuBase* pt_parent,
+  GlobalSetting* pt_global_setting,
   Preset* pt_preset,
   Footswitch* fs,
   uint8_t nb_fs)
@@ -1090,7 +1188,7 @@ MenuMainConf::MenuMainConf(
     swSelect(pt_manager, this, pt_preset, fs, nb_fs),
     presetLoad(pt_manager, this, pt_preset),
     presetSave(pt_manager, this, pt_preset),
-    generalSetting(pt_manager, this) {}
+    generalSetting(pt_manager, this, pt_global_setting) {}
 
 void MenuMainConf::activate()
 {

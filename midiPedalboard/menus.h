@@ -6,6 +6,7 @@
 
 #include "setup.h"
 #include "display.h"
+#include "global_setting.h"
 #include "preset.h"
 #include "footswitch.h"
 
@@ -309,15 +310,44 @@ class MenuPresetSave : public MenuBase
     virtual void print();
 };
 
-#warning "MenuGeneralSetting: need submenu"
-class MenuGeneralSetting : public MenuBase
+class MenuMidiChannel : public MenuBase
 {
   private:
+    MenuBase* pt_parent;
+    GlobalSetting* pt_global_setting;
     uint8_t displayOffset;
     int8_t nbItems;
 
   public:
-    MenuGeneralSetting(MenuManager* pt_manager, MenuBase* pt_parent);
+    MenuMidiChannel(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      GlobalSetting* pt_global_setting);
+
+    virtual void activate();
+
+    virtual bool next();
+    virtual bool prev();
+    virtual bool validate();
+    virtual bool cancel();
+    virtual bool reset();
+    virtual void print();
+};
+
+
+#warning "MenuGeneralSetting: need submenu"
+class MenuGeneralSetting : public MenuBase
+{
+  private:
+    MenuMidiChannel midiChannel;
+    uint8_t displayOffset;
+    int8_t nbItems;
+
+  public:
+    MenuGeneralSetting(
+      MenuManager* pt_manager,
+      MenuBase* pt_parent,
+      GlobalSetting* pt_global_setting);
 
     virtual void activate();
 
@@ -345,6 +375,7 @@ class MenuMainConf : public MenuBase
     MenuMainConf(
       MenuManager* pt_manager,
       MenuBase* pt_parent,
+      GlobalSetting* pt_global_setting,
       Preset* pt_preset,
       Footswitch* pt_fs,
       uint8_t nb_fs);

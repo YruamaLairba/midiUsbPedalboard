@@ -2,6 +2,7 @@
 #include "setup.h"
 #include "menus.h"
 #include "footswitch.h"
+#include "global_setting.h"
 #include "preset.h"
 #include "display.h"
 #include "rotary_encoder.h"
@@ -11,6 +12,7 @@ RotaryEncoder rot(rotaryPinA,rotaryPinB);
 
 //fooswitch
 Footswitch fs[nbFs];
+GlobalSetting global_setting;
 Preset preset(fs, nbFs);
 
 //button ok
@@ -43,7 +45,7 @@ unsigned long debug_last_micros;
 
 extern MenuManager manager;
 
-MenuMainConf mainConf(&manager,NULL,&preset,fs,nbFs);
+MenuMainConf mainConf(&manager,NULL,&global_setting,&preset,fs,nbFs);
 MenuManager manager (&mainConf);
 
 //function to avoid bounce and glitch issue on input
@@ -137,7 +139,12 @@ void loop() {
     int8_t val = fs[i].read();
     if (val >= 0)
     {
-      midiEventPacket_t event = {0x0B,0xB0|0x00,fs[i].get_command(),val};
+      midiEventPacket_t event = {
+        0x0B,
+        0xB0|global_setting.get_midi_channel(),
+        fs[i].get_command(),
+        val
+      };
       MidiUSB.sendMIDI(event);
       MidiUSB.flush();
     }
