@@ -14,7 +14,7 @@ class GlobalSetting
   public:
     GlobalSetting() : midi_channel_(0){};
 
-    void set_midi_channel(uint8_t midi_channel){midi_channel_=midi_channel;};
+    void set_midi_channel(uint8_t midi_channel);
     uint8_t get_midi_channel(){return midi_channel_;};
 };
 
