@@ -32,6 +32,15 @@ void Preset::save(uint8_t presetNumber)
   for(uint8_t i=0; i< min(nb_fs_,nbFs); i++)
   {
     data.fsConfigs[i] = fs_tab_[i].get_config();
+#ifdef DEBUG
+    Serial.print("Fs ");
+    Serial.print(i);
+    Serial.print(" command ");
+    Serial.print(data.fsConfigs[i].command,HEX);
+    Serial.print(", mode ");
+    Serial.print(data.fsConfigs[i].mode,HEX);
+    Serial.print("\n\r");
+#endif //DEBUG
   }
   //exp pedal
 #warning "TODO"
@@ -41,7 +50,7 @@ void Preset::save(uint8_t presetNumber)
     data.expConfigs[i] = exp_tab_[i].get_config();
   }
   */
-  EEPROM.put(presetNumber*sizeof(data),data);
+  EEPROM.put(E2END + 1 - presetNumber*sizeof(data),data);
   isModified = false;
 }
 
@@ -56,11 +65,20 @@ void Preset::load(uint8_t presetNumber)
 //manipulate EEprom here
   number = presetNumber;
   PresetData data;
-  EEPROM.get(presetNumber*sizeof(data), data);
+  EEPROM.get(E2END + 1 - presetNumber*sizeof(data), data);
   //fs
   for(uint8_t i=0; i< min(nb_fs_,nbFs); i++)
   {
     fs_tab_[i].set_config(data.fsConfigs[i]);
+#ifdef DEBUG
+    Serial.print("Fs ");
+    Serial.print(i);
+    Serial.print(" command ");
+    Serial.print(data.fsConfigs[i].command,HEX);
+    Serial.print(", mode ");
+    Serial.print(data.fsConfigs[i].mode,HEX);
+    Serial.print("\n\r");
+#endif //DEBUG
   }
   //exp pedal
 #warning "TODO"
