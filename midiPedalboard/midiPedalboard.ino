@@ -74,11 +74,14 @@ void setup() {
   pinMode(buttonOkPin, INPUT_PULLUP);
   pinMode(buttonCancelPin, INPUT_PULLUP);
 
+  global_setting.init();
+
   //footswitch class initialisation
   for(uint8_t i=0; i<nbFs; i++)
   {
     fs[i].setup(fsPins[i], fsLedPins[i]);
   }
+
 
   display.begin(SSD1306_SWITCHCAPVCC);
   display.display();
