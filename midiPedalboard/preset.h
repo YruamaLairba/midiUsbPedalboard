@@ -5,6 +5,7 @@
 #include "setup.h"
 #include "footswitch.h"
 #include "EEPROM.h"
+#include "eeprom_config.h"
 
 typedef uint8_t FsMode;
 typedef uint8_t FsCommand;
@@ -30,7 +31,8 @@ class Preset
   private:
     Footswitch* fs_tab_;
     uint8_t nb_fs_;
-    static const uint8_t nbPreset = (E2END + 1)/sizeof(PresetData);
+    static const uint8_t nbPreset = (
+        E2END + 1 - eeprom_preset_start)/sizeof(PresetData);
     uint8_t number; //number of the currently loaded preset
     bool isModified; //is the current preset modified ?
   public:
