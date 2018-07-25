@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "setup.h"
 #include "footswitch.h"
+#include "expPedal.h"
 #include "EEPROM.h"
 #include "eeprom_config.h"
 
@@ -12,11 +13,6 @@ typedef uint8_t FsCommand;
 
 typedef uint8_t ExpMode;
 typedef uint8_t ExpCommand;
-struct ExpConfig
-{
-  ExpMode expMode;
-  ExpCommand expCommand;
-};
 
 struct PresetData
 {

@@ -2,6 +2,7 @@
 #include "setup.h"
 #include "menus.h"
 #include "footswitch.h"
+#include "expPedal.h"
 #include "global_setting.h"
 #include "preset.h"
 #include "display.h"
@@ -12,6 +13,7 @@ RotaryEncoder rot(rotaryPinA,rotaryPinB);
 
 //fooswitch
 Footswitch fs[nbFs];
+ExpPedal expPedal[nbExp];
 GlobalSetting global_setting;
 Preset preset(fs, nbFs);
 
