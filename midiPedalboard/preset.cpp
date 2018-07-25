@@ -7,9 +7,12 @@
 //ctor
 Preset::Preset(){}
 
-Preset::Preset(Footswitch* fs_tab,uint8_t nb_fs)
+Preset::Preset(Footswitch* fs_tab, uint8_t nb_fs,
+    ExpPedal* exp_tab, uint8_t nb_exp)
   : fs_tab_(fs_tab)
-  ,nb_fs_(nb_fs)
+  , nb_fs_(nb_fs)
+  , exp_tab_(exp_tab)
+  , nb_exp_(nb_exp)
 {}
 
 void Preset::init()
@@ -46,12 +49,19 @@ void Preset::save(uint8_t presetNumber)
   }
   //exp pedal
 #warning "TODO"
-  /*
-  for(i=0; i< min(nb_exp_,nbExp); i++)
+  for(uint8_t i=0; i< min(nb_exp_,nbExp); i++)
   {
     data.expConfigs[i] = exp_tab_[i].get_config();
+#ifdef DEBUG
+    Serial.print("Exp ");
+    Serial.print(i);
+    Serial.print(" command ");
+    Serial.print(data.fsConfigs[i].command,HEX);
+    Serial.print(", mode ");
+    Serial.print(data.fsConfigs[i].mode,HEX);
+    Serial.print("\n\r");
+#endif //DEBUG
   }
-  */
 
 #ifdef DEBUG
   //Serial.print(eeprom_preset_number_start, number);
@@ -108,11 +118,18 @@ void Preset::load(uint8_t presetNumber)
   }
   //exp pedal
 #warning "TODO"
-  /*
-  for(i=0; i< min(nb_exp,nbExp); i++)
+  for(uint8_t i=0; i< min(nb_exp_,nbExp); i++)
   {
     exp_tab_[i].set_config(data.expConfigs[i]);
+#ifdef DEBUG
+    Serial.print("Exp ");
+    Serial.print(i);
+    Serial.print(" command ");
+    Serial.print(data.fsConfigs[i].command,HEX);
+    Serial.print(", mode ");
+    Serial.print(data.fsConfigs[i].mode,HEX);
+    Serial.print("\n\r");
+#endif //DEBUG
   }
-  */
   isModified = false;
 }

@@ -15,7 +15,7 @@ RotaryEncoder rot(rotaryPinA,rotaryPinB);
 Footswitch fs[nbFs];
 ExpPedal expPedal[nbExp];
 GlobalSetting global_setting;
-Preset preset(fs, nbFs);
+Preset preset(fs, nbFs, expPedal, nbExp);
 
 //button ok
 uint8_t prec_button_ok;

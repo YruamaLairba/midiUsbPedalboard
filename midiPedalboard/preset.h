@@ -27,13 +27,16 @@ class Preset
   private:
     Footswitch* fs_tab_;
     uint8_t nb_fs_;
+    ExpPedal* exp_tab_;
+    uint8_t nb_exp_;
     static const uint8_t nbPreset = (eeprom_preset_bank_end + 1
         - eeprom_preset_bank_start)/sizeof(PresetData);
     uint8_t number; //number of the currently loaded preset
     bool isModified; //is the current preset modified ?
   public:
     Preset();
-    Preset(Footswitch* fs_tab, uint8_t nb_fs);
+    Preset(Footswitch* fs_tab, uint8_t nb_fs,
+        ExpPedal* exp_tab, uint8_t nb_exp_);
 
     void init(); //for startup initialization
 
