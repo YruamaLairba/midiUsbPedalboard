@@ -31,15 +31,15 @@ class Preset
   private:
     Footswitch* fs_tab_;
     uint8_t nb_fs_;
-    static const uint8_t nbPreset = (
-        E2END + 1 - eeprom_preset_start)/sizeof(PresetData);
+    static const uint8_t nbPreset = (eeprom_preset_bank_end + 1
+        - eeprom_preset_bank_start)/sizeof(PresetData);
     uint8_t number; //number of the currently loaded preset
     bool isModified; //is the current preset modified ?
   public:
     Preset();
     Preset(Footswitch* fs_tab, uint8_t nb_fs);
 
-    //void init(); //for startup initialization
+    void init(); //for startup initialization
 
     void save(uint8_t presetNumber);
     void load(uint8_t presetNumber);

@@ -12,9 +12,11 @@ Preset::Preset(Footswitch* fs_tab,uint8_t nb_fs)
   ,nb_fs_(nb_fs)
 {}
 
-//void Preset::init()
-//{
-//}
+void Preset::init()
+{
+  EEPROM.get(eeprom_preset_number_start, number);
+  load(number);
+}
 
 #warning "Preset::save : this is only a prototype
 void Preset::save(uint8_t presetNumber)
@@ -50,7 +52,19 @@ void Preset::save(uint8_t presetNumber)
     data.expConfigs[i] = exp_tab_[i].get_config();
   }
   */
-  EEPROM.put(E2END + 1 - presetNumber*sizeof(data),data);
+
+#ifdef DEBUG
+  //Serial.print(eeprom_preset_number_start, number);
+  Serial.print("addresse dans l'eeprom : ");
+  Serial.print(eeprom_preset_bank_end + 1 -
+      (presetNumber + 1 ) * sizeof(data), DEC);
+  Serial.print("\n\r");
+#endif
+
+  //note : preset are stored in reverse order in the eeprom
+  EEPROM.put(eeprom_preset_bank_end + 1 -
+      (presetNumber + 1) * sizeof(data),data);
+  EEPROM.put(eeprom_preset_number_start, number);
   isModified = false;
 }
 
@@ -65,7 +79,19 @@ void Preset::load(uint8_t presetNumber)
 //manipulate EEprom here
   number = presetNumber;
   PresetData data;
-  EEPROM.get(E2END + 1 - presetNumber*sizeof(data), data);
+
+#ifdef DEBUG
+  //Serial.print(eeprom_preset_number_start, number);
+  Serial.print("addresse dans l'eeprom : ");
+  Serial.print(eeprom_preset_bank_end + 1 -
+      (presetNumber + 1 ) * sizeof(data), DEC);
+  Serial.print("\n\r");
+#endif
+
+  EEPROM.put(eeprom_preset_number_start, number);
+  //note : preset are stored in reverse order in the eeprom
+  EEPROM.get(eeprom_preset_bank_end + 1 -
+      (presetNumber + 1) * sizeof(data),data);
   //fs
   for(uint8_t i=0; i< min(nb_fs_,nbFs); i++)
   {

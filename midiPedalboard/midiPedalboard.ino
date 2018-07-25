@@ -75,6 +75,7 @@ void setup() {
   pinMode(buttonCancelPin, INPUT_PULLUP);
 
   global_setting.init();
+  preset.init();
 
   //footswitch class initialisation
   for(uint8_t i=0; i<nbFs; i++)
