@@ -85,6 +85,11 @@ void setup() {
     fs[i].setup(fsPins[i], fsLedPins[i]);
   }
 
+  //expPedal class initialisation
+  for(uint8_t i=0; i<nbExp; i++)
+  {
+    expPedal[i].setup(expPins[i]);
+  }
 
   display.begin(SSD1306_SWITCHCAPVCC);
   display.display();
@@ -155,4 +160,26 @@ void loop() {
       MidiUSB.flush();
     }
   }
+
+#if 1
+  for(uint8_t i = 0; i < nbExp; i++)
+  {
+    int16_t val = expPedal[i].read();
+    if (val >= 0)
+    {
+      int8_t val2 = val/8;
+#ifdef DEBUG
+      Serial.println(val,DEC);
+#endif
+      midiEventPacket_t event = {
+        0x0B,
+        0xB0|global_setting.get_midi_channel(),
+        expPedal[i].get_command(),
+        val2
+      };
+      MidiUSB.sendMIDI(event);
+      MidiUSB.flush();
+    }
+  }
+#endif
 }

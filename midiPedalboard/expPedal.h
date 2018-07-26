@@ -25,6 +25,8 @@ struct ExpConfig
 class ExpPedal
 {
   private:
+    static const unsigned long debounceTime_ = 1000;
+
     uint8_t command_;
     uint8_t mode_;
 

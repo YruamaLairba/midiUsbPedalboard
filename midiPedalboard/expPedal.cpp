@@ -46,8 +46,13 @@ int16_t ExpPedal::read()
   unsigned long cur_millis = millis();
   int16_t result = -1;
 
-  if (old_exp_val_ != cur_exp_val)
+//  Serial.print(" exp val : ");
+//  Serial.print(cur_exp_val, DEC);
+//  Serial.print("\r\n");
+//  if (old_exp_val_ != cur_exp_val)
+  if ((cur_millis - debounce_millis_) > debounceTime_)
   {
+    debounce_millis_ = cur_millis;
     switch(mode_)
     {
       case expMode::normal:
