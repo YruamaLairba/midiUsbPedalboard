@@ -39,7 +39,7 @@ class ExpPedal
     ExpPedal();
     void setup(uint8_t exp_pin);
     uint8_t get_command() {return command_;};
-    void set_command(uint8_t command){command_ = command;};
+    void set_command(uint8_t command);
 
     uint8_t get_mode(){return mode_;};
     void set_mode(uint8_t mode);

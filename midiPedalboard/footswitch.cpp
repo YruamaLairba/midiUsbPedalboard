@@ -19,10 +19,17 @@ void Footswitch::setup(uint8_t fs_pin, uint8_t led_pin)
   pinMode(fs_pin_, INPUT_PULLUP);
 }
 
+void Footswitch::set_command(uint8_t command)
+{
+  command_ = command;
+  if (command_ > 127) command_ = 0;
+}
+
 void Footswitch::set_mode(uint8_t mode)
 {
   mode_ = mode;
-  switch(mode)
+  if (mode_ > fsMode::MAX) mode_ = fsMode::toggle_off;
+  switch(mode_)
   {
     case fsMode::toggle_off:
       fs_val_=0;

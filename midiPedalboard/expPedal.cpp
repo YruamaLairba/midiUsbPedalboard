@@ -14,9 +14,16 @@ void ExpPedal::setup(uint8_t exp_pin)
   old_exp_val_ = analogRead(exp_pin_);
 }
 
+void ExpPedal::set_command(uint8_t command)
+{
+  command_ = command;
+  if (command_ > 127) command_ = 0;
+}
+
 void ExpPedal::set_mode(uint8_t mode)
 {
   mode_ = mode;
+  if (mode_ > 127) mode_ = 0;
 }
 
 ExpConfig ExpPedal::get_config()
