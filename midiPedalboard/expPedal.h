@@ -25,17 +25,18 @@ struct ExpConfig
 class ExpPedal
 {
   private:
-    static const unsigned long debounceTime_ = 1000;
+    static const unsigned long changeDelayTime_ = 100;
+    static const int16_t dead_zone_ = 8;
 
     uint8_t command_;
     uint8_t mode_;
 
     uint8_t exp_pin_; //analog input pin
 
-    uint16_t old_exp_val_; //
+    int16_t old_exp_val_; //
     uint16_t exp_val_;//virtual value of the pin
 
-    unsigned long debounce_millis_;//for debouncing
+    unsigned long change_delay_millis_;//for debouncing
 
   public:
     ExpPedal();
