@@ -852,8 +852,8 @@ bool MenuPresetLoad::cancel()
 
 bool MenuPresetLoad::reset()
 {
-  selection = 0;
-  displayOffset = 0;
+  selection = pt_preset->get_presetNumber();
+  displayOffset = min(selection, (pt_preset->get_nbPreset() - 1 - 4));
   return true;
 }
 
@@ -945,8 +945,8 @@ bool MenuPresetSave::cancel()
 
 bool MenuPresetSave::reset()
 {
-  selection = 0;
-  displayOffset = 0;
+  selection = pt_preset->get_presetNumber();
+  displayOffset = min(selection, (pt_preset->get_nbPreset() - 1 - 4));
   return true;
 }
 
