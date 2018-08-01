@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "setup.h"
 #include "footswitch.h"
-#include "expPedal.h"
+#include "exp_pedal.h"
 #include "EEPROM.h"
 #include "eeprom_config.h"
 

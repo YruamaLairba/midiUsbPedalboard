@@ -1,5 +1,5 @@
-#ifndef EXPPEDAL_H
-#define EXPPEDAL_H
+#ifndef EXP_PEDAL_H
+#define EXP_PEDAL_H
 
 #include <stdint.h>
 #include <Arduino.h>
@@ -59,5 +59,5 @@ class ExpPedal
 
 
 
-#endif //EXPPEDAL_H
+#endif //EXP_PEDAL_H
 

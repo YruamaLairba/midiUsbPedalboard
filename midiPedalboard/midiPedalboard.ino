@@ -2,7 +2,7 @@
 #include "setup.h"
 #include "menus.h"
 #include "footswitch.h"
-#include "expPedal.h"
+#include "exp_pedal.h"
 #include "global_setting.h"
 #include "preset.h"
 #include "display.h"

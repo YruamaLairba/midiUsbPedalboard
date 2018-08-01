@@ -1,4 +1,4 @@
-#include "expPedal.h"
+#include "exp_pedal.h"
 
 ExpPedal::ExpPedal()
   : command_(0)
