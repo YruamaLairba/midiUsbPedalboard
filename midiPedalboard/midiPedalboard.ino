@@ -77,13 +77,14 @@ void setup() {
   pinMode(buttonCancelPin, INPUT_PULLUP);
 
   global_setting.init();
-  preset.init();
 
   //footswitch class initialisation
   for(uint8_t i=0; i<nbFs; i++)
   {
     fs[i].setup(fsPins[i], fsLedPins[i]);
   }
+
+  preset.init();
 
   //expPedal class initialisation
   for(uint8_t i=0; i<nbExp; i++)
