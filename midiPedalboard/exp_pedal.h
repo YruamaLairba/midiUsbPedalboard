@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <Arduino.h>
+#include "global_setting.h"
 
 //#warning "fix me"
 typedef uint8_t expCommand_t;
@@ -38,9 +39,12 @@ class ExpPedal
 
     unsigned long change_delay_millis_;//for debouncing
 
+    GlobalSetting* pt_global_setting_;
+    void midi_send(uint8_t val);
+
   public:
     ExpPedal();
-    void setup(uint8_t exp_pin);
+    void setup(uint8_t exp_pin, GlobalSetting* pt_global_setting);
     uint8_t get_command() {return command_;};
     void set_command(uint8_t command);
 
@@ -54,7 +58,7 @@ class ExpPedal
 
     //return value when positive
     //return -1 when fs state doesn't change
-    int16_t read();
+    void process();
 };
 
 

@@ -1,4 +1,17 @@
 #include "exp_pedal.h"
+#include <MIDIUSB.h>
+
+void ExpPedal::midi_send(uint8_t val)
+{
+  midiEventPacket_t event = {
+    0x0B,
+    0xB0|pt_global_setting_->get_midi_channel(),
+    get_command(),
+    val
+  };
+  MidiUSB.sendMIDI(event);
+  MidiUSB.flush();
+}
 
 ExpPedal::ExpPedal()
   : command_(0)
@@ -7,11 +20,12 @@ ExpPedal::ExpPedal()
   , change_delay_millis_(0)
 {}
 
-void ExpPedal::setup(uint8_t exp_pin)
+void ExpPedal::setup(uint8_t exp_pin, GlobalSetting* pt_global_setting)
 {
   exp_pin_= exp_pin;
   pinMode(exp_pin_, INPUT);
   old_exp_val_ = analogRead(exp_pin_);
+  pt_global_setting_ = pt_global_setting;
 }
 
 void ExpPedal::set_command(uint8_t command)
@@ -40,11 +54,10 @@ void ExpPedal::set_config(ExpConfig conf)
   set_mode(conf.mode);
 }
 
-int16_t ExpPedal::read()
+void ExpPedal::process()
 {
   int16_t cur_exp_val= analogRead(exp_pin_);
   unsigned long cur_millis = millis();
-  int16_t result = -1;
 
 //  Serial.print(" exp val : ");
 //  Serial.print(cur_exp_val, DEC);
@@ -62,12 +75,11 @@ int16_t ExpPedal::read()
       {
         case expMode::normal:
         case expMode::reverse:
-          result = cur_exp_val;
+          midi_send(cur_exp_val/8);
           break;
       }
       old_exp_val_ = cur_exp_val;
     }
   }
-  return result;
 }
 
