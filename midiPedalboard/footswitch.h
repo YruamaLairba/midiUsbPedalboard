@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <Arduino.h>
+#include "global_setting.h"
 
 //#warning "fix me"
 typedef uint8_t fsCommand_t;
@@ -43,9 +44,12 @@ class Footswitch
     unsigned long led_millis_;//used to make led flash or blink
     unsigned long debounce_millis_;//for debouncing
 
+    GlobalSetting* pt_global_setting_;
+    void midi_send(uint8_t val);
+
   public:
     Footswitch();
-    void setup(uint8_t fs_pin, uint8_t led_pin);
+    void setup(uint8_t fs_pin, uint8_t led_pin, GlobalSetting* global_setting);
     uint8_t get_command() {return command_;};
     void set_command(uint8_t command);
 
@@ -60,7 +64,7 @@ class Footswitch
     //return 127 when fs change to on
     //return 0 when fs change to off
     //return -1 when fs state doesn't change
-    int8_t read();
+    void process();
 };
 
 

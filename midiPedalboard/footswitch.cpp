@@ -1,4 +1,17 @@
 #include "footswitch.h"
+#include <MIDIUSB.h>
+
+void Footswitch::midi_send(uint8_t val)
+{
+  midiEventPacket_t event = {
+    0x0B,
+    0xB0|pt_global_setting_->get_midi_channel(),
+    get_command(),
+    val
+  };
+  MidiUSB.sendMIDI(event);
+  MidiUSB.flush();
+}
 
 Footswitch::Footswitch()
   : command_(0)
@@ -11,12 +24,14 @@ Footswitch::Footswitch()
   , debounce_millis_(0)
 {}
 
-void Footswitch::setup(uint8_t fs_pin, uint8_t led_pin)
+void Footswitch::setup(
+    uint8_t fs_pin, uint8_t led_pin, GlobalSetting* pt_global_setting)
 {
   fs_pin_= fs_pin;
   led_pin_ = led_pin;
   pinMode(led_pin_, OUTPUT);
   pinMode(fs_pin_, INPUT_PULLUP);
+  pt_global_setting_ = pt_global_setting;
 }
 
 void Footswitch::set_command(uint8_t command)
@@ -68,11 +83,10 @@ void Footswitch::set_config(FsConfig conf)
   set_mode(conf.mode);
 }
 
-int8_t Footswitch::read()
+void Footswitch::process()
 {
   uint8_t cur_fs_pin_val= digitalRead(fs_pin_);
   unsigned long cur_millis = millis();
-  int8_t result = -1;
 
   switch(mode_)
   {
@@ -91,15 +105,15 @@ int8_t Footswitch::read()
           {
             if(fs_val_==0)
             {
-              result = 127;
               digitalWrite(led_pin_, HIGH);
               fs_val_ = 1;
+              midi_send(127);
             }
             else
             {
-              result = 0;
               digitalWrite(led_pin_, LOW);
               fs_val_ = 0;
+              midi_send(0);
             }
           }
         }
@@ -112,15 +126,15 @@ int8_t Footswitch::read()
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
           debounce_millis_ = cur_millis;
-          result = 0;
           digitalWrite(led_pin_, LOW);
+          midi_send(0);
         }
         //on release
         else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
         {
           debounce_millis_ = cur_millis;
-          result = 127;
           digitalWrite(led_pin_, HIGH);
+          midi_send(127);
         }
       }
       break;
@@ -131,15 +145,15 @@ int8_t Footswitch::read()
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
           debounce_millis_ = cur_millis;
-          result = 127;
           digitalWrite(led_pin_, HIGH);
+          midi_send(127);
         }
         //on release
         else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
         {
           debounce_millis_ = cur_millis;
-          result = 0;
           digitalWrite(led_pin_, LOW);
+          midi_send(0);
         }
       }
       break;
@@ -154,9 +168,9 @@ int8_t Footswitch::read()
         //on press
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
-          result = 0;
           digitalWrite(led_pin_, HIGH);
           led_millis_ = cur_millis;
+          midi_send(0);
         }
       }
       //when led_millis_ timeout
@@ -176,9 +190,9 @@ int8_t Footswitch::read()
         //on press
         if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
         {
-          result = 127;
           digitalWrite(led_pin_, HIGH);
           led_millis_ = cur_millis;
+          midi_send(127);
         }
       }
       //when led_millis_ timeout
@@ -189,6 +203,5 @@ int8_t Footswitch::read()
     break;
   }
   old_fs_pin_val_ = cur_fs_pin_val;
-  return result;
 }
 

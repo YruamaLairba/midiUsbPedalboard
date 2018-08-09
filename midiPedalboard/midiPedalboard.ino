@@ -81,7 +81,7 @@ void setup() {
   //footswitch class initialisation
   for(uint8_t i=0; i<nbFs; i++)
   {
-    fs[i].setup(fsPins[i], fsLedPins[i]);
+    fs[i].setup(fsPins[i], fsLedPins[i], &global_setting);
   }
 
   preset.init();
@@ -148,18 +148,7 @@ void loop() {
 
   for(uint8_t i = 0; i < nbFs; i++)
   {
-    int8_t val = fs[i].read();
-    if (val >= 0)
-    {
-      midiEventPacket_t event = {
-        0x0B,
-        0xB0|global_setting.get_midi_channel(),
-        fs[i].get_command(),
-        val
-      };
-      MidiUSB.sendMIDI(event);
-      MidiUSB.flush();
-    }
+    fs[i].process();
   }
 
 #if 1
