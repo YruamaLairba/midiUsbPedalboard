@@ -1,5 +1,9 @@
 #include "exp_pedal.h"
+#include "warnings.h"
+
+DIAGNOSTIC_IGNORE_ALL
 #include <MIDIUSB.h>
+DIAGNOSTIC_POP
 
 void ExpPedal::midi_send(uint8_t val)
 {

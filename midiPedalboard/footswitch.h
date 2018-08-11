@@ -1,9 +1,13 @@
 #ifndef FOOTSWITCH_H
 #define FOOTSWITCH_H
 
+#include "global_setting.h"
+#include "warnings.h"
+
+DIAGNOSTIC_IGNORE_ALL
 #include <stdint.h>
 #include <Arduino.h>
-#include "global_setting.h"
+DIAGNOSTIC_POP
 
 //#warning "fix me"
 typedef uint8_t fsCommand_t;

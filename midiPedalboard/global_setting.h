@@ -1,10 +1,14 @@
 #ifndef GLOBAL_SETTING_H
 #define GLOBAL_SETTING_H
 
-#include <stdint.h>
 #include "setup.h"
-#include "EEPROM.h"
 #include "eeprom_config.h"
+#include "warnings.h"
+
+#include <stdint.h>
+DIAGNOSTIC_IGNORE_ALL
+#include <EEPROM.h>
+DIAGNOSTIC_POP
 
 #warning "TODO: eeprom save and load"
 class GlobalSetting

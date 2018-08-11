@@ -1,15 +1,17 @@
 #ifndef MENUS_H
 #define MENUS_H
 
-#include <stdint.h>
-#include <Arduino.h>// for Serial
-
 #include "setup.h"
 #include "display.h"
 #include "global_setting.h"
 #include "preset.h"
 #include "footswitch.h"
+#include "warnings.h"
 
+#include <stdint.h>
+DIAGNOSTIC_IGNORE_ALL
+#include <Arduino.h>// for Serial
+DIAGNOSTIC_POP
 
 class MenuBase;
 

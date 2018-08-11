@@ -1,12 +1,16 @@
 #ifndef PRESET_H
 #define PRESET_H
 
-#include <stdint.h>
 #include "setup.h"
 #include "footswitch.h"
 #include "exp_pedal.h"
-#include "EEPROM.h"
 #include "eeprom_config.h"
+#include "warnings.h"
+
+#include <stdint.h>
+DIAGNOSTIC_IGNORE_ALL
+#include <EEPROM.h>
+DIAGNOSTIC_POP
 
 typedef uint8_t FsMode;
 typedef uint8_t FsCommand;

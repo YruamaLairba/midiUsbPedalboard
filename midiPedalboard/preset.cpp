@@ -1,7 +1,10 @@
 #include "preset.h"
 
 #ifdef DEBUG
+#include "warnings.h"
+DIAGNOSTIC_IGNORE_ALL
 #include <Arduino.h>
+DIAGNOSTIC_POP
 #endif //DEBUG
 
 //ctor

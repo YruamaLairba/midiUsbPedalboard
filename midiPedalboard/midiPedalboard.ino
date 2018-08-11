@@ -1,4 +1,3 @@
-#include <MIDIUSB.h>
 #include "setup.h"
 #include "menus.h"
 #include "footswitch.h"
@@ -7,6 +6,11 @@
 #include "preset.h"
 #include "display.h"
 #include "rotary_encoder.h"
+#include "warnings.h"
+
+DIAGNOSTIC_IGNORE_ALL
+#include <MIDIUSB.h>
+DIAGNOSTIC_POP
 
 //rotary coder
 RotaryEncoder rot(rotaryPinA,rotaryPinB);

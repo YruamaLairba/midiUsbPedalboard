@@ -1,7 +1,11 @@
 #ifndef ROTARY_ENCODER_H
 #define ROTARY_ENCODER_H
 
+#include "warnings.h"
+
+DIAGNOSTIC_IGNORE_ALL
 #include <Arduino.h>
+DIAGNOSTIC_POP
 
 class RotaryEncoder {
  public:

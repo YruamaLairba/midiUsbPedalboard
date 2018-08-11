@@ -1,6 +1,10 @@
 #ifndef SETUP_H
 #define SETUP_H
+#include "warnings.h"
+
+DIAGNOSTIC_IGNORE_ALL
 #include <Arduino.h> // for A0 - A5 pin name
+DIAGNOSTIC_POP
 
 //footswitch
 const uint8_t nbFs = 4;
