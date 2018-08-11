@@ -6,7 +6,6 @@
 
 #include <stdint.h>
 
-#warning "TODO: eeprom save and load"
 class GlobalSetting
 {
   private:
@@ -19,9 +18,6 @@ class GlobalSetting
     void set_midi_channel(uint8_t midi_channel);
     uint8_t get_midi_channel(){return midi_channel_;};
 };
-
-
-
 
 #endif //GLOBAL_SETTING_H
 

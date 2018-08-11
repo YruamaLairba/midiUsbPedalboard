@@ -20,8 +20,6 @@ struct PresetData
   ExpConfig expConfigs [nbExp];
 };
 
-
-#warning "replace litteral values by an abstract value"
 class Preset
 {
   private:

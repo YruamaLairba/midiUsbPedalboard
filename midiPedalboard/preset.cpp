@@ -28,7 +28,6 @@ void Preset::init()
   load(number);
 }
 
-#warning "Preset::save : this is only a prototype
 void Preset::save(uint8_t presetNumber)
 {
 #ifdef DEBUG
@@ -55,7 +54,7 @@ void Preset::save(uint8_t presetNumber)
 #endif //DEBUG
   }
   //exp pedal
-#warning "TODO"
+#warning "TO CHECK"
   for(uint8_t i=0; i< min(nb_exp_,nbExp); i++)
   {
     data.expConfigs[i] = exp_tab_[i].get_config();
@@ -85,7 +84,6 @@ void Preset::save(uint8_t presetNumber)
   isModified = false;
 }
 
-#warning "Preset::load : this is only a prototype
 void Preset::load(uint8_t presetNumber)
 {
 #ifdef DEBUG
@@ -124,7 +122,7 @@ void Preset::load(uint8_t presetNumber)
 #endif //DEBUG
   }
   //exp pedal
-#warning "TODO"
+#warning "TO CHECK"
   for(uint8_t i=0; i< min(nb_exp_,nbExp); i++)
   {
     exp_tab_[i].set_config(data.expConfigs[i]);
