@@ -1,11 +1,15 @@
 #include "preset.h"
+#include "warnings.h"
 
 #ifdef DEBUG
-#include "warnings.h"
 DIAGNOSTIC_IGNORE_ALL
 #include <Arduino.h>
 DIAGNOSTIC_POP
 #endif //DEBUG
+
+DIAGNOSTIC_IGNORE_ALL
+#include <EEPROM.h>
+DIAGNOSTIC_POP
 
 //ctor
 Preset::Preset(){}

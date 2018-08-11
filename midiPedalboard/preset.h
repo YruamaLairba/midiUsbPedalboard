@@ -5,12 +5,8 @@
 #include "footswitch.h"
 #include "exp_pedal.h"
 #include "eeprom_config.h"
-#include "warnings.h"
 
 #include <stdint.h>
-DIAGNOSTIC_IGNORE_ALL
-#include <EEPROM.h>
-DIAGNOSTIC_POP
 
 typedef uint8_t FsMode;
 typedef uint8_t FsCommand;

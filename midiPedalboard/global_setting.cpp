@@ -1,4 +1,9 @@
 #include "global_setting.h"
+#include "warnings.h"
+
+DIAGNOSTIC_IGNORE_ALL
+#include <EEPROM.h>
+DIAGNOSTIC_POP
 
 void GlobalSetting::init()
 {
