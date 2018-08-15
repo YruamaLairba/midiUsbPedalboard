@@ -7,6 +7,7 @@
 #include "display.h"
 #include "rotary_encoder.h"
 #include "warnings.h"
+#include "push_button.h"
 
 DIAGNOSTIC_IGNORE_ALL
 #include <MIDIUSB.h>
@@ -22,11 +23,13 @@ GlobalSetting global_setting;
 Preset preset(fs, nbFs, expPedal, nbExp);
 
 //button ok
+PushButton button_ok(buttonOkPin);
 uint8_t prec_button_ok;
 uint8_t cur_button_ok;
 uint8_t button_ok_acc;//used for debounce filter
 
 //button cancel
+PushButton button_cancel(buttonCancelPin);
 uint8_t prec_button_cancel;
 uint8_t cur_button_cancel;
 uint8_t button_cancel_acc;
@@ -112,14 +115,14 @@ void loop() {
   else if(tmp > 0) refresh=manager.next();
 
   //validate
-  if (prec_button_ok == HIGH and cur_button_ok == LOW)
+  if (button_ok.read()== PushButtonVal::pressed)
   {
     refresh = manager.validate(); 
   }
   prec_button_ok = cur_button_ok;
 
   //cancel
-  if (prec_button_cancel == HIGH and cur_button_cancel == LOW)
+  if (button_cancel.read()== PushButtonVal::pressed)
   {
     refresh = manager.cancel(); 
   }
