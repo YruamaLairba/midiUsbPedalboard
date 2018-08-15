@@ -31,19 +31,6 @@ uint8_t prec_button_cancel;
 uint8_t cur_button_cancel;
 uint8_t button_cancel_acc;
 
-//footswitchs physical value
-uint8_t cur_fsRawValues[nbFs];
-uint8_t prec_fsRawValues[nbFs];
-uint8_t fsRawValues_acc[nbFs];
-
-//footswitchs software value
-uint8_t fsValue[nbFs];//on off, but not the raw digitalRead() value
-
-unsigned long leds_millis[nbFs]; //used to blink led
-
-//expression pedal value
-int16_t expValue[nbExp];
-
 unsigned long last_micros;
 
 unsigned long debug_last_micros;
@@ -117,14 +104,6 @@ void loop() {
     filterButton(digitalRead(buttonOkPin), 50, &button_ok_acc, &cur_button_ok);
     filterButton(digitalRead(buttonCancelPin), 50, &button_cancel_acc,
                  &cur_button_cancel);
-
-    //read footswitch input
-    for(uint8_t i=0; i<nbFs; i++)
-    {
-    filterButton(digitalRead(fsPins[i]), 50, &fsRawValues_acc[i],
-        &cur_fsRawValues[i]);
-    }
-
     last_micros = current_micros;
   }
 
