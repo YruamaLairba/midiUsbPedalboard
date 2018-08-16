@@ -58,7 +58,23 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+#ifdef DEBUG
+  unsigned long int menu_system_time = micros();
+#endif
   menu_system.process();
+#ifdef DEBUG
+  unsigned long int menu_system_time2 = micros();
+  unsigned int long diff = menu_system_time2 - menu_system_time;
+  if(diff >1000)
+  {
+    Serial.print("menu system delay : ");
+    Serial.println(diff);
+  }
+#endif
+
+#ifdef DEBUG
+  unsigned long int controller_system_time = micros();
+#endif
   for(uint8_t i = 0; i < nbFs; i++)
   {
     fs[i].process();
@@ -69,4 +85,14 @@ void loop() {
     expPedal[i].process();
   }
 #endif
+#ifdef DEBUG
+  unsigned long int controller_system_time2 = micros();
+  unsigned long int diff2 = controller_system_time2 - controller_system_time;
+  if(diff2>1000)
+  {
+    Serial.print("controller system delay : ");
+    Serial.println(diff2);
+  }
+#endif
+
 }
