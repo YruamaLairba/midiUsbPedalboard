@@ -20,13 +20,16 @@ DIAGNOSTIC_POP
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
 
-class AbstractMenu;
+class MenuBase;
 class MenuConf;
 class MenuSystem;
 
-class AbstractMenu
+class MenuBase
 {
+  protected:
+    MenuSystem* pt_menu_system_;
   public:
+    MenuBase(MenuSystem* pt_menu_system);
     virtual void select_next() = 0;
     virtual void select_prev() = 0;
     virtual void validate() = 0;
@@ -34,27 +37,53 @@ class AbstractMenu
     virtual void print() = 0;
 };
 
-class MenuBase : public AbstractMenu
+class MenuTemplate : public MenuBase
 {
   protected:
-    MenuSystem* menu_system_;
     uint8_t selection_;
     uint8_t selection_max_;
     uint8_t display_offset_;
     virtual void reset();
   public:
-    MenuBase(MenuSystem* menu_system);
+    MenuTemplate(MenuSystem* menu_system);
     virtual void select_next();
     virtual void select_prev();
-    virtual void validate() = 0;
-    virtual void cancel() = 0;
-    virtual void print() = 0;
 };
 
-class MenuConf : public MenuBase
+// for menus with a parent
+class SubMenuTemplate : public MenuTemplate
+{
+  protected:
+    MenuBase* pt_parent_;
+  public:
+    SubMenuTemplate(MenuSystem* pt_menu_system, MenuBase* pt_parent);
+    virtual void activate();
+    virtual void cancel();
+};
+
+class MenuControllerSetting : public SubMenuTemplate
+{
+  public:
+    MenuControllerSetting(MenuSystem* menu_system, MenuBase* pt_parent);
+    virtual void validate();
+    virtual void print();
+};
+
+class MenuPresetLoad : public SubMenuTemplate
+{
+  public:
+    MenuPresetLoad(MenuSystem* menu_system, MenuBase* pt_parent);
+    virtual void validate();
+    virtual void print();
+};
+
+
+class MenuConf : public MenuTemplate
 {
   public:
     MenuConf(MenuSystem* menu_system);
+    MenuControllerSetting menu_controller_setting_;
+    MenuPresetLoad menu_preset_load_;
     virtual void validate();
     virtual void cancel();
     virtual void print();
@@ -64,7 +93,7 @@ class MenuSystem
 {
   private:
     MenuConf root_;
-    AbstractMenu* pt_current_;
+    MenuBase* pt_current_;
     RotaryEncoder rotary_encoder_;
     PushButton button_ok_;
     PushButton button_cancel_;
@@ -72,7 +101,7 @@ class MenuSystem
   public:
     MenuSystem();
     void init();
-    void set_active(AbstractMenu* activated);
+    void set_active(MenuBase* activated);
     void process();
 };
 
