@@ -70,8 +70,6 @@ void ExpPedal::process()
   if ((cur_millis - change_delay_millis_) > changeDelayTime_)
   {
     int16_t diff = abs(cur_exp_val - old_exp_val_);
-    Serial.print("diff ");
-    Serial.println(diff, DEC);
     if (diff > dead_zone_)
     {
       change_delay_millis_ = cur_millis;
