@@ -77,6 +77,13 @@ class MenuPresetLoad : public SubMenuTemplate
     virtual void print();
 };
 
+class MenuPresetSave : public SubMenuTemplate
+{
+  public:
+    MenuPresetSave(MenuSystem* menu_system, MenuBase* pt_parent);
+    virtual void validate();
+    virtual void print();
+};
 
 class MenuConf : public MenuTemplate
 {
@@ -84,6 +91,7 @@ class MenuConf : public MenuTemplate
     MenuConf(MenuSystem* menu_system);
     MenuControllerSetting menu_controller_setting_;
     MenuPresetLoad menu_preset_load_;
+    MenuPresetSave menu_preset_save_;
     virtual void validate();
     virtual void cancel();
     virtual void print();

@@ -127,10 +127,42 @@ void MenuPresetLoad::print()
   display.display();
 }
 
+MenuPresetSave::MenuPresetSave(
+    MenuSystem* menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(menu_system, pt_parent)
+{
+  selection_max_ = 111;
+}
+
+void MenuPresetSave::validate(){}
+
+void MenuPresetSave::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i <= selection_max_ && i < display_offset_ + 4; i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Save to "));
+    display.print(i,DEC);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuConf::MenuConf(MenuSystem* menu_system)
   : MenuTemplate(menu_system)
   , menu_controller_setting_(menu_system,this)
   , menu_preset_load_(menu_system,this)
+  , menu_preset_save_(menu_system,this)
 {
   selection_max_ = 3;
 }
@@ -144,6 +176,9 @@ void MenuConf::validate()
       break;
     case 1:
       menu_preset_load_.activate();
+      break;
+    case 2:
+      menu_preset_save_.activate();
       break;
   }
 }
