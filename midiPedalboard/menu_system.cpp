@@ -158,11 +158,50 @@ void MenuPresetSave::print()
   display.display();
 }
 
+MenuGlobalSetting::MenuGlobalSetting(
+    MenuSystem* menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(menu_system, pt_parent)
+{
+  selection_max_ = 1;
+}
+
+void MenuGlobalSetting::validate(){}
+
+void MenuGlobalSetting::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i <= selection_max_ && i < display_offset_ + 4; i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    switch(i)
+    {
+      case 0:
+        display.print(F("Midi chan"));
+        break;
+      case 1:
+        display.print(F("Exp cal"));
+        break;
+    }
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuConf::MenuConf(MenuSystem* menu_system)
   : MenuTemplate(menu_system)
   , menu_controller_setting_(menu_system,this)
   , menu_preset_load_(menu_system,this)
   , menu_preset_save_(menu_system,this)
+  , menu_global_setting_(menu_system,this)
 {
   selection_max_ = 3;
 }
@@ -179,6 +218,9 @@ void MenuConf::validate()
       break;
     case 2:
       menu_preset_save_.activate();
+      break;
+    case 3:
+      menu_global_setting_.activate();
       break;
   }
 }
