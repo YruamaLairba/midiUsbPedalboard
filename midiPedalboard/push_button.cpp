@@ -21,11 +21,12 @@ uint8_t PushButton::read()
       {
         val_ = PushButtonVal::pressed;
       }
-      else 
+      else
       {
         val_ = PushButtonVal::depressed;
       }
     }
+    old_pin_val_ = cur_pin_val;
     debounce_millis_ = cur_millis;
   }
   return val_;
