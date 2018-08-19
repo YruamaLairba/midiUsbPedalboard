@@ -61,12 +61,17 @@ class SubMenuTemplate : public MenuTemplate
     virtual void cancel();
 };
 
+class MenuControllerSetting;
 class MenuFsSetting : public SubMenuTemplate
 {
   private:
+    MenuControllerSetting* pt_menu_controller_setting_;
     uint8_t get_nb_item();
   public:
-    MenuFsSetting(MenuSystem* menu_system, MenuBase* pt_parent);
+    MenuFsSetting(
+        MenuSystem* pt_menu_system,
+        MenuBase* pt_parent,
+        MenuControllerSetting* pt_menu_controller_setting);
     virtual void validate();
     virtual void print();
 };
@@ -75,11 +80,15 @@ class MenuFsSetting : public SubMenuTemplate
 class MenuControllerSetting : public SubMenuTemplate
 {
   private:
+    MenuFsSetting menu_fs_setting_;
     uint8_t get_nb_item();
   public:
     MenuControllerSetting(MenuSystem* menu_system, MenuBase* pt_parent);
     virtual void validate();
     virtual void print();
+
+    uint8_t get_selected_fs();
+    uint8_t get_selected_exp();
 };
 
 class MenuPresetLoad : public SubMenuTemplate

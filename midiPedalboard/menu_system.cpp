@@ -18,7 +18,7 @@ void MenuTemplate::reset()
 
 void MenuTemplate::select_next()
 {
-  if (selection_ < get_nb_item())
+  if (selection_ < get_nb_item()-1)
   {
     selection_++;
   }
@@ -42,7 +42,9 @@ void MenuTemplate::select_prev()
   print();
 }
 
-SubMenuTemplate::SubMenuTemplate(MenuSystem* pt_menu_system, MenuBase* pt_parent)
+SubMenuTemplate::SubMenuTemplate(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent)
   : MenuTemplate(pt_menu_system)
   , pt_parent_(pt_parent)
 {}
@@ -57,14 +59,68 @@ void SubMenuTemplate::cancel()
   pt_menu_system_->set_active(pt_parent_);
 }
 
-MenuControllerSetting::MenuControllerSetting(
-    MenuSystem* menu_system, MenuBase* pt_parent)
+MenuFsSetting::MenuFsSetting(
+    MenuSystem* menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
   : SubMenuTemplate(menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuFsSetting::get_nb_item(){return 2;}
+
+void MenuFsSetting::validate(){}
+
+void MenuFsSetting::print()
+{
+  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("FS"));
+    display.print(fsNum, DEC);
+    switch (i)
+    {
+      case 0:
+        display.print(F(" Cmd"));
+        break;
+      case 1:
+        display.print(F(" Mode"));
+        break;
+    }
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
+MenuControllerSetting::MenuControllerSetting(
+    MenuSystem* pt_menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_fs_setting_(pt_menu_system,this,this)
 {}
 
 uint8_t MenuControllerSetting::get_nb_item(){return nbFs + nbExp;}
 
-void MenuControllerSetting::validate(){}
+void MenuControllerSetting::validate()
+{
+  if(selection_ < nbFs)
+  {
+    menu_fs_setting_.activate();
+  }
+  else if (selection_ >= nbFs && selection_ < nbExp)
+  {
+  }
+}
 
 void MenuControllerSetting::print()
 {
@@ -94,6 +150,16 @@ void MenuControllerSetting::print()
     display.print(F("\n\r"));
   }
   display.display();
+}
+
+uint8_t MenuControllerSetting::get_selected_fs()
+{
+  return selection_;
+}
+
+uint8_t MenuControllerSetting::get_selected_exp()
+{
+  return selection_ - nbFs;
 }
 
 MenuPresetLoad::MenuPresetLoad(
