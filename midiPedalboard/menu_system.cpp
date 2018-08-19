@@ -18,7 +18,7 @@ void MenuTemplate::reset()
 
 void MenuTemplate::select_next()
 {
-  if (selection_ < selection_max_)
+  if (selection_ < get_nb_item())
   {
     selection_++;
   }
@@ -60,9 +60,9 @@ void SubMenuTemplate::cancel()
 MenuControllerSetting::MenuControllerSetting(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
-{
-  selection_max_ = nbFs + nbExp - 1;
-}
+{}
+
+uint8_t MenuControllerSetting::get_nb_item(){return nbFs + nbExp;}
 
 void MenuControllerSetting::validate(){}
 
@@ -71,7 +71,7 @@ void MenuControllerSetting::print()
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i <= selection_max_ && i < (display_offset_ + 4); i++)
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -99,9 +99,9 @@ void MenuControllerSetting::print()
 MenuPresetLoad::MenuPresetLoad(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
-{
-  selection_max_ = 2;
-}
+{}
+
+uint8_t MenuPresetLoad::get_nb_item(){return 2;}
 
 void MenuPresetLoad::validate(){}
 
@@ -110,7 +110,7 @@ void MenuPresetLoad::print()
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i <= selection_max_ && i < display_offset_ + 4; i++)
+      i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -130,9 +130,9 @@ void MenuPresetLoad::print()
 MenuPresetSave::MenuPresetSave(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
-{
-  selection_max_ = 111;
-}
+{}
+
+uint8_t MenuPresetSave::get_nb_item(){return 111;}
 
 void MenuPresetSave::validate(){}
 
@@ -141,7 +141,7 @@ void MenuPresetSave::print()
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i <= selection_max_ && i < display_offset_ + 4; i++)
+      i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -161,9 +161,9 @@ void MenuPresetSave::print()
 MenuGlobalSetting::MenuGlobalSetting(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
-{
-  selection_max_ = 1;
-}
+{}
+
+uint8_t MenuGlobalSetting::get_nb_item(){return 2;}
 
 void MenuGlobalSetting::validate(){}
 
@@ -172,7 +172,7 @@ void MenuGlobalSetting::print()
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i <= selection_max_ && i < display_offset_ + 4; i++)
+      i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -202,9 +202,9 @@ MenuConf::MenuConf(MenuSystem* menu_system)
   , menu_preset_load_(menu_system,this)
   , menu_preset_save_(menu_system,this)
   , menu_global_setting_(menu_system,this)
-{
-  selection_max_ = 3;
-}
+{}
+
+uint8_t MenuConf::get_nb_item(){return 4;}
 
 void MenuConf::validate()
 {
@@ -233,7 +233,8 @@ void MenuConf::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
-  for (int i = display_offset_; i< (display_offset_ + 4); i++)
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
       {

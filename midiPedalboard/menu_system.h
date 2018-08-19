@@ -41,8 +41,8 @@ class MenuTemplate : public MenuBase
 {
   protected:
     uint8_t selection_;
-    uint8_t selection_max_;
     uint8_t display_offset_;
+    virtual uint8_t get_nb_item() = 0;
     virtual void reset();
   public:
     MenuTemplate(MenuSystem* menu_system);
@@ -61,8 +61,21 @@ class SubMenuTemplate : public MenuTemplate
     virtual void cancel();
 };
 
+class MenuFsSetting : public SubMenuTemplate
+{
+  private:
+    uint8_t get_nb_item();
+  public:
+    MenuFsSetting(MenuSystem* menu_system, MenuBase* pt_parent);
+    virtual void validate();
+    virtual void print();
+};
+
+//menu to select a controller
 class MenuControllerSetting : public SubMenuTemplate
 {
+  private:
+    uint8_t get_nb_item();
   public:
     MenuControllerSetting(MenuSystem* menu_system, MenuBase* pt_parent);
     virtual void validate();
@@ -71,6 +84,8 @@ class MenuControllerSetting : public SubMenuTemplate
 
 class MenuPresetLoad : public SubMenuTemplate
 {
+  private:
+    uint8_t get_nb_item();
   public:
     MenuPresetLoad(MenuSystem* menu_system, MenuBase* pt_parent);
     virtual void validate();
@@ -79,6 +94,8 @@ class MenuPresetLoad : public SubMenuTemplate
 
 class MenuPresetSave : public SubMenuTemplate
 {
+  private:
+    uint8_t get_nb_item();
   public:
     MenuPresetSave(MenuSystem* menu_system, MenuBase* pt_parent);
     virtual void validate();
@@ -87,6 +104,8 @@ class MenuPresetSave : public SubMenuTemplate
 
 class MenuGlobalSetting : public SubMenuTemplate
 {
+  private:
+    uint8_t get_nb_item();
   public:
     MenuGlobalSetting(MenuSystem* menu_system, MenuBase* pt_parent);
     virtual void validate();
@@ -95,6 +114,8 @@ class MenuGlobalSetting : public SubMenuTemplate
 
 class MenuConf : public MenuTemplate
 {
+  private:
+    uint8_t get_nb_item();
   public:
     MenuConf(MenuSystem* menu_system);
     MenuControllerSetting menu_controller_setting_;
