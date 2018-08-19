@@ -103,10 +103,55 @@ void MenuFsSetting::print()
   display.display();
 }
 
+MenuExpSetting::MenuExpSetting(
+    MenuSystem* menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuExpSetting::get_nb_item(){return 2;}
+
+void MenuExpSetting::validate(){}
+
+void MenuExpSetting::print()
+{
+  uint8_t expNum = pt_menu_controller_setting_->get_selected_exp();
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Exp"));
+    display.print(expNum, DEC);
+    switch (i)
+    {
+      case 0:
+        display.print(F(" Cmd"));
+        break;
+      case 1:
+        display.print(F(" Mode"));
+        break;
+    }
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuControllerSetting::MenuControllerSetting(
     MenuSystem* pt_menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_fs_setting_(pt_menu_system,this,this)
+  , menu_exp_setting_(pt_menu_system,this,this)
 {}
 
 uint8_t MenuControllerSetting::get_nb_item(){return nbFs + nbExp;}
@@ -117,8 +162,10 @@ void MenuControllerSetting::validate()
   {
     menu_fs_setting_.activate();
   }
-  else if (selection_ >= nbFs && selection_ < nbExp)
+  else if (selection_ >= nbFs && selection_ < nbFs + nbExp)
   {
+    menu_exp_setting_.activate();
+    Serial.println(selection_);
   }
 }
 
