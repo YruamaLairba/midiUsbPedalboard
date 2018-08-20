@@ -59,17 +59,59 @@ void SubMenuTemplate::cancel()
   pt_menu_system_->set_active(pt_parent_);
 }
 
-MenuFsSetting::MenuFsSetting(
-    MenuSystem* menu_system,
+MenuFsCommand::MenuFsCommand(
+    MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
-  : SubMenuTemplate(menu_system, pt_parent)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuFsCommand::get_nb_item(){return 128;}
+
+void MenuFsCommand::validate(){}
+
+void MenuFsCommand::print()
+{
+  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("CC"));
+    display.print(i, DEC);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
+MenuFsSetting::MenuFsSetting(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_fs_command_(pt_menu_system, this, pt_menu_controller_setting)
 {}
 
 uint8_t MenuFsSetting::get_nb_item(){return 2;}
 
-void MenuFsSetting::validate(){}
+void MenuFsSetting::validate()
+{
+  switch(selection_)
+  {
+    case 0:
+      menu_fs_command_.activate();
+  }
+}
 
 void MenuFsSetting::print()
 {

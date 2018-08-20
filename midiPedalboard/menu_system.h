@@ -62,9 +62,25 @@ class SubMenuTemplate : public MenuTemplate
 };
 
 class MenuControllerSetting;
+
+class MenuFsCommand : public SubMenuTemplate
+{
+  private:
+    MenuControllerSetting* pt_menu_controller_setting_;
+    uint8_t get_nb_item();
+  public:
+    MenuFsCommand(
+        MenuSystem* pt_menu_system,
+        MenuBase* pt_parent,
+        MenuControllerSetting* pt_menu_controller_setting);
+    virtual void validate();
+    virtual void print();
+};
+
 class MenuFsSetting : public SubMenuTemplate
 {
   private:
+    MenuFsCommand menu_fs_command_;
     MenuControllerSetting* pt_menu_controller_setting_;
     uint8_t get_nb_item();
   public:
