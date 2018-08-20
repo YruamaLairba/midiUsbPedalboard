@@ -94,12 +94,66 @@ void MenuFsCommand::print()
   display.display();
 }
 
+MenuFsMode::MenuFsMode(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuFsMode::get_nb_item(){return fsMode::nb_item;}
+
+void MenuFsMode::validate(){}
+
+void MenuFsMode::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for(uint8_t i = display_offset_; i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+  switch (i)
+    {
+      case fsMode::toggle_off:
+        display.print(F("tog off"));
+        break;
+      case fsMode::toggle_on:
+        display.print(F("tog on"));
+        break;
+      case fsMode::momentary_off:
+        display.print(F("mom (off)"));
+        break;
+      case fsMode::momentary_on:
+        display.print(F("mom (on)"));
+        break;
+      case fsMode::single_off:
+        display.print(F("sing off"));
+        break;
+      case fsMode::single_on:
+        display.print(F("sing on"));
+        break;
+    }
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuFsSetting::MenuFsSetting(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_fs_command_(pt_menu_system, this, pt_menu_controller_setting)
+  , menu_fs_mode_(pt_menu_system, this, pt_menu_controller_setting)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
 uint8_t MenuFsSetting::get_nb_item(){return 2;}
@@ -110,6 +164,10 @@ void MenuFsSetting::validate()
   {
     case 0:
       menu_fs_command_.activate();
+      break;
+    case 1:
+      menu_fs_mode_.activate();
+      break;
   }
 }
 
@@ -207,7 +265,6 @@ void MenuControllerSetting::validate()
   else if (selection_ >= nbFs && selection_ < nbFs + nbExp)
   {
     menu_exp_setting_.activate();
-    Serial.println(selection_);
   }
 }
 

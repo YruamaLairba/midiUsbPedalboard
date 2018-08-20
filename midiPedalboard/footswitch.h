@@ -21,7 +21,8 @@ struct fsMode
     momentary_off, //mode momentarily off, normally on
     momentary_on, //mode momentarily on, normally off
     single_off, //only a "off" message
-    single_on,MAX = single_on //only a "on" message
+    single_on,MAX = single_on, //only a "on" message
+    nb_item
   };
 };
 
