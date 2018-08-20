@@ -459,14 +459,54 @@ void MenuPresetSave::print()
   display.display();
 }
 
-MenuGlobalSetting::MenuGlobalSetting(
+MenuMidiChannel::MenuMidiChannel(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
 {}
 
+uint8_t MenuMidiChannel::get_nb_item(){return 16;}
+
+void MenuMidiChannel::validate(){}
+
+void MenuMidiChannel::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < display_offset_ + 4; i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Channel "));
+    display.print(i + 1);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
+MenuGlobalSetting::MenuGlobalSetting(
+    MenuSystem* pt_menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_midi_channel_(pt_menu_system, this)
+{}
+
 uint8_t MenuGlobalSetting::get_nb_item(){return 2;}
 
-void MenuGlobalSetting::validate(){}
+void MenuGlobalSetting::validate()
+{
+  switch(selection_)
+  {
+    case 0:
+      menu_midi_channel_.activate();
+      break;
+  }
+}
 
 void MenuGlobalSetting::print()
 {

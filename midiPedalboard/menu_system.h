@@ -189,9 +189,20 @@ class MenuPresetSave : public SubMenuTemplate
     virtual void print();
 };
 
+class MenuMidiChannel : public SubMenuTemplate
+{
+  private:
+    uint8_t get_nb_item();
+  public:
+    MenuMidiChannel(MenuSystem* menu_system, MenuBase* pt_parent);
+    virtual void validate();
+    virtual void print();
+};
+
 class MenuGlobalSetting : public SubMenuTemplate
 {
   private:
+    MenuMidiChannel menu_midi_channel_;
     uint8_t get_nb_item();
   public:
     MenuGlobalSetting(MenuSystem* menu_system, MenuBase* pt_parent);
