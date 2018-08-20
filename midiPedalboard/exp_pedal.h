@@ -17,7 +17,8 @@ struct expMode
   enum 
   {
     normal, MIN = normal, //mode toggle, switch is off
-    reverse, MAX = reverse //only a "on" message
+    reverse, MAX = reverse, //only a "on" message
+    nb_item
   };
 };
 

@@ -146,6 +146,81 @@ void MenuFsMode::print()
   display.display();
 }
 
+MenuExpCommand::MenuExpCommand(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuExpCommand::get_nb_item(){return 128;}
+
+void MenuExpCommand::validate(){}
+
+void MenuExpCommand::print()
+{
+  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("CC"));
+    display.print(i, DEC);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
+MenuExpMode::MenuExpMode(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuExpMode::get_nb_item(){return expMode::nb_item;}
+
+void MenuExpMode::validate(){}
+
+void MenuExpMode::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for(uint8_t i = display_offset_; i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+  switch (i)
+    {
+      case expMode::normal:
+        display.print(F("normal"));
+        break;
+      case expMode::reverse:
+        display.print(F("reverse"));
+        break;
+    }
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuFsSetting::MenuFsSetting(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
@@ -204,16 +279,30 @@ void MenuFsSetting::print()
 }
 
 MenuExpSetting::MenuExpSetting(
-    MenuSystem* menu_system,
+    MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
-  : SubMenuTemplate(menu_system, pt_parent)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_exp_command_(pt_menu_system, this, pt_menu_controller_setting)
+  , menu_exp_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
 uint8_t MenuExpSetting::get_nb_item(){return 2;}
 
-void MenuExpSetting::validate(){}
+void MenuExpSetting::validate()
+{
+  switch(selection_)
+  {
+    case 0:
+      menu_exp_command_.activate();
+      break;
+    case 1:
+      menu_exp_mode_.activate();
+      break;
+  }
+}
+
 
 void MenuExpSetting::print()
 {

@@ -5,6 +5,7 @@
 #include "rotary_encoder.h"
 #include "push_button.h"
 #include "footswitch.h"
+#include "exp_pedal.h"
 #include "warnings.h"
 #include "display.h"
 
@@ -108,9 +109,39 @@ class MenuFsSetting : public SubMenuTemplate
     virtual void print();
 };
 
+class MenuExpCommand : public SubMenuTemplate
+{
+  private:
+    MenuControllerSetting* pt_menu_controller_setting_;
+    uint8_t get_nb_item();
+  public:
+    MenuExpCommand(
+        MenuSystem* pt_menu_system,
+        MenuBase* pt_parent,
+        MenuControllerSetting* pt_menu_controller_setting);
+    virtual void validate();
+    virtual void print();
+};
+
+class MenuExpMode : public SubMenuTemplate
+{
+  private:
+    MenuControllerSetting* pt_menu_controller_setting_;
+    uint8_t get_nb_item();
+  public:
+    MenuExpMode(
+        MenuSystem* pt_menu_system,
+        MenuBase* pt_parent,
+        MenuControllerSetting* pt_menu_controller_setting);
+    virtual void validate();
+    virtual void print();
+};
+
 class MenuExpSetting : public SubMenuTemplate
 {
   private:
+    MenuExpCommand menu_exp_command_;
+    MenuExpMode menu_exp_mode_;
     MenuControllerSetting* pt_menu_controller_setting_;
     uint8_t get_nb_item();
   public:
