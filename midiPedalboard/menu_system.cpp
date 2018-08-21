@@ -607,12 +607,13 @@ void MenuConf::print()
   display.display();
 }
 
-MenuSystem::MenuSystem()
+MenuSystem::MenuSystem(ControllerSystem* pt_controller_system)
   : root_(this)
   , pt_current_(&root_)
   , rotary_encoder_(rotaryPinA,rotaryPinB)
   , button_ok_(buttonOkPin)
   , button_cancel_(buttonCancelPin)
+  , pt_controller_system_(pt_controller_system)
 {
 
 }

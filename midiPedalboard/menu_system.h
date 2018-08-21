@@ -6,6 +6,7 @@
 #include "push_button.h"
 #include "footswitch.h"
 #include "exp_pedal.h"
+#include "controller_system.h"
 #include "warnings.h"
 #include "display.h"
 
@@ -213,13 +214,13 @@ class MenuGlobalSetting : public SubMenuTemplate
 class MenuConf : public MenuTemplate
 {
   private:
-    uint8_t get_nb_item();
-  public:
-    MenuConf(MenuSystem* menu_system);
     MenuControllerSetting menu_controller_setting_;
     MenuPresetLoad menu_preset_load_;
     MenuPresetSave menu_preset_save_;
     MenuGlobalSetting menu_global_setting_;
+    uint8_t get_nb_item();
+  public:
+    MenuConf(MenuSystem* menu_system);
     virtual void validate();
     virtual void cancel();
     virtual void print();
@@ -233,9 +234,10 @@ class MenuSystem
     RotaryEncoder rotary_encoder_;
     PushButton button_ok_;
     PushButton button_cancel_;
+    ControllerSystem* pt_controller_system_;
 
   public:
-    MenuSystem();
+    MenuSystem(ControllerSystem* pt_controller_system);
     void init();
     void set_active(MenuBase* activated);
     void process();

@@ -8,13 +8,11 @@ DIAGNOSTIC_IGNORE_ALL
 #include <MIDIUSB.h>
 DIAGNOSTIC_POP
 
-//fooswitch
-ControllerSystem controller_system;
 unsigned long last_micros;
-
 unsigned long debug_last_micros;
 
-MenuSystem menu_system;
+ControllerSystem controller_system;
+MenuSystem menu_system(&controller_system);
 
 void setup() {
   // put your setup code here, to run once:
