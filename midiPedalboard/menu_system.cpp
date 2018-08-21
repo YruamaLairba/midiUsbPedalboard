@@ -1,22 +1,22 @@
 #include "menu_system.h"
 
-MenuBase::MenuBase(MenuSystem* pt_menu_system)
+MenuSystem::MenuBase::MenuBase(MenuSystem* pt_menu_system)
   : pt_menu_system_(pt_menu_system)
 {}
 
-MenuTemplate::MenuTemplate(MenuSystem* pt_menu_system)
+MenuSystem::MenuTemplate::MenuTemplate(MenuSystem* pt_menu_system)
   : MenuBase(pt_menu_system)
   , selection_(0)
   , display_offset_(0)
 {}
 
-void MenuTemplate::reset()
+void MenuSystem::MenuTemplate::reset()
 {
   selection_ = 0;
   display_offset_ = 0;
 }
 
-void MenuTemplate::select_next()
+void MenuSystem::MenuTemplate::select_next()
 {
   if (selection_ < get_nb_item()-1)
   {
@@ -29,7 +29,7 @@ void MenuTemplate::select_next()
   print();
 }
 
-void MenuTemplate::select_prev()
+void MenuSystem::MenuTemplate::select_prev()
 {
   if (selection_ > 0)
   {
@@ -42,24 +42,24 @@ void MenuTemplate::select_prev()
   print();
 }
 
-SubMenuTemplate::SubMenuTemplate(
+MenuSystem::SubMenuTemplate::SubMenuTemplate(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent)
   : MenuTemplate(pt_menu_system)
   , pt_parent_(pt_parent)
 {}
 
-void SubMenuTemplate::activate()
+void MenuSystem::SubMenuTemplate::activate()
 {
   pt_menu_system_->set_active(this);
 }
 
-void SubMenuTemplate::cancel()
+void MenuSystem::SubMenuTemplate::cancel()
 {
   pt_menu_system_->set_active(pt_parent_);
 }
 
-MenuFsCommand::MenuFsCommand(
+MenuSystem::MenuFsCommand::MenuFsCommand(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -67,11 +67,11 @@ MenuFsCommand::MenuFsCommand(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuFsCommand::get_nb_item(){return 128;}
+uint8_t MenuSystem::MenuFsCommand::get_nb_item(){return 128;}
 
-void MenuFsCommand::validate(){}
+void MenuSystem::MenuFsCommand::validate(){}
 
-void MenuFsCommand::print()
+void MenuSystem::MenuFsCommand::print()
 {
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   display.clearDisplay();
@@ -94,7 +94,7 @@ void MenuFsCommand::print()
   display.display();
 }
 
-MenuFsMode::MenuFsMode(
+MenuSystem::MenuFsMode::MenuFsMode(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -102,11 +102,11 @@ MenuFsMode::MenuFsMode(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuFsMode::get_nb_item(){return fsMode::nb_item;}
+uint8_t MenuSystem::MenuFsMode::get_nb_item(){return fsMode::nb_item;}
 
-void MenuFsMode::validate(){}
+void MenuSystem::MenuFsMode::validate(){}
 
-void MenuFsMode::print()
+void MenuSystem::MenuFsMode::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -146,7 +146,7 @@ void MenuFsMode::print()
   display.display();
 }
 
-MenuExpCommand::MenuExpCommand(
+MenuSystem::MenuExpCommand::MenuExpCommand(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -154,11 +154,11 @@ MenuExpCommand::MenuExpCommand(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuExpCommand::get_nb_item(){return 128;}
+uint8_t MenuSystem::MenuExpCommand::get_nb_item(){return 128;}
 
-void MenuExpCommand::validate(){}
+void MenuSystem::MenuExpCommand::validate(){}
 
-void MenuExpCommand::print()
+void MenuSystem::MenuExpCommand::print()
 {
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   display.clearDisplay();
@@ -181,7 +181,7 @@ void MenuExpCommand::print()
   display.display();
 }
 
-MenuExpMode::MenuExpMode(
+MenuSystem::MenuExpMode::MenuExpMode(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -189,11 +189,11 @@ MenuExpMode::MenuExpMode(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuExpMode::get_nb_item(){return expMode::nb_item;}
+uint8_t MenuSystem::MenuExpMode::get_nb_item(){return expMode::nb_item;}
 
-void MenuExpMode::validate(){}
+void MenuSystem::MenuExpMode::validate(){}
 
-void MenuExpMode::print()
+void MenuSystem::MenuExpMode::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -221,7 +221,7 @@ void MenuExpMode::print()
   display.display();
 }
 
-MenuFsSetting::MenuFsSetting(
+MenuSystem::MenuFsSetting::MenuFsSetting(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -231,9 +231,9 @@ MenuFsSetting::MenuFsSetting(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuFsSetting::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuFsSetting::get_nb_item(){return 2;}
 
-void MenuFsSetting::validate()
+void MenuSystem::MenuFsSetting::validate()
 {
   switch(selection_)
   {
@@ -246,7 +246,7 @@ void MenuFsSetting::validate()
   }
 }
 
-void MenuFsSetting::print()
+void MenuSystem::MenuFsSetting::print()
 {
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   display.clearDisplay();
@@ -278,7 +278,7 @@ void MenuFsSetting::print()
   display.display();
 }
 
-MenuExpSetting::MenuExpSetting(
+MenuSystem::MenuExpSetting::MenuExpSetting(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -288,9 +288,9 @@ MenuExpSetting::MenuExpSetting(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuExpSetting::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuExpSetting::get_nb_item(){return 2;}
 
-void MenuExpSetting::validate()
+void MenuSystem::MenuExpSetting::validate()
 {
   switch(selection_)
   {
@@ -304,7 +304,7 @@ void MenuExpSetting::validate()
 }
 
 
-void MenuExpSetting::print()
+void MenuSystem::MenuExpSetting::print()
 {
   uint8_t expNum = pt_menu_controller_setting_->get_selected_exp();
   display.clearDisplay();
@@ -336,16 +336,16 @@ void MenuExpSetting::print()
   display.display();
 }
 
-MenuControllerSetting::MenuControllerSetting(
+MenuSystem::MenuControllerSetting::MenuControllerSetting(
     MenuSystem* pt_menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_fs_setting_(pt_menu_system,this,this)
   , menu_exp_setting_(pt_menu_system,this,this)
 {}
 
-uint8_t MenuControllerSetting::get_nb_item(){return nbFs + nbExp;}
+uint8_t MenuSystem::MenuControllerSetting::get_nb_item(){return nbFs + nbExp;}
 
-void MenuControllerSetting::validate()
+void MenuSystem::MenuControllerSetting::validate()
 {
   if(selection_ < nbFs)
   {
@@ -357,7 +357,7 @@ void MenuControllerSetting::validate()
   }
 }
 
-void MenuControllerSetting::print()
+void MenuSystem::MenuControllerSetting::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -387,26 +387,26 @@ void MenuControllerSetting::print()
   display.display();
 }
 
-uint8_t MenuControllerSetting::get_selected_fs()
+uint8_t MenuSystem::MenuControllerSetting::get_selected_fs()
 {
   return selection_;
 }
 
-uint8_t MenuControllerSetting::get_selected_exp()
+uint8_t MenuSystem::MenuControllerSetting::get_selected_exp()
 {
   return selection_ - nbFs;
 }
 
-MenuPresetLoad::MenuPresetLoad(
+MenuSystem::MenuPresetLoad::MenuPresetLoad(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
 {}
 
-uint8_t MenuPresetLoad::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuPresetLoad::get_nb_item(){return 2;}
 
-void MenuPresetLoad::validate(){}
+void MenuSystem::MenuPresetLoad::validate(){}
 
-void MenuPresetLoad::print()
+void MenuSystem::MenuPresetLoad::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -428,16 +428,16 @@ void MenuPresetLoad::print()
   display.display();
 }
 
-MenuPresetSave::MenuPresetSave(
+MenuSystem::MenuPresetSave::MenuPresetSave(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
 {}
 
-uint8_t MenuPresetSave::get_nb_item(){return 111;}
+uint8_t MenuSystem::MenuPresetSave::get_nb_item(){return 111;}
 
-void MenuPresetSave::validate(){}
+void MenuSystem::MenuPresetSave::validate(){}
 
-void MenuPresetSave::print()
+void MenuSystem::MenuPresetSave::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -459,16 +459,16 @@ void MenuPresetSave::print()
   display.display();
 }
 
-MenuMidiChannel::MenuMidiChannel(
+MenuSystem::MenuMidiChannel::MenuMidiChannel(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
 {}
 
-uint8_t MenuMidiChannel::get_nb_item(){return 16;}
+uint8_t MenuSystem::MenuMidiChannel::get_nb_item(){return 16;}
 
-void MenuMidiChannel::validate(){}
+void MenuSystem::MenuMidiChannel::validate(){}
 
-void MenuMidiChannel::print()
+void MenuSystem::MenuMidiChannel::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -490,15 +490,15 @@ void MenuMidiChannel::print()
   display.display();
 }
 
-MenuGlobalSetting::MenuGlobalSetting(
+MenuSystem::MenuGlobalSetting::MenuGlobalSetting(
     MenuSystem* pt_menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_midi_channel_(pt_menu_system, this)
 {}
 
-uint8_t MenuGlobalSetting::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuGlobalSetting::get_nb_item(){return 2;}
 
-void MenuGlobalSetting::validate()
+void MenuSystem::MenuGlobalSetting::validate()
 {
   switch(selection_)
   {
@@ -508,7 +508,7 @@ void MenuGlobalSetting::validate()
   }
 }
 
-void MenuGlobalSetting::print()
+void MenuSystem::MenuGlobalSetting::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -537,7 +537,7 @@ void MenuGlobalSetting::print()
   display.display();
 }
 
-MenuConf::MenuConf(MenuSystem* menu_system)
+MenuSystem::MenuConf::MenuConf(MenuSystem* menu_system)
   : MenuTemplate(menu_system)
   , menu_controller_setting_(menu_system,this)
   , menu_preset_load_(menu_system,this)
@@ -545,9 +545,9 @@ MenuConf::MenuConf(MenuSystem* menu_system)
   , menu_global_setting_(menu_system,this)
 {}
 
-uint8_t MenuConf::get_nb_item(){return 4;}
+uint8_t MenuSystem::MenuConf::get_nb_item(){return 4;}
 
-void MenuConf::validate()
+void MenuSystem::MenuConf::validate()
 {
   switch(selection_)
   {
@@ -566,11 +566,11 @@ void MenuConf::validate()
   }
 }
 
-void MenuConf::cancel()
+void MenuSystem::MenuConf::cancel()
 {
 }
 
-void MenuConf::print()
+void MenuSystem::MenuConf::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
