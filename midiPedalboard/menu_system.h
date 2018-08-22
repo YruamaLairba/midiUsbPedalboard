@@ -78,6 +78,7 @@ class MenuSystem
           MenuSystem* pt_menu_system,
           MenuBase* pt_parent,
           MenuControllerSetting* pt_menu_controller_setting);
+      virtual void activate();
       virtual void validate();
       virtual void print();
   };
@@ -92,6 +93,7 @@ class MenuSystem
           MenuSystem* pt_menu_system,
           MenuBase* pt_parent,
           MenuControllerSetting* pt_menu_controller_setting);
+      virtual void activate();
       virtual void validate();
       virtual void print();
   };
@@ -122,6 +124,7 @@ class MenuSystem
           MenuSystem* pt_menu_system,
           MenuBase* pt_parent,
           MenuControllerSetting* pt_menu_controller_setting);
+      virtual void activate();
       virtual void validate();
       virtual void print();
   };
@@ -136,6 +139,7 @@ class MenuSystem
           MenuSystem* pt_menu_system,
           MenuBase* pt_parent,
           MenuControllerSetting* pt_menu_controller_setting);
+      virtual void activate();
       virtual void validate();
       virtual void print();
   };

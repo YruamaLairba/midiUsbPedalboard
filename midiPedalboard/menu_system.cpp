@@ -69,11 +69,23 @@ MenuSystem::MenuFsCommand::MenuFsCommand(
 
 uint8_t MenuSystem::MenuFsCommand::get_nb_item(){return 128;}
 
-void MenuSystem::MenuFsCommand::validate(){}
+void MenuSystem::MenuFsCommand::activate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  selection_ =  pt_menu_system_->pt_controller_system_->get_fs_command(fs);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuFsCommand::validate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuFsCommand::print()
 {
-  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -104,7 +116,20 @@ MenuSystem::MenuFsMode::MenuFsMode(
 
 uint8_t MenuSystem::MenuFsMode::get_nb_item(){return fsMode::nb_item;}
 
-void MenuSystem::MenuFsMode::validate(){}
+void MenuSystem::MenuFsMode::activate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  selection_ =  pt_menu_system_->pt_controller_system_->get_fs_mode(fs);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuFsMode::validate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  pt_menu_system_->pt_controller_system_->set_fs_mode(fs, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuFsMode::print()
 {
@@ -156,11 +181,23 @@ MenuSystem::MenuExpCommand::MenuExpCommand(
 
 uint8_t MenuSystem::MenuExpCommand::get_nb_item(){return 128;}
 
-void MenuSystem::MenuExpCommand::validate(){}
+void MenuSystem::MenuExpCommand::activate()
+{
+  uint8_t exp = pt_menu_controller_setting_->get_selected_exp();
+  selection_ =  pt_menu_system_->pt_controller_system_->get_exp_command(exp);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuExpCommand::validate()
+{
+  uint8_t exp = pt_menu_controller_setting_->get_selected_exp();
+  pt_menu_system_->pt_controller_system_->set_exp_command(exp, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuExpCommand::print()
 {
-  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -191,7 +228,20 @@ MenuSystem::MenuExpMode::MenuExpMode(
 
 uint8_t MenuSystem::MenuExpMode::get_nb_item(){return expMode::nb_item;}
 
-void MenuSystem::MenuExpMode::validate(){}
+void MenuSystem::MenuExpMode::activate()
+{
+  uint8_t exp = pt_menu_controller_setting_->get_selected_exp();
+  selection_ =  pt_menu_system_->pt_controller_system_->get_exp_mode(exp);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuExpMode::validate()
+{
+  uint8_t exp = pt_menu_controller_setting_->get_selected_exp();
+  pt_menu_system_->pt_controller_system_->set_exp_mode(exp, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuExpMode::print()
 {
