@@ -30,7 +30,7 @@ void ControllerSystem::process()
   }
 }
 
-void ControllerSystem::get_fs_command(uint8_t fs_num)
+uint8_t ControllerSystem::get_fs_command(uint8_t fs_num)
 {
   return fs_tab_[fs_num].get_command();
 }
@@ -40,7 +40,7 @@ void ControllerSystem::set_fs_command(uint8_t fs_num, uint8_t fs_cmd)
   fs_tab_[fs_num].set_command(fs_cmd);
 }
 
-void ControllerSystem::get_fs_mode(uint8_t fs_num)
+uint8_t ControllerSystem::get_fs_mode(uint8_t fs_num)
 {
   return fs_tab_[fs_num].get_mode();
 }
@@ -50,7 +50,7 @@ void ControllerSystem::set_fs_mode(uint8_t fs_num, uint8_t fs_mode)
   fs_tab_[fs_num].set_mode(fs_mode);
 }
 
-void ControllerSystem::get_exp_command(uint8_t exp_num)
+uint8_t ControllerSystem::get_exp_command(uint8_t exp_num)
 {
   return exp_tab_[exp_num].get_command();
 }
@@ -60,7 +60,7 @@ void ControllerSystem::set_exp_command(uint8_t exp_num, uint8_t exp_cmd)
   exp_tab_[exp_num].set_command(exp_cmd);
 }
 
-void ControllerSystem::get_exp_mode(uint8_t exp_num)
+uint8_t ControllerSystem::get_exp_mode(uint8_t exp_num)
 {
   return exp_tab_[exp_num].get_mode();
 }
