@@ -343,15 +343,21 @@ MenuSystem::MenuControllerSetting::MenuControllerSetting(
   , menu_exp_setting_(pt_menu_system,this,this)
 {}
 
-uint8_t MenuSystem::MenuControllerSetting::get_nb_item(){return nbFs + nbExp;}
+uint8_t MenuSystem::MenuControllerSetting::get_nb_item()
+{
+  return pt_menu_system_->pt_controller_system_->get_nb_fs() +
+    pt_menu_system_->pt_controller_system_->get_nb_exp() ;
+}
 
 void MenuSystem::MenuControllerSetting::validate()
 {
-  if(selection_ < nbFs)
+  uint8_t nb_fs = pt_menu_system_->pt_controller_system_->get_nb_fs();
+  uint8_t nb_exp = pt_menu_system_->pt_controller_system_->get_nb_exp();
+  if(selection_ < nb_fs)
   {
     menu_fs_setting_.activate();
   }
-  else if (selection_ >= nbFs && selection_ < nbFs + nbExp)
+  else if (selection_ >= nb_fs && selection_ < nb_fs + nb_exp)
   {
     menu_exp_setting_.activate();
   }
@@ -359,6 +365,8 @@ void MenuSystem::MenuControllerSetting::validate()
 
 void MenuSystem::MenuControllerSetting::print()
 {
+  uint8_t nb_fs = pt_menu_system_->pt_controller_system_->get_nb_fs();
+  uint8_t nb_exp = pt_menu_system_->pt_controller_system_->get_nb_exp();
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -372,15 +380,15 @@ void MenuSystem::MenuControllerSetting::print()
     {
       display.setTextColor(WHITE,BLACK);
     }
-    if (i < nbFs)
+    if (i < nb_fs)
     {
       display.print(F("FS "));
       display.print(i, DEC);
     }
-    else if (i < (nbFs + nbExp))
+    else if (i < (nb_fs + nb_exp))
     {
       display.print(F("Exp "));
-      display.print(i - nbFs, DEC);
+      display.print(i - nb_fs, DEC);
     }
     display.print(F("\n\r"));
   }
@@ -394,7 +402,8 @@ uint8_t MenuSystem::MenuControllerSetting::get_selected_fs()
 
 uint8_t MenuSystem::MenuControllerSetting::get_selected_exp()
 {
-  return selection_ - nbFs;
+  return selection_ -
+    pt_menu_system_->pt_controller_system_->get_nb_fs();
 }
 
 MenuSystem::MenuPresetLoad::MenuPresetLoad(

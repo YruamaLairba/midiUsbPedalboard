@@ -22,6 +22,9 @@ class ControllerSystem
     ControllerSystem();
     void init();
     void process();
+    //number accessor
+    static uint8_t get_nb_fs(){return nb_fs_;}
+    static uint8_t get_nb_exp(){return nb_exp_;}
     //accessor for footswitch
     void get_fs_command(uint8_t fs_num);
     void set_fs_command(uint8_t fs_num, uint8_t fs_cmd);
