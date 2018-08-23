@@ -35,6 +35,9 @@ class ControllerSystem
     void set_exp_command(uint8_t exp_num, uint8_t exp_cmd);
     uint8_t get_exp_mode(uint8_t exp_num);
     void set_exp_mode(uint8_t exp_num, uint8_t exp_mode);
+    //midi channel
+    uint8_t get_midi_channel();
+    void set_midi_channel(uint8_t channel);
 };
 
 #endif //CONTROLLER_SYSTEM_H

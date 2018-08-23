@@ -525,7 +525,18 @@ MenuSystem::MenuMidiChannel::MenuMidiChannel(
 
 uint8_t MenuSystem::MenuMidiChannel::get_nb_item(){return 16;}
 
-void MenuSystem::MenuMidiChannel::validate(){}
+void MenuSystem::MenuMidiChannel::activate()
+{
+  selection_ =  pt_menu_system_->pt_controller_system_->get_midi_channel();
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuMidiChannel::validate()
+{
+  pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuMidiChannel::print()
 {

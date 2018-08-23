@@ -202,6 +202,7 @@ class MenuSystem
       uint8_t get_nb_item();
     public:
       MenuMidiChannel(MenuSystem* menu_system, MenuBase* pt_parent);
+      virtual void activate();
       virtual void validate();
       virtual void print();
   };

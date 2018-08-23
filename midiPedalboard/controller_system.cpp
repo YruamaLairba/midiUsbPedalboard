@@ -70,3 +70,12 @@ void ControllerSystem::set_exp_mode(uint8_t exp_num, uint8_t exp_mode)
   exp_tab_[exp_num].set_mode(exp_mode);
 }
 
+uint8_t ControllerSystem::get_midi_channel()
+{
+  return global_setting_.get_midi_channel();
+}
+
+void ControllerSystem::set_midi_channel(uint8_t channel)
+{
+  global_setting_.set_midi_channel(channel);
+}
