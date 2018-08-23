@@ -461,9 +461,23 @@ MenuSystem::MenuPresetLoad::MenuPresetLoad(
   : SubMenuTemplate(menu_system, pt_parent)
 {}
 
-uint8_t MenuSystem::MenuPresetLoad::get_nb_item(){return 2;}
+void MenuSystem::MenuPresetLoad::activate()
+{
+  selection_ =  pt_menu_system_->pt_controller_system_->get_current_preset();
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
 
-void MenuSystem::MenuPresetLoad::validate(){}
+uint8_t MenuSystem::MenuPresetLoad::get_nb_item()
+{
+  return pt_menu_system_->pt_controller_system_->get_nb_preset();
+}
+
+void MenuSystem::MenuPresetLoad::validate()
+{
+  pt_menu_system_->pt_controller_system_->load_preset(selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuPresetLoad::print()
 {
@@ -492,9 +506,23 @@ MenuSystem::MenuPresetSave::MenuPresetSave(
   : SubMenuTemplate(menu_system, pt_parent)
 {}
 
-uint8_t MenuSystem::MenuPresetSave::get_nb_item(){return 111;}
+uint8_t MenuSystem::MenuPresetSave::get_nb_item()
+{
+  return pt_menu_system_->pt_controller_system_->get_nb_preset();
+}
 
-void MenuSystem::MenuPresetSave::validate(){}
+void MenuSystem::MenuPresetSave::activate()
+{
+  selection_ =  pt_menu_system_->pt_controller_system_->get_current_preset();
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuPresetSave::validate()
+{
+  pt_menu_system_->pt_controller_system_->save_preset(selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
 
 void MenuSystem::MenuPresetSave::print()
 {

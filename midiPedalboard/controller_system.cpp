@@ -70,6 +70,26 @@ void ControllerSystem::set_exp_mode(uint8_t exp_num, uint8_t exp_mode)
   exp_tab_[exp_num].set_mode(exp_mode);
 }
 
+uint8_t ControllerSystem::get_nb_preset()
+{
+  return preset_.get_nbPreset();
+}
+
+uint8_t ControllerSystem::get_current_preset()
+{
+  return preset_.get_presetNumber();
+}
+
+void ControllerSystem::load_preset(uint8_t preset_num)
+{
+  preset_.load(preset_num);
+}
+
+void ControllerSystem::save_preset(uint8_t preset_num)
+{
+  preset_.save(preset_num);
+}
+
 uint8_t ControllerSystem::get_midi_channel()
 {
   return global_setting_.get_midi_channel();

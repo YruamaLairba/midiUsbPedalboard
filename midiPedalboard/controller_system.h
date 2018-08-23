@@ -35,6 +35,11 @@ class ControllerSystem
     void set_exp_command(uint8_t exp_num, uint8_t exp_cmd);
     uint8_t get_exp_mode(uint8_t exp_num);
     void set_exp_mode(uint8_t exp_num, uint8_t exp_mode);
+    //preset
+    uint8_t get_nb_preset();
+    uint8_t get_current_preset();
+    void load_preset(uint8_t preset_num);
+    void save_preset(uint8_t preset_num);
     //midi channel
     uint8_t get_midi_channel();
     void set_midi_channel(uint8_t channel);
