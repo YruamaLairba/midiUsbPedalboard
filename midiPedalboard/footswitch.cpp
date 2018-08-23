@@ -1,4 +1,5 @@
 #include "footswitch.h"
+#include "controller_system.h"
 #include "warnings.h"
 
 DIAGNOSTIC_IGNORE_ALL
@@ -9,7 +10,7 @@ void Footswitch::midi_send(uint8_t val)
 {
   midiEventPacket_t event = {
     0x0B,
-    0xB0|pt_global_setting_->get_midi_channel(),
+    0xB0|pt_controller_system_->get_midi_channel(),
     get_command(),
     val
   };
@@ -29,19 +30,29 @@ Footswitch::Footswitch()
 {}
 
 void Footswitch::setup(
-    uint8_t fs_pin, uint8_t led_pin, GlobalSetting* pt_global_setting)
+    uint8_t fs_pin, uint8_t led_pin, ControllerSystem* pt_controller_system)
 {
   fs_pin_= fs_pin;
   led_pin_ = led_pin;
   pinMode(led_pin_, OUTPUT);
   pinMode(fs_pin_, INPUT_PULLUP);
-  pt_global_setting_ = pt_global_setting;
+  pt_controller_system_ = pt_controller_system;
+}
+
+uint8_t Footswitch::get_command()
+{
+  return command_;
 }
 
 void Footswitch::set_command(uint8_t command)
 {
   command_ = command;
   if (command_ > 127) command_ = 0;
+}
+
+uint8_t Footswitch::get_mode()
+{
+  return mode_;
 }
 
 void Footswitch::set_mode(uint8_t mode)

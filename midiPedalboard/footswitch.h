@@ -1,11 +1,9 @@
 #ifndef FOOTSWITCH_H
 #define FOOTSWITCH_H
 
-#include "global_setting.h"
-#include "warnings.h"
-
-DIAGNOSTIC_IGNORE_ALL
 #include <stdint.h>
+#include "warnings.h"
+DIAGNOSTIC_IGNORE_ALL
 #include <Arduino.h>
 DIAGNOSTIC_POP
 
@@ -32,6 +30,7 @@ struct FsConfig
   uint8_t mode;
 };
 
+class ControllerSystem;
 class Footswitch
 {
   private:
@@ -49,16 +48,17 @@ class Footswitch
     unsigned long led_millis_;//used to make led flash or blink
     unsigned long debounce_millis_;//for debouncing
 
-    GlobalSetting* pt_global_setting_;
+    ControllerSystem* pt_controller_system_;
     void midi_send(uint8_t val);
 
   public:
     Footswitch();
-    void setup(uint8_t fs_pin, uint8_t led_pin, GlobalSetting* global_setting);
-    uint8_t get_command() {return command_;};
+    void setup(uint8_t fs_pin, uint8_t led_pin,
+      ControllerSystem* pt_controller_system_);
+    uint8_t get_command();
     void set_command(uint8_t command);
 
-    uint8_t get_mode(){return mode_;};
+    uint8_t get_mode();
     void set_mode(uint8_t mode);
 
     FsConfig get_config();

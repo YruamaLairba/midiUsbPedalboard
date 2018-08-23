@@ -1,4 +1,5 @@
 #include "exp_pedal.h"
+#include "controller_system.h"
 #include "warnings.h"
 
 DIAGNOSTIC_IGNORE_ALL
@@ -9,7 +10,7 @@ void ExpPedal::midi_send(uint8_t val)
 {
   midiEventPacket_t event = {
     0x0B,
-    0xB0|pt_global_setting_->get_midi_channel(),
+    0xB0|pt_controller_system_->get_midi_channel(),
     get_command(),
     val
   };
@@ -24,12 +25,12 @@ ExpPedal::ExpPedal()
   , change_delay_millis_(0)
 {}
 
-void ExpPedal::setup(uint8_t exp_pin, GlobalSetting* pt_global_setting)
+void ExpPedal::setup(uint8_t exp_pin, ControllerSystem* pt_controller_system)
 {
   exp_pin_= exp_pin;
   pinMode(exp_pin_, INPUT);
   old_exp_val_ = analogRead(exp_pin_);
-  pt_global_setting_ = pt_global_setting;
+  pt_controller_system_ = pt_controller_system;
 }
 
 void ExpPedal::set_command(uint8_t command)

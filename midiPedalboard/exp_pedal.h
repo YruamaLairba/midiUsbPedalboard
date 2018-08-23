@@ -1,11 +1,9 @@
 #ifndef EXP_PEDAL_H
 #define EXP_PEDAL_H
 
-#include "global_setting.h"
-#include "warnings.h"
-
-DIAGNOSTIC_IGNORE_ALL
 #include <stdint.h>
+#include "warnings.h"
+DIAGNOSTIC_IGNORE_ALL
 #include <Arduino.h>
 DIAGNOSTIC_POP
 
@@ -28,6 +26,7 @@ struct ExpConfig
   uint8_t mode;
 };
 
+class ControllerSystem;
 class ExpPedal
 {
   private:
@@ -44,12 +43,12 @@ class ExpPedal
 
     unsigned long change_delay_millis_;//for debouncing
 
-    GlobalSetting* pt_global_setting_;
+    ControllerSystem* pt_controller_system_;
     void midi_send(uint8_t val);
 
   public:
     ExpPedal();
-    void setup(uint8_t exp_pin, GlobalSetting* pt_global_setting);
+    void setup(uint8_t exp_pin, ControllerSystem* pt_controller_system);
     uint8_t get_command() {return command_;};
     void set_command(uint8_t command);
 

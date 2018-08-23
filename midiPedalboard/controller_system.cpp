@@ -1,4 +1,9 @@
 #include "controller_system.h"
+#include "warnings.h"
+DIAGNOSTIC_IGNORE_ALL
+#include <EEPROM.h>
+DIAGNOSTIC_POP
+
 
 ControllerSystem::ControllerSystem()
   : preset_(fs_tab_, nb_fs_, exp_tab_, nb_exp_)
@@ -6,15 +11,19 @@ ControllerSystem::ControllerSystem()
 
 void ControllerSystem::init()
 {
-  global_setting_.init();
+  //load midi channel
+  EEPROM.get(eeprom_midi_channel_start,midi_channel_);
+  if (midi_channel_ > 15) midi_channel_ = 0;
+  //initialize controller
   for (uint8_t i = 0; i < nb_fs_; i++)
   {
-    fs_tab_[i].setup(fsPins[i], fsLedPins[i], &global_setting_);
+    fs_tab_[i].setup(fsPins[i], fsLedPins[i], this);
   }
   for(uint8_t i=0; i<nb_exp_; i++)
   {
-    exp_tab_[i].setup(expPins[i], &global_setting_);
+    exp_tab_[i].setup(expPins[i], this);
   }
+  //initialize preset
   preset_.init();
 }
 
@@ -92,10 +101,12 @@ void ControllerSystem::save_preset(uint8_t preset_num)
 
 uint8_t ControllerSystem::get_midi_channel()
 {
-  return global_setting_.get_midi_channel();
+  return midi_channel_;
 }
 
 void ControllerSystem::set_midi_channel(uint8_t channel)
 {
-  global_setting_.set_midi_channel(channel);
+  midi_channel_=channel;
+  if (midi_channel_ > 15) midi_channel_ = 0;
+  EEPROM.put(eeprom_midi_channel_start,midi_channel_);
 }
