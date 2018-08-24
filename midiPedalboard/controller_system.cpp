@@ -106,8 +106,8 @@ void ControllerSystem::load_preset(uint8_t preset_num)
     PresetData data;
     EEPROM.put(eeprom_preset_number_start, current_preset_);
     //note : preset are stored in reverse order in the eeprom
-    EEPROM.get(eeprom_preset_bank_end + 1 -
-        (current_preset_ + 1) * sizeof(data),data);
+    EEPROM.get(int(eeprom_preset_bank_end + 1U -
+        (current_preset_ + 1U) * sizeof(data)),data);
     //fs
     for(uint8_t i=0; i< nb_fs_; i++)
     {
@@ -139,8 +139,8 @@ void ControllerSystem::save_preset(uint8_t preset_num)
       data.expConfigs[i] = exp_tab_[i].get_config();
     }
     //note : preset are stored in reverse order in the eeprom
-    EEPROM.put(eeprom_preset_bank_end + 1 -
-        (current_preset_ + 1) * sizeof(data),data);
+    EEPROM.put(int(eeprom_preset_bank_end + 1U -
+        (current_preset_ + 1U) * sizeof(data)),data);
     EEPROM.put(eeprom_preset_number_start, current_preset_);
     is_preset_modified_ = false;
   }
