@@ -4,21 +4,30 @@
 #include "setup.h"
 #include "footswitch.h"
 #include "exp_pedal.h"
-#include "preset.h"
 #include "eeprom_config.h"
 
 
 #include <stdint.h>
+
+//a block of preset data in eeprom
+struct PresetData
+{
+  FsConfig fsConfigs [nbFs];
+  ExpConfig expConfigs [nbExp];
+};
 
 class ControllerSystem
 {
   private:
     Footswitch fs_tab_[nbFs];
     ExpPedal exp_tab_[nbExp];
-    Preset preset_;
+    uint8_t current_preset_;//the number of the currently loaded present
+    bool is_preset_modified_;//is the current preset modified ?
     uint8_t midi_channel_;
     static const uint8_t nb_fs_ = nbFs;
     static const uint8_t nb_exp_ = nbExp;
+    static const uint8_t nb_preset_ = (eeprom_preset_bank_end + 1
+        - eeprom_preset_bank_start)/sizeof(PresetData);
   public:
     ControllerSystem();
     void init();
@@ -39,6 +48,7 @@ class ControllerSystem
     //preset
     uint8_t get_nb_preset();
     uint8_t get_current_preset();
+    bool is_preset_modified();
     void load_preset(uint8_t preset_num);
     void save_preset(uint8_t preset_num);
     //midi channel
