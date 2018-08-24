@@ -10,7 +10,7 @@ void Footswitch::midi_send(uint8_t val)
 {
   midiEventPacket_t event = {
     0x0B,
-    0xB0|pt_controller_system_->get_midi_channel(),
+    uint8_t(0xB0|pt_controller_system_->get_midi_channel()),
     get_command(),
     val
   };
