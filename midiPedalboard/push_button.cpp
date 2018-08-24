@@ -2,8 +2,8 @@
 
 PushButton::PushButton(uint8_t pin)
   : pin_(pin)
-  , val_(PushButtonVal::none)
   , old_pin_val_(HIGH)
+  , val_(PushButtonVal::none)
 {
   pinMode(pin_, INPUT_PULLUP);
 }
