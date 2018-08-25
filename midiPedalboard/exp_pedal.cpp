@@ -77,8 +77,10 @@ void ExpPedal::process()
       switch(mode_)
       {
         case expMode::normal:
-        case expMode::reverse:
           midi_send(cur_exp_val/8);
+          break;
+        case expMode::reverse:
+          midi_send((1023-cur_exp_val)/8);
           break;
       }
       old_exp_val_ = cur_exp_val;
