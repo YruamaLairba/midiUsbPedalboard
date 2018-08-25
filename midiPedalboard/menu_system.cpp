@@ -718,6 +718,7 @@ MenuSystem::MenuSystem(ControllerSystem* pt_controller_system)
 
 void MenuSystem::init()
 {
+  root_.print();
 }
 
 void MenuSystem::set_active(MenuBase* activated)
