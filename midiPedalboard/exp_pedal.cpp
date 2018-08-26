@@ -8,13 +8,21 @@ DIAGNOSTIC_POP
 
 void ExpPedal::midi_send(uint8_t val)
 {
+  uint8_t usb_header = 0x0B;
+  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
+  uint8_t data0 = get_command();
+  uint8_t data1 = val;
+  Serial1.write(status);
+  Serial1.write(data0);
+  Serial1.write(data1);
   midiEventPacket_t event = {
-    0x0B,
-    uint8_t(0xB0|pt_controller_system_->get_midi_channel()),
-    get_command(),
-    val
+    usb_header,
+    status,
+    data0,
+    data1,
   };
   MidiUSB.sendMIDI(event);
+  Serial1.flush();
   MidiUSB.flush();
 }
 

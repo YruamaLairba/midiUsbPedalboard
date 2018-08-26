@@ -17,7 +17,7 @@ MenuSystem menu_system(&controller_system);
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-
+  Serial1.begin(31250);//physical serial configured for midi
   controller_system.init();
 
   display.begin(SSD1306_SWITCHCAPVCC);
