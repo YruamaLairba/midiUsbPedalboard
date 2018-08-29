@@ -12,6 +12,7 @@ void Footswitch::midi_send(uint8_t val)
   uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
   uint8_t data0 = get_command();
   uint8_t data1 = val;
+  Serial1.begin(31250);
   Serial1.write(status);
   Serial1.write(data0);
   Serial1.write(data1);
@@ -23,6 +24,7 @@ void Footswitch::midi_send(uint8_t val)
   };
   MidiUSB.sendMIDI(event);
   Serial1.flush();
+  Serial1.end();
   MidiUSB.flush();
 }
 
