@@ -396,24 +396,6 @@ module bottom_3D()
 *mirror(v=[1,0,0]) rear_2D()
 
 //translate([-pb_size_x/2,-pb_size_y/2])
-//box in 3D
-*union(){
-    //color("red",0.5) cube([pb_size_x,pb_size_y,pb_size_z]);
-    color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top_3D();
-    translate([0,0,high_step_height])  high_top_3D();
-
-    translate([0,thickness,0]) rotate([90,0,0]) low_front_3D();
-    color("green",alpha=0.5) translate([0,60+thickness,0]) rotate([90,0,0]) high_front_3D();
-
-    color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear_3D();
-
-    color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left_3D();
-    color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right_3D();
-
-    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover_3D();
-
-    color("grey",alpha=0.5) translate([0,0,-thickness]) bottom_3D();
-}
 
 //connector
 *%translate([95,180-thickness,13]) rotate([90,0,0]) usb_connector();
