@@ -1,5 +1,7 @@
 use <footswitch.scad>;
 use <angle_bracket.scad>;
+use <USB_connector.scad>;
+use <midi_connector.scad>;
 
 $fn=80;
 //Holes diameter
@@ -226,6 +228,16 @@ module rear_3D()
     
 module rear_2D()
 {
+    module usb_clearance() {
+            square([12,12], center=true);
+            translate([-15,0]) circle(d=3.3);
+            translate([15,0]) circle(d=3.3);
+    }
+    module midi_cutout() {
+        translate([-11.1,0]) circle(d=3.3);
+        translate([11.1,0]) circle(d=3.3);
+        circle(d=16);
+    }
     difference(){
         union(){
             translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
@@ -246,6 +258,10 @@ module rear_2D()
             translate([pb_size_x/2-35,high_step_height-12]) circle(d=M4Hole);
             translate([pb_size_x/2+30-7,high_step_height-12]) circle(d=M4Hole);
             translate([pb_size_x/2+30+7,high_step_height-12]) circle(d=M4Hole);
+
+            translate([95,13]) usb_clearance();
+            translate([35,13]) rotate(-35) midi_cutout();
+            translate([58,13]) rotate(-35) midi_cutout();
         }
     }
 }
@@ -365,17 +381,19 @@ module bottom_3D()
 
 //2D projection
 union(){
-    low_top_2D();
-    translate([0,10]) high_top_2D();
+    translate([0,0]) low_front_2D();
+    translate([0,32]) low_top_2D();
+    translate([0,98]) high_front_2D();
+    translate([0,89]) high_top_2D();
     
-    translate([0,-35]) low_front_2D();
-    translate([145,-40]) high_front_2D();
+    translate([0,320]) rotate([0,0,180]) mirror(v=[1,0,0]) rear_2D();
     
-    translate([180,255]) rotate([0,0,90]) left_2D();
-    translate([180,200]) rotate([0,0,90]) right_2D();
+    translate([200,177]) rotate([0,0,0]) left_2D();
+    translate([191,177]) rotate([0,0,0]) mirror(v=[1,0,0]) right_2D();
 
-    translate([145,10]) bottom_2D();
+    translate([142,-5]) bottom_2D();
 }
+mirror(v=[1,0,0]) rear_2D()
 
 //translate([-pb_size_x/2,-pb_size_y/2])
 //box in 3D
@@ -386,6 +404,7 @@ union(){
 
     translate([0,thickness,0]) rotate([90,0,0]) low_front_3D();
     color("green",alpha=0.5) translate([0,60+thickness,0]) rotate([90,0,0]) high_front_3D();
+
     color("green") translate([0,pb_size_y,0]) rotate([90,0,0]) rear_3D();
 
     color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left_3D();
@@ -396,8 +415,13 @@ union(){
     color("grey",alpha=0.5) translate([0,0,-thickness]) bottom_3D();
 }
 
+//connector
+*%translate([95,180-thickness,13]) rotate([90,0,0]) usb_connector();
+*%translate([35,180,13]) rotate([-90,34,0]) midi_connector();
+*%translate([58,180,13]) rotate([-90,34,0]) midi_connector();
+
 //footswitch
-*%union(){
+*union(){
     translate([fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
     translate([pb_size_x-fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
     translate([fs_side_dist,60+20,high_step_height-low_step_height]) rotate([0,0,0]) footswitch();
@@ -406,12 +430,12 @@ union(){
 
 
 //angle bracket
-%union()
+*%union()
 {
-    translate([pb_size_x/2-15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
-    translate([pb_size_x/2+15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
-    translate([pb_size_x/2-18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
-    translate([pb_size_x/2+18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
+    *translate([pb_size_x/2-15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
+    *translate([pb_size_x/2+15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
+    //translate([pb_size_x/2-18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
+    //translate([pb_size_x/2+18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
     translate([pb_size_x/2-35,180-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
     translate([pb_size_x/2+30,180-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_double();
     //translate([pb_size_x/2,60+thickness,high_step_height]) rotate([180,0,0]) angle_bracket_double();
@@ -422,7 +446,7 @@ union(){
 
     translate([thickness,120+20,high_step_height])rotate([90,0,90]) angle_bracket_double();
     translate([pb_size_x-thickness,120+20,high_step_height]) rotate([90,0,-90]) angle_bracket_double();
-        translate([thickness,120-15,high_step_height])rotate([90,0,90]) angle_bracket_double();
+    translate([thickness,120-15,high_step_height])rotate([90,0,90]) angle_bracket_double();
     translate([pb_size_x-thickness,120-15,high_step_height]) rotate([90,0,-90]) angle_bracket_double();
 
     //translate([thickness+8,3*60-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
