@@ -41,5 +41,5 @@ Most of pins are in setup.h and can be changed. Exception are :
 * MOSI of the arduino, connected to the data input of the SSD1306 screen
 * SCK of the arduino, connected to the clock input of the SSD1306 screen
 * pin 0/Rx of the arduino, not yet used but reserved for midi reception
-* pin 1/Tx of the arduino, not yet used but reserved for midi transmission
+* pin 1/Tx of the arduino, used for midi transmission
 
