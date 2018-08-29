@@ -380,7 +380,7 @@ module bottom_3D()
 }
 
 //2D projection
-union(){
+*union(){
     translate([0,0]) low_front_2D();
     translate([0,32]) low_top_2D();
     translate([0,98]) high_front_2D();
@@ -393,7 +393,7 @@ union(){
 
     translate([142,-5]) bottom_2D();
 }
-mirror(v=[1,0,0]) rear_2D()
+*mirror(v=[1,0,0]) rear_2D()
 
 //translate([-pb_size_x/2,-pb_size_y/2])
 //box in 3D
