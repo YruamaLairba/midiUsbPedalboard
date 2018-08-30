@@ -1,3 +1,5 @@
+use <footswitch.scad>;
+use <angle_bracket.scad>;
 use <USB_connector.scad>;
 use <midi_connector.scad>;
 include <boitier_modules.scad>
@@ -15,6 +17,37 @@ union(){
     color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right_3D();
 
     color("grey",alpha=0.5) translate([0,0,-thickness]) bottom_3D();
+}
+
+//angle bracket
+%union()
+{
+    translate([pb_size_x/2-15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
+    translate([pb_size_x/2+15.5,thickness,low_step_height]) rotate([180,0,0]) angle_bracket_double();
+    translate([pb_size_x/2-18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
+    translate([pb_size_x/2+18,60,low_step_height]) rotate([90,0,0]) angle_bracket_double();
+    translate([pb_size_x/2-35,180-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_simple();
+    translate([pb_size_x/2+30,180-thickness,high_step_height]) rotate([90,0,0]) angle_bracket_double();
+
+    translate([thickness,120+20,high_step_height])rotate([90,0,90]) angle_bracket_double();
+    translate([pb_size_x-thickness,120+20,high_step_height]) rotate([90,0,-90]) angle_bracket_double();
+    translate([thickness,120-15,high_step_height])rotate([90,0,90]) angle_bracket_double();
+    translate([pb_size_x-thickness,120-15,high_step_height]) rotate([90,0,-90]) angle_bracket_double();
+
+    translate([thickness,45,low_step_height])rotate([90,0,90]) angle_bracket_double();
+    translate([pb_size_x-thickness,45,low_step_height])rotate([90,0,-90]) angle_bracket_double();
+
+    translate([thickness+8,thickness,0]) rotate([0,0,180]) angle_bracket_simple();
+    translate([pb_size_x-(thickness+8),thickness,0]) rotate([0,0,180]) angle_bracket_simple();
+
+    translate([thickness+8,pb_size_y-thickness,0]) rotate([0,0,0]) angle_bracket_simple();
+    translate([pb_size_x-(thickness+8),pb_size_y-thickness,0]) rotate([0,0,0]) angle_bracket_simple();
+
+    translate([thickness,60+thickness,high_step_height-8]) rotate([0,-90,180]) angle_bracket_simple();
+    translate([pb_size_x-thickness,60+thickness,high_step_height-8]) rotate([0,90,180]) angle_bracket_simple();
+
+    translate([thickness,180-thickness,high_step_height-8]) rotate([0,+90,0]) angle_bracket_simple();
+    translate([pb_size_x-thickness,180-thickness,high_step_height-8]) rotate([0,-90,0]) angle_bracket_simple();
 }
 
 //footswitch
