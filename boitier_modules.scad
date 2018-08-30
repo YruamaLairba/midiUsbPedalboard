@@ -11,8 +11,6 @@ M4Hole=4;//spec 4, measured 3.9 on screw
 
 thickness=3;
 
-//screen_size_x=26;
-//screen_size_y=19;
 screen_size_x =28;//measured 26.65, pcb 28mm
 screen_size_y =19.4;//measured 19.3
 
@@ -99,8 +97,6 @@ module low_top_2D()
             square([pb_size_x,60]);
             //finger
             translate([(pb_size_x/2)-(pb_size_x/6),60]) square([pb_size_x/3,thickness]);
-            //translate([thickness+23,60]) square([25,thickness]);
-            //translate([pb_size_x-(thickness+23+25),60]) square([25,thickness]);
         }
         {
             translate([fs_side_dist,20]) circle(d=fsHole);
@@ -170,15 +166,12 @@ module high_front_2D()
         union()
         {
             translate([thickness,0]) square([pb_size_x-2*thickness,high_step_height]);
-            //translate([(pb_size_x/2)-(40/2),high_step_height]) square([40,thickness]);
             translate([0,low_step_height/3]) square([thickness, low_step_height/3]);
             translate([pb_size_x-thickness,low_step_height/3]) square([thickness, low_step_height/3]);
             translate([(pb_size_x/2)-(pb_size_x/6),high_step_height]) square([pb_size_x/3,thickness]);
         }
         {
             translate([(pb_size_x/2)-(pb_size_x/6),low_step_height]) square([pb_size_x/3,thickness]);
-            //translate([thickness+23,low_step_height]) square([25,thickness]);
-            //translate([pb_size_x-(thickness+23+25),low_step_height]) square([25,thickness]);
             //hole for cable
             translate([fs_side_dist-5,low_step_height/2]) square([10,5], center=true);
             translate([pb_size_x-fs_side_dist+5,low_step_height/2]) square([10,5], center=true);
