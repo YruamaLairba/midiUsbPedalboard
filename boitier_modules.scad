@@ -133,29 +133,6 @@ module low_top_2D()
     }
 }
 
-module plastic_cover_3D()
-{
-    linear_extrude(height=3)  plastic_cover_2D();
-}
-module plastic_cover_2D()
-{
-    difference()
-    {
-       {
-           square([pb_size_x,60]);
-       }
-       {
-           translate([pb_size_x/2 -10 ,60-30])
-           {
-               translate([2-screen_size_x/2,2-screen_size_y/2]) circle(d=screenHole);
-               translate([2-screen_size_x/2,screen_size_y/2-2]) circle(d=screenHole);
-               translate([screen_size_x/2-2,2-screen_size_y/2]) circle(d=screenHole);
-               translate([screen_size_x/2-2,screen_size_y/2-2]) circle(d=screenHole);
-           }
-       }
-   }
-}
-
 module low_front_3D()
 {
     linear_extrude(height=thickness) low_front_2D();

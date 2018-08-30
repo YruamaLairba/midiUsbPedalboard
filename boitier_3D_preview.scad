@@ -12,7 +12,5 @@ union(){
     color("red",alpha=0.5) translate([thickness,0,0]) rotate([0,-90,0]) left_3D();
     color("red",alpha=0.5) translate([pb_size_x,0,0]) rotate([0,-90,0]) right_3D();
 
-    color([0.8,0.8,0.8,0.3]) translate([0,120,high_step_height+thickness]) plastic_cover_3D();
-
     color("grey",alpha=0.5) translate([0,0,-thickness]) bottom_3D();
 }
