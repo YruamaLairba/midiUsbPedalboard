@@ -354,15 +354,6 @@ module bottom_3D()
     }
 }
 
-//footswitch
-*union(){
-    translate([fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
-    translate([pb_size_x-fs_side_dist,20,0]) rotate([0,0,90]) footswitch();
-    translate([fs_side_dist,60+20,high_step_height-low_step_height]) rotate([0,0,0]) footswitch();
-    translate([pb_size_x-fs_side_dist,60+20,high_step_height-low_step_height]) rotate([0,0,90]) footswitch();
-}
-
-
 //angle bracket
 *%union()
 {
