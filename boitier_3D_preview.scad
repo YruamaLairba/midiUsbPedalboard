@@ -1,6 +1,8 @@
+use <USB_connector.scad>;
+use <midi_connector.scad>;
 include <boitier_modules.scad>
 
-
+//the enclosure
 union(){
     color("blue",alpha=0.2) translate([0,0,low_step_height]) low_top_3D();
     translate([0,0,high_step_height])  high_top_3D();
@@ -14,3 +16,8 @@ union(){
 
     color("grey",alpha=0.5) translate([0,0,-thickness]) bottom_3D();
 }
+
+//connector
+%translate([95,180-thickness,13]) rotate([90,0,0]) usb_connector();
+%translate([35,180,13]) rotate([-90,34,0]) midi_connector();
+%translate([58,180,13]) rotate([-90,34,0]) midi_connector();
