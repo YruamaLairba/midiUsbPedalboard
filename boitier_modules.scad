@@ -22,6 +22,18 @@ fsSpaceBorder= 30; //space between footswitch and a border
 pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
 echo("pb_size : ",pb_size);
 
+module fingers(alternation=0, length=0, width=0, invert=false,center=false)
+{
+    finger_length=length/alternation;
+    a= center ? length/2 : 0;
+    b= center ? width/2 : 0;
+    start= invert ? 1 : 0;
+    for(i =[start:2:alternation-1])
+    {
+        translate([i*finger_length-a,-b]) square([finger_length,width]);
+    }
+}
+
 module top_3D()
 linear_extrude(height=thickness) top_2D();
 
@@ -65,6 +77,15 @@ module top_2D()
                 translate([i*fsSpace,0]) circle(d=fsHole);
                 translate([i*fsSpace,20]) circle(d=ledHole);
             }
+            //fingers
+            translate([pb_size.x/2,0])
+            fingers(15,pb_size.x+20,thickness*2,true,true);
+            translate([pb_size.x/2,pb_size.y])
+            fingers(15,pb_size.x+20,thickness*2,true,true);
+            translate([0,pb_size.y/2]) rotate(90)
+            fingers(15,pb_size.y+2,thickness*2,true,true);
+            translate([pb_size.x,pb_size.y/2]) rotate(90)
+            fingers(15,pb_size.y+2,thickness*2,true,true);
         }
     }
 }
