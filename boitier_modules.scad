@@ -19,18 +19,50 @@ nbFs=4; //number of footswitch
 fsSpace=80; //space between footswitch
 fsSpaceBorder= 30; //space between footswitch and a border
 
+debug=true;
+
 pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
 echo("pb_size : ",pb_size);
 
-module fingers(alternation=0, length=0, width=0, invert=false,center=false)
+module fingers(
+length=0,
+finger_length=10,
+width=10,
+invert=false,
+center=false,
+debug=false)
 {
-    finger_length=length/alternation;
-    a= center ? length/2 : 0;
-    b= center ? width/2 : 0;
+    nb_finger=round(length/(finger_length*2));
+    a= center ? 0: length/2;
+    b= center ? 0: width/2;
     start= invert ? 1 : 0;
-    for(i =[start:2:alternation-1])
+    translate([a,b])
+    difference()
     {
-        translate([i*finger_length-a,-b]) square([finger_length,width]);
+        for(i =[0:1:nb_finger])
+        {
+            translate([(i-nb_finger/2)*2*finger_length,0])
+            square([finger_length,width],center=true);
+        }
+        union()
+        {
+            size = [finger_length+2,width+2];
+            translate([-size.x/2-length/2,0])
+            square(size,center=true);
+            translate([size.x/2+length/2,0])
+            square(size,center=true);
+        }
+    }
+    if (debug)
+    {
+        %union()
+        {
+            size = [finger_length+2,width+2];
+            translate([-size.x/2-length/2,0])
+            square(size,center=true);
+            translate([size.x/2+length/2,0])
+            square(size,center=true);
+        }
     }
 }
 
@@ -79,13 +111,13 @@ module top_2D()
             }
             //fingers
             translate([pb_size.x/2,0])
-            fingers(15,pb_size.x+20,thickness*2,true,true);
+            fingers(pb_size.x+2,20,thickness*2,true,true,debug);
             translate([pb_size.x/2,pb_size.y])
-            fingers(15,pb_size.x+20,thickness*2,true,true);
+            fingers(pb_size.x+2,20,thickness*2,true,true,debug);
             translate([0,pb_size.y/2]) rotate(90)
-            fingers(15,pb_size.y+2,thickness*2,true,true);
+            fingers(pb_size.y+2,18,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.y/2]) rotate(90)
-            fingers(15,pb_size.y+2,thickness*2,true,true);
+            fingers(pb_size.y+2,18,thickness*2,true,true,debug);
         }
     }
 }
