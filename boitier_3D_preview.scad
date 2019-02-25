@@ -5,7 +5,9 @@ use <midi_connector.scad>;
 include <boitier_modules.scad>
 
 //the enclosure
-union(){
+union()
+{
+    top_3D();
 }
 
 //angle bracket

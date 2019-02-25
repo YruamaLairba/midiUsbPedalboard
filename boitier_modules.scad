@@ -15,10 +15,15 @@ thickness=3;
 //y: measured 19.3
 screen_size = [28,19.4];
 
-pb_size = [140,180,45];
+nbFs=4; //number of footswitch
+fsSpace=80; //space between footswitch
+fsSpaceBorder= 30; //space between footswitch and a border
+
+pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
+echo("pb_size : ",pb_size);
 
 module top_3D()
-linear_extrude(height=thickness) high_top_2D();
+linear_extrude(height=thickness) top_2D();
 
 module top_2D()
 {
@@ -33,11 +38,40 @@ module top_2D()
         translate([11.75,-11.75]) circle(d=screenHole);
         translate([-11.75,-11.75]) circle(d=screenHole);
     }
+    difference()
+    {
+        union()
+        {
+            square([pb_size.x,pb_size.y]);
+        }
+        union()
+        {
+            a=30;
+            b=a+15+screen_size.x/2;
+            c=b+screen_size.x/2+15;
+            d=c+20;
+            translate([a,pb_size.y-(thickness+20)])
+            circle(d=rotaryHole);
+            translate([b, pb_size.y-(thickness+20)])
+            screen_clearance();
+            translate([c, pb_size.y-(thickness+20)])
+            circle(d=swHole);
+            translate([d, pb_size.y-(thickness+20)])
+            circle(d=swHole);
+            //footswitches and leds holes
+            translate([fsSpaceBorder,20])
+            for(i = [0:nbFs-1])
+            {
+                translate([i*fsSpace,0]) circle(d=fsHole);
+                translate([i*fsSpace,20]) circle(d=ledHole);
+            }
+        }
+    }
 }
 
 module front_3D()
 {
-    linear_extrude(height=thickness) low_front_2D();
+    linear_extrude(height=thickness) front_2D();
 }
 
 module front_2D()    
