@@ -19,6 +19,10 @@ nbFs=4; //number of footswitch
 fsSpace=80; //space between footswitch
 fsSpaceBorder= 30; //space between footswitch and a border
 
+finger_size_x=20.5;
+finger_size_y=20;
+finger_size_z=12;
+
 debug=true;
 
 pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
@@ -113,13 +117,14 @@ module top_2D()
             }
             //fingers
             translate([pb_size.x/2,0])
-            fingers(pb_size.x+2,20,thickness*2,true,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,true,true,debug);
             translate([pb_size.x/2,pb_size.y])
-            fingers(pb_size.x+2,20,thickness*2,true,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,true,true,debug);
+
             translate([0,pb_size.y/2]) rotate(90)
-            fingers(pb_size.y+2,18,thickness*2,true,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.y/2]) rotate(90)
-            fingers(pb_size.y+2,18,thickness*2,true,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
         }
     }
 }
@@ -141,14 +146,14 @@ module front_2D()
         {
             //fingers
             translate([pb_size.x/2,0])
-            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,false,true,debug);
             translate([pb_size.x/2,pb_size.z])
-            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,false,true,debug);
 
             translate([0,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,true,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,true,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,true,true,debug);
 
         }
     }
@@ -192,14 +197,14 @@ module rear_2D()
             midi_cutout();
             //fingers
             translate([pb_size.x/2,0])
-            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,false,true,debug);
             translate([pb_size.x/2,pb_size.z])
-            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,false,true,debug);
 
             translate([0,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,true,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,true,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,true,true,debug);
 
         }
     }
@@ -223,14 +228,14 @@ module left_2D()
         {
             //fingers
             translate([pb_size.y/2,0])
-            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,false,true,debug);
             translate([pb_size.y/2,pb_size.z,])
-            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,false,true,debug);
 
             translate([0,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,false,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
             translate([pb_size.y,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,false,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
         }
     }
 }
@@ -252,14 +257,14 @@ module right_2D()
         {
             //fingers
             translate([pb_size.y/2,0])
-            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,false,true,debug);
             translate([pb_size.y/2,pb_size.z,])
-            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,false,true,debug);
 
             translate([0,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,false,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
             translate([pb_size.y,pb_size.z/2]) rotate(90)
-            fingers(pb_size.z+2,10,thickness*2,false,true,debug);
+            fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
         }
     }
 }
@@ -281,13 +286,13 @@ module bottom_3D()
         {
             //fingers
             translate([pb_size.x/2,0])
-            fingers(pb_size.x+2,20,thickness*2,true,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,true,true,debug);
             translate([pb_size.x/2,pb_size.y])
-            fingers(pb_size.x+2,20,thickness*2,true,true,debug);
+            fingers(pb_size.x+2,finger_size_x,thickness*2,true,true,debug);
             translate([0,pb_size.y/2]) rotate(90)
-            fingers(pb_size.y+2,18,thickness*2,true,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.y/2]) rotate(90)
-            fingers(pb_size.y+2,18,thickness*2,true,true,debug);
+            fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
         }
     }
 }
