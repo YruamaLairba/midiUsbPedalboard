@@ -177,6 +177,20 @@ module left_3D()
 
 module left_2D()
 {
+    difference()
+    {
+        union()
+        {
+            square([pb_size.y,pb_size.z]);
+        }
+        union()
+        {
+            translate([pb_size.y/2,0])
+            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+            translate([pb_size.y/2,pb_size.z,])
+            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+        }
+    }
 }
 
 module right_3D()
