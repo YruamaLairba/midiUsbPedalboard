@@ -42,7 +42,31 @@ union()
 }
 
 //footswitch
-%union(){
+%union()
+{   translate([fsSpaceBorder,20,thickness])
+    for( i = [0:nbFs-1])
+    {
+        translate([i*fsSpace,0,0])
+        footswitch();
+    }
 }
 
 //connector
+%union()
+{
+    translate([pb_size.x,pb_size.y,0])
+    rotate([90,0,180])
+    {
+        //USB connector
+        translate([pb_size.x/2,pb_size.z/2,-thickness])
+        rotate([180,0,0])
+        usb_connector();
+        //midi connector
+        translate([pb_size.x/2-40,pb_size.z/2])
+        rotate(35)
+        midi_connector();
+        translate([pb_size.x/2-40-30,pb_size.z/2])
+        rotate(35)
+        midi_connector();
+    }
+}
