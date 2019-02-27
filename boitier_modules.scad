@@ -33,15 +33,17 @@ center=false,
 debug=false)
 {
     nb_finger=round(length/(finger_length*2));
+    inv = invert ? 1 : 0;
+    start=-(nb_finger-inv)/2;
+    end= (nb_finger-inv)/2;
     a= center ? 0: length/2;
     b= center ? 0: width/2;
-    start= invert ? 1 : 0;
     translate([a,b])
     difference()
     {
-        for(i =[0:1:nb_finger])
+        for(i =[start:1:end])
         {
-            translate([(i-nb_finger/2)*2*finger_length,0])
+            translate([(i)*2*finger_length,0])
             square([finger_length,width],center=true);
         }
         union()
@@ -127,8 +129,23 @@ module front_3D()
     linear_extrude(height=thickness) front_2D();
 }
 
-module front_2D()    
+module front_2D()
 {
+    difference()
+    {
+        union()
+        {
+            square([pb_size.x,pb_size.z]);
+        }
+        union()
+        {
+            //fingers
+            translate([pb_size.x/2,0])
+            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+            translate([pb_size.x/2,pb_size.z])
+            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+        }
+    }
 }
 
 module rear_3D()

@@ -7,7 +7,13 @@ include <boitier_modules.scad>
 //the enclosure
 union()
 {
+    translate([0,0,pb_size.z-thickness])
     top_3D();
+
+    color("blue")
+    translate([0,thickness,0])
+    rotate([90,0,0])
+    front_3D();
 }
 
 //angle bracket
