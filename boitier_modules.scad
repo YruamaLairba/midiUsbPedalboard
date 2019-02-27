@@ -173,6 +173,27 @@ module rear_2D()
         translate([11.1,0]) circle(d=3.3);
         circle(d=16);
     }
+    difference()
+    {
+        union()
+        {
+            square([pb_size.x,pb_size.z]);
+        }
+        union()
+        {
+            //fingers
+            translate([pb_size.x/2,0])
+            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+            translate([pb_size.x/2,pb_size.z])
+            fingers(pb_size.x+2,20,thickness*2,false,true,debug);
+
+            translate([0,pb_size.z/2]) rotate(90)
+            fingers(pb_size.z+2,10,thickness*2,true,true,debug);
+            translate([pb_size.x,pb_size.z/2]) rotate(90)
+            fingers(pb_size.z+2,10,thickness*2,true,true,debug);
+
+        }
+    }
 }
 
 

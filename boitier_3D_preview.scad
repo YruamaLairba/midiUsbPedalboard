@@ -15,6 +15,11 @@ union()
     rotate([90,0,0])
     front_3D();
 
+    color("blue")
+    translate([pb_size.x,pb_size.y-thickness,0])
+    rotate([90,0,180])
+    rear_3D();
+
     color("red")
     translate([thickness,pb_size.y,0])
     rotate([90,0,-90])
