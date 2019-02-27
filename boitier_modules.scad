@@ -233,6 +233,26 @@ module right_3D()
 
 module right_2D()
 {
+    difference()
+    {
+        union()
+        {
+            square([pb_size.y,pb_size.z]);
+        }
+        union()
+        {
+            //fingers
+            translate([pb_size.y/2,0])
+            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+            translate([pb_size.y/2,pb_size.z,])
+            fingers(pb_size.y+2,18,thickness*2,false,true,debug);
+
+            translate([0,pb_size.z/2]) rotate(90)
+            fingers(pb_size.z+2,10,thickness*2,false,true,debug);
+            translate([pb_size.y,pb_size.z/2]) rotate(90)
+            fingers(pb_size.z+2,10,thickness*2,false,true,debug);
+        }
+    }
 }
 
 module bottom_3D()

@@ -24,6 +24,11 @@ union()
     translate([thickness,pb_size.y,0])
     rotate([90,0,-90])
     left_3D();
+
+    color("red")
+    translate([pb_size.x-thickness,0,0])
+    rotate([90,0,90])
+    right_3D();
 }
 
 //angle bracket
