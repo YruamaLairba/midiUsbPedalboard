@@ -181,6 +181,15 @@ module rear_2D()
         }
         union()
         {
+            //connector cutout
+            translate([pb_size.x/2,pb_size.z/2])
+            usb_clearance();
+            translate([pb_size.x/2-40,pb_size.z/2])
+            rotate(35)
+            midi_cutout();
+            translate([pb_size.x/2-40-30,pb_size.z/2])
+            rotate(35)
+            midi_cutout();
             //fingers
             translate([pb_size.x/2,0])
             fingers(pb_size.x+2,20,thickness*2,false,true,debug);
