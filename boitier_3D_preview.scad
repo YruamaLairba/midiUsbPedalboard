@@ -1,8 +1,22 @@
 use <footswitch.scad>;
 use <angle_bracket.scad>;
+use <custom_angle_bracket.scad>;
 use <USB_connector.scad>;
 use <midi_connector.scad>;
 include <boitier_modules.scad>
+
+module my_angle_bracket()
+{
+    custom_angle_bracket(
+    size=[24,24,pb_size.z-2*thickness],
+    hole_diameter=3,
+    thickness=3,
+    bottom_hole_pos=[for(i=M4_distance_bottom) i-thickness],
+    top_hole_pos=[for(i=M4_distance_top) i-thickness],
+    left_hole_pos=[for(i=M4_distance_sides) i-thickness],
+    front_hole_pos=[for(i=M4_distance_sides) i-thickness]
+    );
+}
 
 //the enclosure
 union()
@@ -39,6 +53,8 @@ union()
 //angle bracket
 %union()
 {
+    translate([thickness,thickness,thickness])
+    my_angle_bracket();
 }
 
 //footswitch
@@ -47,6 +63,7 @@ union()
     for( i = [0:nbFs-1])
     {
         translate([i*fsSpace,0,0])
+        rotate(90)
         footswitch();
     }
 }
