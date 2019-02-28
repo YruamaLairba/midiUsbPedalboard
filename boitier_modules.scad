@@ -23,10 +23,16 @@ finger_size_x=20.5;
 finger_size_y=20;
 finger_size_z=12;
 
-debug=true;
+debug=false;
 
 pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
 echo("pb_size : ",pb_size);
+
+//M4 positionning from border
+M4_distance_top=[10,10];
+M4_distance_bottom=[10,10];
+M4_distance_sides=[15,pb_size.z/2];
+
 
 module fingers(
 length=0,
@@ -125,6 +131,16 @@ module top_2D()
             fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.y/2]) rotate(90)
             fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
+
+            //m4 holes
+            d1=M4_distance_top;
+            d2=[pb_size.x-M4_distance_top.x,M4_distance_top.y];
+            d3=[M4_distance_top.x,pb_size.y-M4_distance_top.y];
+            d4=[pb_size.x-M4_distance_top.x,pb_size.y-M4_distance_top.y];
+            translate(d1) circle(d=M4Hole);
+            translate(d2) circle(d=M4Hole);
+            translate(d3) circle(d=M4Hole);
+            translate(d4) circle(d=M4Hole);
         }
     }
 }
@@ -155,6 +171,11 @@ module front_2D()
             translate([pb_size.x,pb_size.z/2]) rotate(90)
             fingers(pb_size.z+2,finger_size_z,thickness*2,true,true,debug);
 
+            //m4 holes
+            d1=M4_distance_sides;
+            d2=[pb_size.x-M4_distance_sides.x,M4_distance_sides.y];
+            translate(d1) circle(d=M4Hole);
+            translate(d2) circle(d=M4Hole);
         }
     }
 }
@@ -206,6 +227,11 @@ module rear_2D()
             translate([pb_size.x,pb_size.z/2]) rotate(90)
             fingers(pb_size.z+2,finger_size_z,thickness*2,true,true,debug);
 
+            //m4 holes
+            d1=M4_distance_sides;
+            d2=[pb_size.x-M4_distance_sides.x,M4_distance_sides.y];
+            translate(d1) circle(d=M4Hole);
+            translate(d2) circle(d=M4Hole);
         }
     }
 }
@@ -236,6 +262,12 @@ module left_2D()
             fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
             translate([pb_size.y,pb_size.z/2]) rotate(90)
             fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
+
+            //m4 holes
+            d1=M4_distance_sides;
+            d2=[pb_size.y-M4_distance_sides.x,M4_distance_sides.y];
+            translate(d1) circle(d=M4Hole);
+            translate(d2) circle(d=M4Hole);
         }
     }
 }
@@ -265,6 +297,12 @@ module right_2D()
             fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
             translate([pb_size.y,pb_size.z/2]) rotate(90)
             fingers(pb_size.z+2,finger_size_z,thickness*2,false,true,debug);
+
+            //m4 holes
+            d1=M4_distance_sides;
+            d2=[pb_size.y-M4_distance_sides.x,M4_distance_sides.y];
+            translate(d1) circle(d=M4Hole);
+            translate(d2) circle(d=M4Hole);
         }
     }
 }
@@ -293,6 +331,16 @@ module bottom_3D()
             fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
             translate([pb_size.x,pb_size.y/2]) rotate(90)
             fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
+
+            //m4 holes
+            d1=M4_distance_bottom;
+            d2=[pb_size.x-M4_distance_bottom.x,M4_distance_bottom.y];
+            d3=[M4_distance_bottom.x,pb_size.y-M4_distance_bottom.y];
+            d4=[pb_size.x-M4_distance_bottom.x,pb_size.y-M4_distance_bottom.y];
+            translate(d1) circle(d=M4Hole);
+            translate(d2) circle(d=M4Hole);
+            translate(d3) circle(d=M4Hole);
+            translate(d4) circle(d=M4Hole);
         }
     }
 }
