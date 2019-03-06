@@ -1,22 +1,8 @@
 use <footswitch.scad>;
 use <angle_bracket.scad>;
-use <custom_angle_bracket.scad>;
 use <USB_connector.scad>;
 use <midi_connector.scad>;
 include <boitier_modules.scad>
-
-module my_angle_bracket()
-{
-    custom_angle_bracket(
-    size=[15,25,pb_size.z-2*thickness],
-    hole_diameter=3,
-    thickness=3,
-    bottom_hole_pos=[for(i=M4_distance_tb) i-thickness],
-    top_hole_pos=[for(i=M4_distance_tb) i-thickness],
-    left_hole_pos=[for(i=M4_distance_lr) i-thickness],
-    front_hole_pos=[for(i=M4_distance_fr) i-thickness]
-    );
-}
 
 //proxy for screw
 module screw()
