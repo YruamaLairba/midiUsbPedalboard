@@ -17,7 +17,7 @@ front_hole_pos=[0,0]
     size_x = size.x>0? size.x : (bottom_hole_pos.x>0 ? bottom_hole_pos.x*2 : 0);
     echo(size_x);
     cond_y = size.y<=0 && bottom_hole_pos.y>0;
-    size_y = size.x>0? size.x : (bottom_hole_pos.x>0 ? bottom_hole_pos.x*2 : 0);
+    size_y = size.y>0? size.y : (bottom_hole_pos.y>0 ? bottom_hole_pos.y*2 : 0);
 
     size_z= size.z;
 
