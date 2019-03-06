@@ -11,10 +11,10 @@ module my_angle_bracket()
     size=[15,25,pb_size.z-2*thickness],
     hole_diameter=3,
     thickness=3,
-    bottom_hole_pos=[for(i=M4_distance_bottom) i-thickness],
-    top_hole_pos=[for(i=M4_distance_top) i-thickness],
-    left_hole_pos=[for(i=M4_distance_sides) i-thickness],
-    front_hole_pos=[for(i=M4_distance_sides) i-thickness]
+    bottom_hole_pos=[for(i=M4_distance_tb) i-thickness],
+    top_hole_pos=[for(i=M4_distance_tb) i-thickness],
+    left_hole_pos=[for(i=M4_distance_lr) i-thickness],
+    front_hole_pos=[for(i=M4_distance_fr) i-thickness]
     );
 }
 
@@ -33,10 +33,10 @@ union()
     //top
     union()
     {
-        d1=[M4_distance_top.x,M4_distance_top.y,pb_size.z];
-        d2=[pb_size.x-M4_distance_top.x,M4_distance_top.y,pb_size.z];
-        d3=[M4_distance_top.x,pb_size.y-M4_distance_top.y,pb_size.z];
-        d4=[pb_size.x-M4_distance_top.x,pb_size.y-M4_distance_top.y,pb_size.z];
+        d1=[M4_distance_tb.x,M4_distance_tb.y,pb_size.z];
+        d2=[pb_size.x-M4_distance_tb.x,M4_distance_tb.y,pb_size.z];
+        d3=[M4_distance_tb.x,pb_size.y-M4_distance_tb.y,pb_size.z];
+        d4=[pb_size.x-M4_distance_tb.x,pb_size.y-M4_distance_tb.y,pb_size.z];
         translate(d1) screw();
         translate(d2) screw();
         translate(d3) screw();
@@ -48,8 +48,8 @@ union()
     rotate([90,0,0])
     union()
     {
-        d1=M4_distance_sides;
-        d2=[pb_size.x-M4_distance_sides.x,M4_distance_sides.y];
+        d1=M4_distance_fr;
+        d2=[pb_size.x-M4_distance_fr.x,M4_distance_fr.y];
         translate(d1) screw();
         translate(d2) screw();
     }
@@ -59,8 +59,8 @@ union()
     rotate([90,0,180])
     union()
     {
-        d1=M4_distance_sides;
-        d2=[pb_size.x-M4_distance_sides.x,M4_distance_sides.y];
+        d1=M4_distance_fr;
+        d2=[pb_size.x-M4_distance_fr.x,M4_distance_fr.y];
         translate(d1) screw();
         translate(d2) screw();
     }
@@ -70,8 +70,8 @@ union()
     rotate([90,0,-90])
     union()
     {
-        d1=M4_distance_sides;
-        d2=[pb_size.y-M4_distance_sides.x,M4_distance_sides.y];
+        d1=M4_distance_lr;
+        d2=[pb_size.y-M4_distance_lr.x,M4_distance_lr.y];
         translate(d1) screw();
         translate(d2) screw();
     }
@@ -81,8 +81,8 @@ union()
     rotate([90,0,90])
     union()
     {
-        d1=M4_distance_sides;
-        d2=[pb_size.y-M4_distance_sides.x,M4_distance_sides.y];
+        d1=M4_distance_lr;
+        d2=[pb_size.y-M4_distance_lr.x,M4_distance_lr.y];
         translate(d1) screw();
         translate(d2) screw();
     }
@@ -92,10 +92,10 @@ union()
     rotate([180,0,0])
     union()
     {
-        d1=M4_distance_bottom;
-        d2=[pb_size.x-M4_distance_bottom.x,M4_distance_bottom.y];
-        d3=[M4_distance_bottom.x,pb_size.y-M4_distance_bottom.y];
-        d4=[pb_size.x-M4_distance_bottom.x,pb_size.y-M4_distance_bottom.y];
+        d1=M4_distance_tb;
+        d2=[pb_size.x-M4_distance_tb.x,M4_distance_tb.y];
+        d3=[M4_distance_tb.x,pb_size.y-M4_distance_tb.y];
+        d4=[pb_size.x-M4_distance_tb.x,pb_size.y-M4_distance_tb.y];
         translate(d1) screw();
         translate(d2) screw();
         translate(d3) screw();
