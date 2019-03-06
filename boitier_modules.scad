@@ -78,6 +78,51 @@ debug=false)
     }
 }
 
+module corner_bracket()
+{
+    cb_thickness=3;
+    cb_size_x= 2*(max(M4_distance_tb.x,M4_distance_fr.x)-thickness);
+    cb_size_y= 2*(max(M4_distance_tb.y,M4_distance_lr.x)-thickness);
+    cb_size=[cb_size_x,cb_size_y,pb_size.z-2*thickness];
+    cb_hole=3;
+    bottom_hole_pos=[for(i=M4_distance_tb) i-thickness];
+    top_hole_pos=[for(i=M4_distance_tb) i-thickness];
+    left_hole_pos=[for(i=M4_distance_lr) i-thickness];
+    front_hole_pos=[for(i=M4_distance_fr) i-thickness];
+    e=0.1; //epsilon margin
+    difference()
+    {
+        union()
+        {
+            cube(cb_size);
+        }
+        union()
+        {
+            //clearance
+            translate([cb_thickness, cb_thickness, cb_thickness])
+            cube([cb_size.x,cb_size.y,cb_size.z-2*cb_thickness]);
+
+            //bottom hole
+            translate([bottom_hole_pos.x,bottom_hole_pos.y,-e])
+            cylinder(h=cb_thickness+2*e,d=cb_hole);
+
+            //top hole
+            translate([top_hole_pos.x,top_hole_pos.y,cb_size.z-cb_thickness-e])
+            cylinder(h=cb_thickness+2*e,d=cb_hole);
+
+            //left hole
+            translate([-e,left_hole_pos.x,left_hole_pos.y])
+            rotate([0,90,0])
+            cylinder(h=cb_thickness+2*e,d=cb_hole);
+
+            //front hole
+            translate([front_hole_pos.x,-e,front_hole_pos.y])
+            rotate([-90,0,0])
+            cylinder(h=cb_thickness+2*e,d=cb_hole);
+        }
+    }
+}
+
 module top_3D()
 linear_extrude(height=thickness) top_2D();
 
