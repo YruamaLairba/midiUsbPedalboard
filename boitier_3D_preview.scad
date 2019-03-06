@@ -107,16 +107,16 @@ union()
 union()
 {
     translate([thickness,thickness,thickness])
-    my_angle_bracket();
+    corner_bracket();
     translate([pb_size.x-thickness,thickness,pb_size.z-thickness])
     rotate([0,180,0])
-    my_angle_bracket();
+    corner_bracket();
     translate([thickness,pb_size.y-thickness,pb_size.z-thickness])
     rotate([180,0,0])
-    my_angle_bracket();
+    corner_bracket();
     translate([pb_size.x-thickness,pb_size.y-thickness,thickness])
     rotate([180,180,0])
-    my_angle_bracket();
+    corner_bracket();
 }
 
 //footswitch
