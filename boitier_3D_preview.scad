@@ -18,6 +18,15 @@ module my_angle_bracket()
     );
 }
 
+//proxy for screw
+module screw()
+{
+    e=0.1;
+    translate([0,0,e-10])
+    cylinder(h=e+10,d=2);
+    cylinder(h=3,d=6);
+}
+
 //angle bracket
 union()
 {
