@@ -23,8 +23,84 @@ module screw()
 {
     e=0.1;
     translate([0,0,e-10])
-    cylinder(h=e+10,d=2);
-    cylinder(h=3,d=6);
+    cylinder(h=e+10,d=4);
+    cylinder(h=3,d=7);
+}
+
+//screw placement
+union()
+{
+    //top
+    union()
+    {
+        d1=[M4_distance_top.x,M4_distance_top.y,pb_size.z];
+        d2=[pb_size.x-M4_distance_top.x,M4_distance_top.y,pb_size.z];
+        d3=[M4_distance_top.x,pb_size.y-M4_distance_top.y,pb_size.z];
+        d4=[pb_size.x-M4_distance_top.x,pb_size.y-M4_distance_top.y,pb_size.z];
+        translate(d1) screw();
+        translate(d2) screw();
+        translate(d3) screw();
+        translate(d4) screw();
+    }
+
+    //front
+    translate([0,0,0])
+    rotate([90,0,0])
+    union()
+    {
+        d1=M4_distance_sides;
+        d2=[pb_size.x-M4_distance_sides.x,M4_distance_sides.y];
+        translate(d1) screw();
+        translate(d2) screw();
+    }
+
+    //rear
+    translate([pb_size.x,pb_size.y,0])
+    rotate([90,0,180])
+    union()
+    {
+        d1=M4_distance_sides;
+        d2=[pb_size.x-M4_distance_sides.x,M4_distance_sides.y];
+        translate(d1) screw();
+        translate(d2) screw();
+    }
+
+    //left
+    translate([0,pb_size.y,0])
+    rotate([90,0,-90])
+    union()
+    {
+        d1=M4_distance_sides;
+        d2=[pb_size.y-M4_distance_sides.x,M4_distance_sides.y];
+        translate(d1) screw();
+        translate(d2) screw();
+    }
+
+    //right
+    translate([pb_size.x,0,0])
+    rotate([90,0,90])
+    union()
+    {
+        d1=M4_distance_sides;
+        d2=[pb_size.y-M4_distance_sides.x,M4_distance_sides.y];
+        translate(d1) screw();
+        translate(d2) screw();
+    }
+
+    //bottom
+    translate([0,pb_size.y,0])
+    rotate([180,0,0])
+    union()
+    {
+        d1=M4_distance_bottom;
+        d2=[pb_size.x-M4_distance_bottom.x,M4_distance_bottom.y];
+        d3=[M4_distance_bottom.x,pb_size.y-M4_distance_bottom.y];
+        d4=[pb_size.x-M4_distance_bottom.x,pb_size.y-M4_distance_bottom.y];
+        translate(d1) screw();
+        translate(d2) screw();
+        translate(d3) screw();
+        translate(d4) screw();
+    }
 }
 
 //angle bracket
