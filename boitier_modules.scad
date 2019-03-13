@@ -29,8 +29,8 @@ pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
 echo("pb_size : ",pb_size);
 
 //M4 screw positionning from border
-M4_distance_tb=[10,10]; //for top/bottom panel
-M4_distance_fr=[10,pb_size.z/2]; //for front/rear panel
+M4_distance_tb=[12,12]; //for top/bottom panel
+M4_distance_fr=[12,pb_size.z/2]; //for front/rear panel
 M4_distance_lr=[15,pb_size.z/2]; //for left/right panel
 
 
@@ -81,8 +81,8 @@ debug=false)
 module corner_bracket()
 {
     cb_thickness=3;
-    cb_size_x= 2*(max(M4_distance_tb.x,M4_distance_fr.x)-thickness);
-    cb_size_y= 2*(max(M4_distance_tb.y,M4_distance_lr.x)-thickness);
+    cb_size_x= 9+(max(M4_distance_tb.x,M4_distance_fr.x)-thickness);
+    cb_size_y= 9+(max(M4_distance_tb.y,M4_distance_lr.x)-thickness);
     cb_size=[cb_size_x,cb_size_y,pb_size.z-2*thickness];
     cb_hole=3;
     bottom_hole_pos=[for(i=M4_distance_tb) i-thickness];
@@ -147,7 +147,7 @@ module top_2D()
         }
         union()
         {
-            a=30;
+            a=40;
             b=a+15+screen_size.x/2;
             c=b+screen_size.x/2+15;
             d=c+20;
@@ -253,14 +253,17 @@ module rear_2D()
         union()
         {
             //connector cutout
-            translate([pb_size.x/2,pb_size.z/2])
+            translate([pb_size.x/2+40,pb_size.z/2])
             usb_clearance();
-            translate([pb_size.x/2-40,pb_size.z/2])
+            translate([pb_size.x/2-00,pb_size.z/2])
             rotate(35)
             midi_cutout();
-            translate([pb_size.x/2-40-30,pb_size.z/2])
+            translate([pb_size.x/2-00-30,pb_size.z/2])
             rotate(35)
             midi_cutout();
+            //jack input
+            translate([80,pb_size.z/2])
+            circle(d=9);
             //fingers
             translate([pb_size.x/2,0])
             fingers(pb_size.x+2,finger_size_x,thickness*2,false,true,debug);
