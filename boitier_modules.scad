@@ -37,6 +37,7 @@ M4_distance_lr=[15,pb_size.z/2]; //for left/right panel
 usb_pos=[pb_size.x/2+40,pb_size.z/2];
 midi1_pos=[pb_size.x/2-00,pb_size.z/2];
 midi2_pos=[pb_size.x/2-00-30,pb_size.z/2];
+exp_pos=[80,pb_size.z/2];
 
 module fingers(
 length=0,
@@ -266,7 +267,7 @@ module rear_2D()
             rotate(35)
             midi_cutout();
             //jack input
-            translate([80,pb_size.z/2])
+            translate(exp_pos)
             circle(d=9);
             //fingers
             translate([pb_size.x/2,0])
