@@ -123,14 +123,14 @@ union()
     rotate([90,0,180])
     {
         //USB connector
-        translate([pb_size.x/2,pb_size.z/2,-thickness])
+        translate(usb_pos)
         rotate([180,0,0])
         usb_connector();
         //midi connector
-        translate([pb_size.x/2-40,pb_size.z/2])
+        translate(midi1_pos)
         rotate(35)
         midi_connector();
-        translate([pb_size.x/2-40-30,pb_size.z/2])
+        translate(midi2_pos)
         rotate(35)
         midi_connector();
     }
