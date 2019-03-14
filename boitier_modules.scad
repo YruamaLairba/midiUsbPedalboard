@@ -258,12 +258,12 @@ module rear_2D()
         union()
         {
             //connector cutout
-            translate([pb_size.x/2+40,pb_size.z/2])
+            translate(usb_pos)
             usb_clearance();
-            translate([pb_size.x/2-00,pb_size.z/2])
+            translate(midi1_pos)
             rotate(35)
             midi_cutout();
-            translate([pb_size.x/2-00-30,pb_size.z/2])
+            translate(midi2_pos)
             rotate(35)
             midi_cutout();
             //jack input
