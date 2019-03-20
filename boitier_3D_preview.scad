@@ -14,6 +14,7 @@ module screw()
 }
 
 //screw placement
+color("lightgrey")
 union()
 {
     //top
@@ -106,6 +107,7 @@ union()
 }
 
 //footswitch
+color("lightgrey")
 union()
 {   translate([fsSpaceBorder,20,thickness])
     for( i = [0:nbFs-1])
@@ -123,7 +125,7 @@ union()
     rotate([90,0,180])
     {
         //USB connector
-        translate(usb_pos)
+        translate([usb_pos.x,usb_pos.y,-thickness])
         rotate([180,0,0])
         usb_connector();
         //midi connector
