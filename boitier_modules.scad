@@ -245,9 +245,10 @@ module rear_2D()
     }
     module midi_cutout()
     {
-        translate([-11.1,0]) circle(d=3.3);
-        translate([11.1,0]) circle(d=3.3);
-        circle(d=16);
+        //size taken from rean (neutrik) drawing
+        translate([-11.1,0]) circle(d=3.2);
+        translate([11.1,0]) circle(d=3.2);
+        circle(d=15.1);
     }
     difference()
     {
