@@ -34,10 +34,10 @@ M4_distance_fr=[12,pb_size.z/2]; //for front/rear panel
 M4_distance_lr=[15,pb_size.z/2]; //for left/right panel
 
 //connector positionning
-usb_pos=[pb_size.x/2+40,pb_size.z/2];
-midi1_pos=[pb_size.x/2-00,pb_size.z/2];
-midi2_pos=[pb_size.x/2-00-30,pb_size.z/2];
-exp_pos=[80,pb_size.z/2];
+usb_pos=[pb_size.x/2+10,pb_size.z/2];
+midi1_pos=[pb_size.x/2-30,pb_size.z/2];
+midi2_pos=[pb_size.x/2-30-30,pb_size.z/2];
+exp_pos=[50,pb_size.z/2];
 
 module fingers(
 length=0,
