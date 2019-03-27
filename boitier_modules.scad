@@ -89,7 +89,7 @@ module corner_bracket()
     cb_size_x= 9+(max(M4_distance_tb.x,M4_distance_fr.x)-thickness);
     cb_size_y= 9+(max(M4_distance_tb.y,M4_distance_lr.x)-thickness);
     cb_size=[cb_size_x,cb_size_y,pb_size.z-2*thickness];
-    cb_hole=3;
+    cb_hole=3.3;
     bottom_hole_pos=[for(i=M4_distance_tb) i-thickness];
     top_hole_pos=[for(i=M4_distance_tb) i-thickness];
     left_hole_pos=[for(i=M4_distance_lr) i-thickness];
