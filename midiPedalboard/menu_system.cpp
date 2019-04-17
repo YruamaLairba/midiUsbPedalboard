@@ -59,6 +59,59 @@ void MenuSystem::SubMenuTemplate::cancel()
   pt_menu_system_->set_active(pt_parent_);
 }
 
+MenuSystem::MenuFsCmdTyp::MenuFsCmdTyp(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuSystem::MenuFsCmdTyp::get_nb_item(){return 2;}
+
+void MenuSystem::MenuFsCmdTyp::activate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  selection_ =  0;//pt_menu_system_->pt_controller_system_->get_fs_command(fs);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuFsCmdTyp::validate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  //pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuFsCmdTyp::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    switch (i)
+    {
+      case 0:
+        display.print(F("Ctl Change\n\r"));
+        break;
+      case 1:
+        display.print(F("Pgm Change\n\r"));
+        break;
+    }
+  }
+  display.display();
+}
+
 MenuSystem::MenuFsCmdVal::MenuFsCmdVal(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
@@ -276,6 +329,7 @@ MenuSystem::MenuFsSetting::MenuFsSetting(
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
   : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_fs_cmd_typ_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_cmd_val_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
@@ -287,6 +341,9 @@ void MenuSystem::MenuFsSetting::validate()
 {
   switch(selection_)
   {
+    case 0:
+      menu_fs_cmd_typ_.activate();
+      break;
     case 1:
       menu_fs_cmd_val_.activate();
       break;
