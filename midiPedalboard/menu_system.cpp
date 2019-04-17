@@ -59,7 +59,7 @@ void MenuSystem::SubMenuTemplate::cancel()
   pt_menu_system_->set_active(pt_parent_);
 }
 
-MenuSystem::MenuFsCommand::MenuFsCommand(
+MenuSystem::MenuFsCmdVal::MenuFsCmdVal(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -67,9 +67,9 @@ MenuSystem::MenuFsCommand::MenuFsCommand(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuFsCommand::get_nb_item(){return 128;}
+uint8_t MenuSystem::MenuFsCmdVal::get_nb_item(){return 128;}
 
-void MenuSystem::MenuFsCommand::activate()
+void MenuSystem::MenuFsCmdVal::activate()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
   selection_ =  pt_menu_system_->pt_controller_system_->get_fs_command(fs);
@@ -77,14 +77,14 @@ void MenuSystem::MenuFsCommand::activate()
   SubMenuTemplate::activate();
 }
 
-void MenuSystem::MenuFsCommand::validate()
+void MenuSystem::MenuFsCmdVal::validate()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
   pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
   pt_menu_system_->set_active(pt_parent_);
 }
 
-void MenuSystem::MenuFsCommand::print()
+void MenuSystem::MenuFsCmdVal::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
@@ -276,21 +276,21 @@ MenuSystem::MenuFsSetting::MenuFsSetting(
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
   : SubMenuTemplate(pt_menu_system, pt_parent)
-  , menu_fs_command_(pt_menu_system, this, pt_menu_controller_setting)
+  , menu_fs_cmd_val_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuFsSetting::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuFsSetting::get_nb_item(){return 3;}
 
 void MenuSystem::MenuFsSetting::validate()
 {
   switch(selection_)
   {
-    case 0:
-      menu_fs_command_.activate();
-      break;
     case 1:
+      menu_fs_cmd_val_.activate();
+      break;
+    case 2:
       menu_fs_mode_.activate();
       break;
   }
@@ -317,9 +317,12 @@ void MenuSystem::MenuFsSetting::print()
     switch (i)
     {
       case 0:
-        display.print(F(" Cmd"));
+        display.print(F(" CmdTyp"));
         break;
       case 1:
+        display.print(F(" CmdVal"));
+        break;
+      case 2:
         display.print(F(" Mode"));
         break;
     }

@@ -68,13 +68,13 @@ class MenuSystem
 
   class MenuControllerSetting;
 
-  class MenuFsCommand : public SubMenuTemplate
+  class MenuFsCmdVal : public SubMenuTemplate
   {
     private:
       MenuControllerSetting* pt_menu_controller_setting_;
       uint8_t get_nb_item();
     public:
-      MenuFsCommand(
+      MenuFsCmdVal(
           MenuSystem* pt_menu_system,
           MenuBase* pt_parent,
           MenuControllerSetting* pt_menu_controller_setting);
@@ -101,7 +101,7 @@ class MenuSystem
   class MenuFsSetting : public SubMenuTemplate
   {
     private:
-      MenuFsCommand menu_fs_command_;
+      MenuFsCmdVal menu_fs_cmd_val_;
       MenuFsMode menu_fs_mode_;
       MenuControllerSetting* pt_menu_controller_setting_;
       uint8_t get_nb_item();
