@@ -49,6 +49,16 @@ void Footswitch::setup(
   pt_controller_system_ = pt_controller_system;
 }
 
+fsCmdTyp_t Footswitch::get_cmd_typ()
+{
+  return cmd_typ_;
+}
+
+void Footswitch::set_cmd_typ(fsCmdTyp_t cmd_typ)
+{
+  cmd_typ_ = cmd_typ;
+}
+
 uint8_t Footswitch::get_command()
 {
   return command_;

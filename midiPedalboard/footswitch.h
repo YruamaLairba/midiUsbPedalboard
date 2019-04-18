@@ -10,6 +10,12 @@ DIAGNOSTIC_POP
 //#warning "fix me"
 typedef uint8_t fsCommand_t;
 
+typedef enum class fsCmdTyp: uint8_t
+{
+  cc, MIN=cc,
+  pgm, MAX=pgm
+} fsCmdTyp_t;
+
 struct fsMode
 {
   enum 
@@ -36,6 +42,7 @@ class Footswitch
   private:
     static const unsigned long debounceTime_ = 100;
     static const unsigned long ledTime_ = 100;
+    fsCmdTyp_t cmd_typ_;
     uint8_t command_;
     uint8_t mode_;
 
@@ -55,6 +62,10 @@ class Footswitch
     Footswitch();
     void setup(uint8_t fs_pin, uint8_t led_pin,
       ControllerSystem* pt_controller_system_);
+
+    fsCmdTyp_t get_cmd_typ();
+    void set_cmd_typ(fsCmdTyp cmd_typ);
+
     uint8_t get_command();
     void set_command(uint8_t command);
 
