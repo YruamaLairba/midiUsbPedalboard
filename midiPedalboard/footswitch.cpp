@@ -107,6 +107,7 @@ void Footswitch::set_mode(uint8_t mode)
 FsConfig Footswitch::get_config()
 {
   FsConfig res;
+  res.cmd_typ = static_cast<uint8_t>(get_cmd_typ());
   res.command = get_command();
   res.mode = get_mode();
   return res;
@@ -114,6 +115,8 @@ FsConfig Footswitch::get_config()
 
 void Footswitch::set_config(FsConfig conf)
 {
+  set_cmd_typ((conf.cmd_typ<=static_cast<uint8_t>(fsCmdTyp_t::MAX))?
+      static_cast<fsCmdTyp_t>(conf.cmd_typ):fsCmdTyp_t::MIN);
   set_command(conf.command);
   set_mode(conf.mode);
 }

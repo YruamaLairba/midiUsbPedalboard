@@ -30,10 +30,12 @@ struct fsMode
   };
 };
 
+//this structure is used to store fs data in eeprom
 struct FsConfig
 {
-  uint8_t command;
-  uint8_t mode;
+  uint8_t command:7,:1;
+  uint8_t mode:4;
+  uint8_t cmd_typ:4;
 };
 
 class ControllerSystem;
@@ -75,11 +77,6 @@ class Footswitch
     FsConfig get_config();
     void set_config(FsConfig conf);
 
-    //void set_mode(uint8_t mode){mode_ = mode;};
-
-    //return 127 when fs change to on
-    //return 0 when fs change to off
-    //return -1 when fs state doesn't change
     void process();
 };
 
