@@ -6,12 +6,11 @@ DIAGNOSTIC_IGNORE_ALL
 #include <MIDIUSB.h>
 DIAGNOSTIC_POP
 
-void Footswitch::midi_send(uint8_t val)
+//to send channel voice message
+//no error check here
+void midi_send_cvm(uint8_t status, uint8_t data0, uint8_t data1=0)
 {
-  uint8_t usb_header = 0x0B;
-  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
-  uint8_t data0 = get_command();
-  uint8_t data1 = val;
+  uint8_t usb_header= (status & 0xF0) >> 4;
   Serial1.begin(31250);
   Serial1.write(status);
   Serial1.write(data0);
@@ -121,11 +120,10 @@ void Footswitch::set_config(FsConfig conf)
   set_mode(conf.mode);
 }
 
-void Footswitch::process()
+void Footswitch::process_cc(uint8_t cur_fs_pin_val)
 {
-  uint8_t cur_fs_pin_val= digitalRead(fs_pin_);
   unsigned long cur_millis = millis();
-
+  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
   switch(mode_)
   {
     case fsMode::toggle_off:
@@ -145,13 +143,13 @@ void Footswitch::process()
             {
               digitalWrite(led_pin_, HIGH);
               fs_val_ = 1;
-              midi_send(127);
+              midi_send_cvm(status,get_command(),127);
             }
             else
             {
               digitalWrite(led_pin_, LOW);
               fs_val_ = 0;
-              midi_send(0);
+              midi_send_cvm(status,get_command(),0);
             }
           }
         }
@@ -165,14 +163,14 @@ void Footswitch::process()
         {
           debounce_millis_ = cur_millis;
           digitalWrite(led_pin_, LOW);
-          midi_send(0);
+          midi_send_cvm(status,get_command(),0);
         }
         //on release
         else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
         {
           debounce_millis_ = cur_millis;
           digitalWrite(led_pin_, HIGH);
-          midi_send(127);
+          midi_send_cvm(status,get_command(),127);
         }
       }
       break;
@@ -184,14 +182,14 @@ void Footswitch::process()
         {
           debounce_millis_ = cur_millis;
           digitalWrite(led_pin_, HIGH);
-          midi_send(127);
+          midi_send_cvm(status,get_command(),127);
         }
         //on release
         else if(cur_fs_pin_val == HIGH && old_fs_pin_val_ == LOW)
         {
           debounce_millis_ = cur_millis;
           digitalWrite(led_pin_, LOW);
-          midi_send(0);
+          midi_send_cvm(status,get_command(),0);
         }
       }
       break;
@@ -208,7 +206,7 @@ void Footswitch::process()
         {
           digitalWrite(led_pin_, HIGH);
           led_millis_ = cur_millis;
-          midi_send(0);
+          midi_send_cvm(status,get_command(),0);
         }
       }
       //when led_millis_ timeout
@@ -230,7 +228,7 @@ void Footswitch::process()
         {
           digitalWrite(led_pin_, HIGH);
           led_millis_ = cur_millis;
-          midi_send(127);
+          midi_send_cvm(status,get_command(),127);
         }
       }
       //when led_millis_ timeout
@@ -239,6 +237,45 @@ void Footswitch::process()
         digitalWrite(led_pin_, LOW);
       }
     break;
+  }
+}
+
+void Footswitch::process_pgm(uint8_t cur_fs_pin_val)
+{
+  unsigned long cur_millis = millis();
+  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
+  if( cur_millis - debounce_millis_ >= debounceTime_)
+  {
+    //deboucing
+    if(cur_fs_pin_val != old_fs_pin_val_)
+    {
+      debounce_millis_ = cur_millis;
+    }
+    //on press
+    if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+    {
+      digitalWrite(led_pin_, HIGH);
+      led_millis_ = cur_millis;
+      midi_send_cvm(status,get_command());
+    }
+  }
+  //when led_millis_ timeout
+  if(cur_millis - led_millis_ > ledTime_)
+  {
+    digitalWrite(led_pin_, LOW);
+  }
+}
+
+void Footswitch::process()
+{
+  uint8_t cur_fs_pin_val= digitalRead(fs_pin_);
+  switch(cmd_typ_)
+  {
+    case fsCmdTyp_t::cc:
+      process_cc(cur_fs_pin_val);
+      break;
+    case fsCmdTyp_t::pgm:
+      break;
   }
   old_fs_pin_val_ = cur_fs_pin_val;
 }

@@ -59,6 +59,8 @@ class Footswitch
 
     ControllerSystem* pt_controller_system_;
     void midi_send(uint8_t val);
+    void process_cc(uint8_t cur_fs_pin_val);
+    void process_pgm(uint8_t cur_fs_pin_val);
 
   public:
     Footswitch();
