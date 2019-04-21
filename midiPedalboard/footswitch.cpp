@@ -243,7 +243,7 @@ void Footswitch::process_cc(uint8_t cur_fs_pin_val)
 void Footswitch::process_pgm(uint8_t cur_fs_pin_val)
 {
   unsigned long cur_millis = millis();
-  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
+  uint8_t status = 0xC0|pt_controller_system_->get_midi_channel();
   if( cur_millis - debounce_millis_ >= debounceTime_)
   {
     //deboucing
@@ -275,6 +275,7 @@ void Footswitch::process()
       process_cc(cur_fs_pin_val);
       break;
     case fsCmdTyp_t::pgm:
+      process_pgm(cur_fs_pin_val);
       break;
   }
   old_fs_pin_val_ = cur_fs_pin_val;

@@ -72,7 +72,8 @@ uint8_t MenuSystem::MenuFsCmdTyp::get_nb_item(){return 2;}
 void MenuSystem::MenuFsCmdTyp::activate()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
-  selection_ =  0;//pt_menu_system_->pt_controller_system_->get_fs_command(fs);
+  selection_ =  static_cast<uint8_t>(
+      pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fs));
   display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
   SubMenuTemplate::activate();
 }
@@ -80,7 +81,8 @@ void MenuSystem::MenuFsCmdTyp::activate()
 void MenuSystem::MenuFsCmdTyp::validate()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
-  //pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
+  pt_menu_system_->pt_controller_system_->set_fs_cmd_typ(
+      fs, static_cast<fsCmdTyp_t>(selection_));
   pt_menu_system_->set_active(pt_parent_);
 }
 

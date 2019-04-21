@@ -39,6 +39,17 @@ void ControllerSystem::process()
   }
 }
 
+fsCmdTyp_t ControllerSystem::get_fs_cmd_typ(uint8_t fs_num)
+{
+  return fs_tab_[fs_num].get_cmd_typ();
+}
+
+void ControllerSystem::set_fs_cmd_typ(uint8_t fs_num, fsCmdTyp_t fs_cmd_typ)
+{
+  fs_tab_[fs_num].set_cmd_typ(fs_cmd_typ);
+  is_preset_modified_ = true;
+}
+
 uint8_t ControllerSystem::get_fs_command(uint8_t fs_num)
 {
   return fs_tab_[fs_num].get_command();
