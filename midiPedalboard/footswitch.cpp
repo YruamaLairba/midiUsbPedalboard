@@ -27,6 +27,28 @@ void midi_send_cvm(uint8_t status, uint8_t data0, uint8_t data1=0)
   MidiUSB.flush();
 }
 
+void midi_send_mmc_cmd(uint8_t cmd)
+{
+  Serial1.begin(31250);
+  Serial1.write(0xF0);
+  Serial1.write(0x7F);
+  Serial1.write(0x7F);
+  Serial1.write(0x06);
+  Serial1.write(cmd);
+  Serial1.write(0xF7);
+  Serial1.flush();
+  Serial1.end();
+  midiEventPacket_t events[2] =
+  {
+    {0x04,0xF0,0x7F,0x7F},
+    {0x04,0x06,cmd,0xF7},
+  };
+  MidiUSB.sendMIDI(events[0]);
+  MidiUSB.sendMIDI(events[1]);
+  MidiUSB.flush();
+}
+
+
 Footswitch::Footswitch()
   : command_(0)
   , mode_(fsMode::toggle_off)
@@ -268,6 +290,54 @@ void Footswitch::process_pgm(uint8_t cur_fs_pin_val)
       digitalWrite(led_pin_, HIGH);
       led_millis_ = cur_millis;
       midi_send_cvm(status,get_command());
+    }
+  }
+  //when led_millis_ timeout
+  if(cur_millis - led_millis_ > ledTime_)
+  {
+    digitalWrite(led_pin_, LOW);
+  }
+}
+
+void Footswitch::process_mmc(uint8_t cur_fs_pin_val)
+{
+  unsigned long cur_millis = millis();
+  uint8_t value_on;
+  switch (get_mmc())
+  {
+    case fsMmc_t::play:
+      value_on=MMC_CMD::PLAY;
+      break;
+    case fsMmc_t::stop:
+      value_on=MMC_CMD::STOP;
+      break;
+    case fsMmc_t::record_punch:
+      value_on=MMC_CMD::RECORD_STROBE;
+      break;
+    case fsMmc_t::pause:
+      value_on=MMC_CMD::PAUSE;
+      break;
+    case fsMmc_t::fast_forward:
+      value_on=MMC_CMD::FAST_FORWARD;
+      break;
+    case fsMmc_t::rewind:
+      value_on=MMC_CMD::REWIND;
+      break;
+  }
+
+  if( cur_millis - debounce_millis_ >= debounceTime_)
+  {
+    //deboucing
+    if(cur_fs_pin_val != old_fs_pin_val_)
+    {
+      debounce_millis_ = cur_millis;
+    }
+    //on press
+    if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+    {
+      digitalWrite(led_pin_, HIGH);
+      led_millis_ = cur_millis;
+      midi_send_mmc_cmd(value_on);
     }
   }
   //when led_millis_ timeout

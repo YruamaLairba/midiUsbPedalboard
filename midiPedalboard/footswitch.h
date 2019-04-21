@@ -21,12 +21,24 @@ enum class fsMmc_t: uint8_t
 {
   play, MIN=play,
   stop,
-  play_stop,
+  play_stop,//toggle play/stop
   record_punch,
-  record_punch_stop,
+  record_punch_stop,//toggle record/stop
   pause,
   fast_forward,
   rewind, MAX=rewind,
+};
+
+//mapping beetween some MMC command bytes and theire name
+enum MMC_CMD : uint8_t
+{
+  STOP=0x01,
+  PLAY=0x02,
+  FAST_FORWARD=0x04,
+  REWIND=0x05,
+  RECORD_STROBE=0x06,
+  RECORD_EXIT=0x07,
+  PAUSE=0x09
 };
 
 struct fsMode
@@ -74,6 +86,7 @@ class Footswitch
     void midi_send(uint8_t val);
     void process_cc(uint8_t cur_fs_pin_val);
     void process_pgm(uint8_t cur_fs_pin_val);
+    void process_mmc(uint8_t cur_fs_pin_val);
 
   public:
     Footswitch();
