@@ -36,6 +36,7 @@ class ControllerSystem
     static uint8_t get_nb_fs(){return nb_fs_;}
     static uint8_t get_nb_exp(){return nb_exp_;}
     //accessor for footswitch
+    Footswitch* get_fs(uint8_t fs_num);
     fsCmdTyp_t get_fs_cmd_typ(uint8_t fs_num);
     void set_fs_cmd_typ(uint8_t fs_num, fsCmdTyp_t fs_cmd_typ);
     uint8_t get_fs_command(uint8_t fs_num);

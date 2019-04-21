@@ -39,6 +39,12 @@ void ControllerSystem::process()
   }
 }
 
+Footswitch* ControllerSystem::get_fs(uint8_t fs_num)
+{
+  if (fs_num < nb_fs_) return &(fs_tab_[fs_num]);
+  else return nullptr;
+}
+
 fsCmdTyp_t ControllerSystem::get_fs_cmd_typ(uint8_t fs_num)
 {
   return fs_tab_[fs_num].get_cmd_typ();
