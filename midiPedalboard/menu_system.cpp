@@ -67,7 +67,10 @@ MenuSystem::MenuFsCmdTyp::MenuFsCmdTyp(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuFsCmdTyp::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuFsCmdTyp::get_nb_item()
+{
+  return static_cast<uint8_t>(fsCmdTyp_t::MAX)+1;
+}
 
 void MenuSystem::MenuFsCmdTyp::activate()
 {
@@ -108,6 +111,9 @@ void MenuSystem::MenuFsCmdTyp::print()
         break;
       case 1:
         display.print(F("Pgm Change\n\r"));
+        break;
+      case 2:
+        display.print(F("MMC Cmd\n\r"));
         break;
     }
   }
@@ -165,6 +171,8 @@ void MenuSystem::MenuFsCmdVal::print()
       case fsCmdTyp_t::pgm:
         display.print(F("Pgm "));
         break;
+      case fsCmdTyp_t::mmc:
+        display.print(F("MMC "));
     }
     display.print(i, DEC);
     display.print(F("\n\r"));
