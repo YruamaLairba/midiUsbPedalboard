@@ -141,6 +141,9 @@ void MenuSystem::MenuFsCmdVal::validate()
 
 void MenuSystem::MenuFsCmdVal::print()
 {
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  fsCmdTyp_t cmd_typ = 
+    pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fs);
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -154,7 +157,15 @@ void MenuSystem::MenuFsCmdVal::print()
     {
       display.setTextColor(WHITE,BLACK);
     }
-    display.print(F("CC"));
+    switch (cmd_typ)
+    {
+      case fsCmdTyp_t::cc:
+        display.print(F("CC"));
+        break;
+      case fsCmdTyp_t::pgm:
+        display.print(F("Pgm "));
+        break;
+    }
     display.print(i, DEC);
     display.print(F("\n\r"));
   }
