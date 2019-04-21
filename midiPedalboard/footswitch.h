@@ -13,8 +13,21 @@ typedef uint8_t fsCommand_t;
 enum class fsCmdTyp_t: uint8_t
 {
   cc, MIN=cc,
-  pgm, MAX=pgm
+  pgm,
+  mmc, MAX=mmc
 } ;
+
+enum class fsMmc_t: uint8_t
+{
+  play, MIN=play,
+  stop,
+  play_stop,
+  record_punch,
+  record_punch_stop,
+  pause,
+  fast_forward,
+  rewind, MAX=rewind,
+};
 
 struct fsMode
 {
@@ -72,6 +85,9 @@ class Footswitch
 
     uint8_t get_command();
     void set_command(uint8_t command);
+
+    fsMmc_t get_mmc();
+    void set_mmc(fsMmc_t mmc);
 
     uint8_t get_mode();
     void set_mode(uint8_t mode);

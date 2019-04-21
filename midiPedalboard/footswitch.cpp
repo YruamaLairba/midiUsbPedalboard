@@ -69,6 +69,17 @@ void Footswitch::set_command(uint8_t command)
   if (command_ > 127) command_ = 0;
 }
 
+fsMmc_t Footswitch::get_mmc()
+{
+  return static_cast<fsMmc_t>(command_);
+}
+
+void Footswitch::set_mmc(fsMmc_t mmc)
+{
+  command_ = static_cast<uint8_t>(mmc);
+  if (command_ > static_cast<uint8_t>(fsMmc_t::MAX)) command_ = 0;
+}
+
 uint8_t Footswitch::get_mode()
 {
   return mode_;
