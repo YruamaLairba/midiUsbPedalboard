@@ -10,11 +10,11 @@ DIAGNOSTIC_POP
 //#warning "fix me"
 typedef uint8_t fsCommand_t;
 
-typedef enum class fsCmdTyp: uint8_t
+enum class fsCmdTyp_t: uint8_t
 {
   cc, MIN=cc,
   pgm, MAX=pgm
-} fsCmdTyp_t;
+} ;
 
 struct fsMode
 {
@@ -68,7 +68,7 @@ class Footswitch
       ControllerSystem* pt_controller_system_);
 
     fsCmdTyp_t get_cmd_typ();
-    void set_cmd_typ(fsCmdTyp cmd_typ);
+    void set_cmd_typ(fsCmdTyp_t cmd_typ);
 
     uint8_t get_command();
     void set_command(uint8_t command);
