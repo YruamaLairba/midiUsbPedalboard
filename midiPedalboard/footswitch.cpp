@@ -306,12 +306,14 @@ void Footswitch::process_mmc(uint8_t cur_fs_pin_val)
   switch (get_mmc())
   {
     case fsMmc_t::play:
+    case fsMmc_t::play_stop:
       value_on=MMC_CMD::PLAY;
       break;
     case fsMmc_t::stop:
       value_on=MMC_CMD::STOP;
       break;
     case fsMmc_t::record_punch:
+    case fsMmc_t::record_punch_stop:
       value_on=MMC_CMD::RECORD_STROBE;
       break;
     case fsMmc_t::pause:
@@ -357,6 +359,9 @@ void Footswitch::process()
       break;
     case fsCmdTyp_t::pgm:
       process_pgm(cur_fs_pin_val);
+      break;
+    case fsCmdTyp_t::mmc:
+      process_mmc(cur_fs_pin_val);
       break;
   }
   old_fs_pin_val_ = cur_fs_pin_val;
