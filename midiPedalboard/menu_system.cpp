@@ -1,5 +1,36 @@
 #include "menu_system.h"
 
+void print_fs_mmc(fsMmc_t mmc_cmd)
+{
+  switch (mmc_cmd)
+  {
+    case fsMmc_t::play:
+      display.print(F("play"));
+      break;
+    case fsMmc_t::stop:
+      display.print(F("stop"));
+      break;
+    case fsMmc_t::play_stop:
+      display.print(F("play/stop"));
+      break;
+    case fsMmc_t::record_punch:
+      display.print(F("record"));
+      break;
+    case fsMmc_t::record_punch_stop:
+      display.print(F("record/stop"));
+      break;
+    case fsMmc_t::pause:
+      display.print(F("pause"));
+      break;
+    case fsMmc_t::fast_forward:
+      display.print(F("fast_forward"));
+      break;
+    case fsMmc_t::rewind:
+      display.print(F("backward"));
+      break;
+  }
+}
+
 MenuSystem::MenuBase::MenuBase(MenuSystem* pt_menu_system)
   : pt_menu_system_(pt_menu_system)
 {}
@@ -167,14 +198,16 @@ void MenuSystem::MenuFsCmdVal::print()
     {
       case fsCmdTyp_t::cc:
         display.print(F("CC"));
+        display.print(i, DEC);
         break;
       case fsCmdTyp_t::pgm:
         display.print(F("Pgm "));
+        display.print(i, DEC);
         break;
       case fsCmdTyp_t::mmc:
-        display.print(F("MMC "));
+        print_fs_mmc(static_cast<fsMmc_t>(i));
+        break;
     }
-    display.print(i, DEC);
     display.print(F("\n\r"));
   }
   display.display();
