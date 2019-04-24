@@ -299,53 +299,104 @@ void Footswitch::process_pgm(uint8_t cur_fs_pin_val)
   }
 }
 
+enum mmc_mode_t : uint8_t
+{
+  single,
+  toggle
+};
+
 void Footswitch::process_mmc(uint8_t cur_fs_pin_val)
 {
   unsigned long cur_millis = millis();
-  uint8_t value_on;
+  MMC_CMD value_on;
+  MMC_CMD value_off;
+  mmc_mode_t mode;
   switch (get_mmc())
   {
     case fsMmc_t::play:
-    case fsMmc_t::play_stop:
+      mode=mmc_mode_t::single;
       value_on=MMC_CMD::PLAY;
       break;
+    case fsMmc_t::play_stop:
+      mode=mmc_mode_t::toggle;
+      value_on=MMC_CMD::PLAY;
+      value_off=MMC_CMD::STOP;
+      break;
     case fsMmc_t::stop:
+      mode=mmc_mode_t::single;
       value_on=MMC_CMD::STOP;
       break;
     case fsMmc_t::record_punch:
-    case fsMmc_t::record_punch_stop:
+      mode=mmc_mode_t::single;
       value_on=MMC_CMD::RECORD_STROBE;
+    case fsMmc_t::record_punch_stop:
+      mode=mmc_mode_t::toggle;
+      value_on=MMC_CMD::RECORD_STROBE;
+      value_off=MMC_CMD::STOP;
       break;
     case fsMmc_t::pause:
+      mode=mmc_mode_t::single;
       value_on=MMC_CMD::PAUSE;
       break;
     case fsMmc_t::fast_forward:
+      mode=mmc_mode_t::single;
       value_on=MMC_CMD::FAST_FORWARD;
       break;
     case fsMmc_t::rewind:
+      mode=mmc_mode_t::single;
       value_on=MMC_CMD::REWIND;
       break;
   }
-
-  if( cur_millis - debounce_millis_ >= debounceTime_)
+  switch(mode)
   {
-    //deboucing
-    if(cur_fs_pin_val != old_fs_pin_val_)
-    {
-      debounce_millis_ = cur_millis;
-    }
-    //on press
-    if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
-    {
-      digitalWrite(led_pin_, HIGH);
-      led_millis_ = cur_millis;
-      midi_send_mmc_cmd(value_on);
-    }
-  }
-  //when led_millis_ timeout
-  if(cur_millis - led_millis_ > ledTime_)
-  {
-    digitalWrite(led_pin_, LOW);
+    case mmc_mode_t::single:
+      if( cur_millis - debounce_millis_ >= debounceTime_)
+      {
+        //deboucing
+        if(cur_fs_pin_val != old_fs_pin_val_)
+        {
+          debounce_millis_ = cur_millis;
+        }
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          digitalWrite(led_pin_, HIGH);
+          led_millis_ = cur_millis;
+          midi_send_mmc_cmd(value_on);
+        }
+      }
+      //when led_millis_ timeout
+      if(cur_millis - led_millis_ > ledTime_)
+      {
+        digitalWrite(led_pin_, LOW);
+      }
+      break;
+    case mmc_mode_t::toggle:
+      if( cur_millis - debounce_millis_ >= debounceTime_)
+      {
+        //deboucing
+        if(cur_fs_pin_val != old_fs_pin_val_)
+        {
+          debounce_millis_ = cur_millis;
+        }
+        //on press
+        if(cur_fs_pin_val == LOW && old_fs_pin_val_ == HIGH)
+        {
+          if(fs_val_==0)
+          {
+            digitalWrite(led_pin_, HIGH);
+            fs_val_ = 1;
+            midi_send_mmc_cmd(value_on);
+          }
+          else
+          {
+            digitalWrite(led_pin_, LOW);
+            fs_val_ = 0;
+            midi_send_mmc_cmd(value_off);
+          }
+        }
+      }
+      break;
   }
 }
 
