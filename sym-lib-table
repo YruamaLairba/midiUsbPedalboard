@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name arduino_micro_shield)(type Legacy)(uri ${KIPRJMOD}/arduino_micro_shield.lib)(options "")(descr ""))
+  (lib (name pc900)(type Legacy)(uri /home/amaury/Kicad/midiPedalboard_Perfboard/pc900.lib)(options "")(descr ""))
+)
