@@ -31,7 +31,7 @@
   )
 
   (setup
-    (last_trace_width 0.5)
+    (last_trace_width 0.25)
     (user_trace_width 0.25)
     (user_trace_width 0.5)
     (trace_clearance 0.2)
@@ -1691,7 +1691,7 @@
     )
   )
 
-  (module Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal (layer F.Cu) (tedit 5A19A42A) (tstamp 5CC71DEB)
+  (module Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal (layer F.Cu) (tedit 5A19A42A) (tstamp 5CC9DFDC)
     (at 114.3 114.3 270)
     (descr "Through hole angled socket strip, 1x01, 2.54mm pitch, 8.51mm socket length, single row (from Kicad 4.0.7), script generated")
     (tags "Through hole angled socket strip THT 1x01 2.54mm single row")
@@ -1886,10 +1886,10 @@
     )
   )
 
-  (gr_line (start 96.52 142.24) (end 96.52 104.14) (layer Edge.Cuts) (width 0.15))
-  (gr_line (start 160.02 142.24) (end 96.52 142.24) (layer Edge.Cuts) (width 0.15))
-  (gr_line (start 160.02 104.14) (end 160.02 142.24) (layer Edge.Cuts) (width 0.15))
-  (gr_line (start 96.52 104.14) (end 160.02 104.14) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 96.52 142.24) (end 96.52 91.44) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 162.56 142.24) (end 96.52 142.24) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 162.56 91.44) (end 162.56 142.24) (layer Edge.Cuts) (width 0.15))
+  (gr_line (start 96.52 91.44) (end 162.56 91.44) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 177.8 129.54) (end 177.8 127) (layer B.SilkS) (width 0.2))
   (gr_circle (center 172.72 124.46) (end 177.8 129.54) (layer B.SilkS) (width 0.2))
 
