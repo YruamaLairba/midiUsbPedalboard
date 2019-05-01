@@ -880,7 +880,7 @@ U 1 1 5CAE6698
 P 8300 3300
 F 0 "S1" H 8300 3350 50  0000 L CNN
 F 1 "Socket" H 8327 3235 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3300 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3300 50  0001 C CNN
 F 3 "~" H 8300 3300 50  0001 C CNN
 	1    8300 3300
 	1    0    0    -1  
@@ -891,7 +891,7 @@ U 1 1 5CAE6A24
 P 8300 3400
 F 0 "S2" H 8300 3450 50  0000 L CNN
 F 1 "Socket" H 8327 3335 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3400 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3400 50  0001 C CNN
 F 3 "~" H 8300 3400 50  0001 C CNN
 	1    8300 3400
 	1    0    0    -1  
@@ -902,7 +902,7 @@ U 1 1 5CAE6A92
 P 8300 3500
 F 0 "S3" H 8300 3550 50  0000 L CNN
 F 1 "Socket" H 8327 3435 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3500 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3500 50  0001 C CNN
 F 3 "~" H 8300 3500 50  0001 C CNN
 	1    8300 3500
 	1    0    0    -1  
@@ -913,7 +913,7 @@ U 1 1 5CAE708E
 P 8300 3600
 F 0 "S4" H 8300 3650 50  0000 L CNN
 F 1 "Socket" H 8327 3535 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3600 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3600 50  0001 C CNN
 F 3 "~" H 8300 3600 50  0001 C CNN
 	1    8300 3600
 	1    0    0    -1  
@@ -924,7 +924,7 @@ U 1 1 5CAE70FC
 P 8300 3700
 F 0 "S5" H 8300 3750 50  0000 L CNN
 F 1 "Socket" H 8327 3635 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3700 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3700 50  0001 C CNN
 F 3 "~" H 8300 3700 50  0001 C CNN
 	1    8300 3700
 	1    0    0    -1  
@@ -935,7 +935,7 @@ U 1 1 5CAE7170
 P 8300 3800
 F 0 "S6" H 8300 3850 50  0000 L CNN
 F 1 "Socket" H 8327 3735 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3800 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3800 50  0001 C CNN
 F 3 "~" H 8300 3800 50  0001 C CNN
 	1    8300 3800
 	1    0    0    -1  
@@ -946,7 +946,7 @@ U 1 1 5CAE71E2
 P 8300 3900
 F 0 "S7" H 8300 3950 50  0000 L CNN
 F 1 "Socket" H 8327 3835 50  0001 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Vertical" H 8300 3900 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x01_P2.54mm_Horizontal" H 8300 3900 50  0001 C CNN
 F 3 "~" H 8300 3900 50  0001 C CNN
 	1    8300 3900
 	1    0    0    -1  
