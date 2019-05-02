@@ -3,7 +3,7 @@
   (general
     (thickness 1.6)
     (drawings 6)
-    (tracks 120)
+    (tracks 121)
     (zones 0)
     (modules 49)
     (nets 40)
@@ -31,7 +31,7 @@
   )
 
   (setup
-    (last_trace_width 0.25)
+    (last_trace_width 0.5)
     (user_trace_width 0.25)
     (user_trace_width 0.5)
     (trace_clearance 0.2)
@@ -1651,6 +1651,7 @@
   (via (at 134.62 104.14) (size 0.8) (drill 0.4) (layers F.Cu B.Cu) (net 2))
   (segment (start 131.92 106.84) (end 134.62 104.14) (width 0.25) (layer F.Cu) (net 2))
   (segment (start 127 106.84) (end 131.92 106.84) (width 0.25) (layer F.Cu) (net 2))
+  (segment (start 127 116.84) (end 127 114.3) (width 0.5) (layer B.Cu) (net 2))
   (segment (start 121.92 116.84) (end 121.92 111.76) (width 0.5) (layer B.Cu) (net 3))
   (segment (start 127 132.096) (end 127 134.62) (width 0.5) (layer B.Cu) (net 4))
   (segment (start 124.46 134.62) (end 127 134.62) (width 0.5) (layer B.Cu) (net 4))
