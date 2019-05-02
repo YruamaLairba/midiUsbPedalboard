@@ -36,26 +36,26 @@ F 3 "~" H 2500 2500 50  0001 C CNN
 	1    2500 2500
 	1    0    0    -1  
 $EndComp
-Text Label 4150 3300 0    50   ~ 0
+Text Label 4150 3800 0    50   ~ 0
 rotary_a
-Text Label 4150 3400 0    50   ~ 0
+Text Label 4150 3900 0    50   ~ 0
 rotary_b
 Text Label 4150 3500 0    50   ~ 0
 screen_cs
 Wire Wire Line
-	4150 3300 4550 3300
+	4150 3800 4550 3800
+Wire Wire Line
+	4150 3900 4550 3900
+Wire Wire Line
+	4150 3500 4550 3500
 Wire Wire Line
 	4150 3400 4550 3400
 Wire Wire Line
-	4150 3500 4550 3500
+	4150 3300 4550 3300
 Wire Wire Line
 	4150 3600 4550 3600
 Wire Wire Line
 	4150 3700 4550 3700
-Wire Wire Line
-	4150 3800 4550 3800
-Wire Wire Line
-	4150 3900 4550 3900
 Wire Wire Line
 	4150 4000 4550 4000
 Wire Wire Line
@@ -64,13 +64,13 @@ Wire Wire Line
 	4150 4200 4550 4200
 Wire Wire Line
 	4150 4300 4550 4300
-Text Label 4150 3600 0    50   ~ 0
+Text Label 4150 3400 0    50   ~ 0
 screen_dc
-Text Label 4150 3700 0    50   ~ 0
+Text Label 4150 3300 0    50   ~ 0
 screen_res
-Text Label 4150 3800 0    50   ~ 0
+Text Label 4150 3600 0    50   ~ 0
 btn_ok
-Text Label 4150 3900 0    50   ~ 0
+Text Label 4150 3700 0    50   ~ 0
 btn_cancel
 Text Label 4150 4000 0    50   ~ 0
 fs_0
@@ -172,23 +172,23 @@ rotary_b
 $Comp
 L Connector:Conn_01x01_Female J6
 U 1 1 5CABD334
-P 3950 3800
-F 0 "J6" H 4000 3750 50  0000 C CNN
-F 1 "wire" H 3850 3750 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 3950 3800 50  0001 C CNN
-F 3 "~" H 3950 3800 50  0001 C CNN
-	1    3950 3800
+P 3950 3600
+F 0 "J6" H 4000 3550 50  0000 C CNN
+F 1 "wire" H 3850 3550 50  0000 C CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 3950 3600 50  0001 C CNN
+F 3 "~" H 3950 3600 50  0001 C CNN
+	1    3950 3600
 	-1   0    0    1   
 $EndComp
 $Comp
 L Connector:Conn_01x01_Female J7
 U 1 1 5CABD51F
-P 3950 3900
-F 0 "J7" H 4000 3850 50  0000 C CNN
-F 1 "wire" H 3850 3850 50  0000 C CNN
-F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 3950 3900 50  0001 C CNN
-F 3 "~" H 3950 3900 50  0001 C CNN
-	1    3950 3900
+P 3950 3700
+F 0 "J7" H 4000 3650 50  0000 C CNN
+F 1 "wire" H 3850 3650 50  0000 C CNN
+F 2 "Connector_Wire:SolderWirePad_1x01_Drill0.8mm" H 3950 3700 50  0001 C CNN
+F 3 "~" H 3950 3700 50  0001 C CNN
+	1    3950 3700
 	-1   0    0    1   
 $EndComp
 $Comp

@@ -36,22 +36,22 @@ F 3 "~" H 2500 2500 50  0001 C CNN
 	1    2500 2500
 	1    0    0    -1  
 $EndComp
-Text Label 4150 3300 0    50   ~ 0
+Text Label 4150 3600 0    50   ~ 0
 rotary_a
-Text Label 4150 3400 0    50   ~ 0
+Text Label 4150 3700 0    50   ~ 0
 rotary_b
 Text Label 4150 3500 0    50   ~ 0
 screen_cs
 Wire Wire Line
-	4150 3300 4550 3300
-Wire Wire Line
-	4150 3400 4550 3400
-Wire Wire Line
-	4150 3500 4550 3500
-Wire Wire Line
 	4150 3600 4550 3600
 Wire Wire Line
 	4150 3700 4550 3700
+Wire Wire Line
+	4150 3500 4550 3500
+Wire Wire Line
+	4150 3400 4550 3400
+Wire Wire Line
+	4150 3300 4550 3300
 Wire Wire Line
 	4150 3800 4550 3800
 Wire Wire Line
@@ -64,9 +64,9 @@ Wire Wire Line
 	4150 4200 4550 4200
 Wire Wire Line
 	4150 4300 4550 4300
-Text Label 4150 3600 0    50   ~ 0
+Text Label 4150 3400 0    50   ~ 0
 screen_dc
-Text Label 4150 3700 0    50   ~ 0
+Text Label 4150 3300 0    50   ~ 0
 screen_res
 Text Label 4150 3800 0    50   ~ 0
 btn_ok
@@ -922,10 +922,10 @@ F 3 "~" H 7250 3000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R_Small R?
+L Device:R_Small R6
 U 1 1 5CCBBBCF
 P 7000 2750
-F 0 "R?" V 7000 2750 50  0000 C CNN
+F 0 "R6" V 7000 2750 50  0000 C CNN
 F 1 "100" V 6895 2750 50  0001 C CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" H 7000 2750 50  0001 C CNN
 F 3 "~" H 7000 2750 50  0001 C CNN
@@ -933,10 +933,10 @@ F 3 "~" H 7000 2750 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:VCC #PWR?
+L power:VCC #PWR0101
 U 1 1 5CCBBBD6
 P 7000 2550
-F 0 "#PWR?" H 7000 2400 50  0001 C CNN
+F 0 "#PWR0101" H 7000 2400 50  0001 C CNN
 F 1 "VCC" H 7017 2723 50  0000 C CNN
 F 2 "" H 7000 2550 50  0001 C CNN
 F 3 "" H 7000 2550 50  0001 C CNN
@@ -954,10 +954,10 @@ Wire Wire Line
 Wire Wire Line
 	7000 3000 7000 3050
 $Comp
-L power:GND #PWR?
+L power:GND #PWR0111
 U 1 1 5CCBBBE1
 P 7000 3050
-F 0 "#PWR?" H 7000 2800 50  0001 C CNN
+F 0 "#PWR0111" H 7000 2800 50  0001 C CNN
 F 1 "GND" H 7005 2877 50  0000 C CNN
 F 2 "" H 7000 3050 50  0001 C CNN
 F 3 "" H 7000 3050 50  0001 C CNN
