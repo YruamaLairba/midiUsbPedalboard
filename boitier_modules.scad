@@ -82,7 +82,30 @@ debug=false)
         }
     }
 }
-
+module reinforcing()
+{
+    r_thickness=3;
+    r_size_x=14;
+    r_size_y=16;
+    r_size_z=pb_size.z-2*thickness;
+    r_hole=3.3;
+    difference()
+    {
+        union()
+        {
+            rotate([-90,0,0])
+            linear_extrude(height=r_size_y,center=true)
+            polygon(points = [[0, 0],[0,-r_size_z],[r_size_x,0]]);
+        }
+        translate([r_size_x/2,0,-5])
+        cylinder(d=r_hole,h=r_size_z+10);
+        translate([-5,0,r_size_z/2])
+        rotate([0,90,0])
+        cylinder(d=r_hole,h=r_size_z+10);
+        translate([r_thickness,-r_size_y/2+r_thickness,r_thickness])
+        cube([r_size_x,r_size_y-r_thickness*2,r_size_z]);
+    }
+}
 module corner_bracket()
 {
     cb_thickness=3;

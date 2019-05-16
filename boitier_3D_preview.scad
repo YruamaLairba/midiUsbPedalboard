@@ -112,6 +112,17 @@ union()
     corner_bracket();
 }
 
+//reinforcing
+union()
+{
+    translate([pb_size.x/2-40,pb_size.y-thickness,pb_size.z-thickness])
+    rotate([180,0,-90])
+    reinforcing();
+        translate([pb_size.x/2+40,pb_size.y-thickness,pb_size.z-thickness])
+    rotate([180,0,-90])
+    reinforcing();
+}
+
 //footswitch
 color("lightgrey")
 union()
