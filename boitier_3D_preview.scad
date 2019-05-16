@@ -2,6 +2,7 @@ use <footswitch.scad>;
 use <angle_bracket.scad>;
 use <USB_connector.scad>;
 use <midi_connector.scad>;
+use <jack_connector.scad>;
 
 include <boitier_modules.scad>
 
@@ -140,6 +141,9 @@ union()
         translate(midi2_pos)
         rotate(35)
         midi_connector();
+        //jack 
+        translate([exp_pos.x,exp_pos.y,-thickness])
+        jack_connector();
     }
 }
 
