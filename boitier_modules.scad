@@ -182,7 +182,7 @@ module top_2D()
             translate([pb_size.x,pb_size.y/2]) rotate(90)
             fingers(pb_size.y+2,finger_size_y,thickness*2,true,true,debug);
 
-            //m4 holes
+            //m4 holes for corner bracket
             d1=M4_distance_tb;
             d2=[pb_size.x-M4_distance_tb.x,M4_distance_tb.y];
             d3=[M4_distance_tb.x,pb_size.y-M4_distance_tb.y];
@@ -191,6 +191,11 @@ module top_2D()
             translate(d2) circle(d=M4Hole);
             translate(d3) circle(d=M4Hole);
             translate(d4) circle(d=M4Hole);
+
+            //m4 holes for perfboard mounting
+            p_hole_space = 22.86;// 1"
+            translate([(pb_size.x-p_hole_space)/2,50]) circle(d=M4Hole);
+            translate([(pb_size.x+p_hole_space)/2,50]) circle(d=M4Hole);
         }
     }
 }

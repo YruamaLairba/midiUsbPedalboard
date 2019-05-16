@@ -2,6 +2,7 @@ use <footswitch.scad>;
 use <angle_bracket.scad>;
 use <USB_connector.scad>;
 use <midi_connector.scad>;
+
 include <boitier_modules.scad>
 
 //proxy for screw
@@ -89,6 +90,10 @@ union()
         translate(d4) screw();
     }
 }
+
+translate([pb_size.x/2,50-6,pb_size.z-thickness])
+rotate([0,180,0])
+import("perfboard.stl");
 
 //angle bracket
 union()
