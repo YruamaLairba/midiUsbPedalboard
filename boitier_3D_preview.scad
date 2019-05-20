@@ -172,8 +172,11 @@ union()
         translate(midi2_pos)
         rotate(35)
         midi_connector();
-        //jack 
-        translate([exp_pos.x,exp_pos.y,-thickness])
+        //jacks 
+        translate([exp1_pos.x,exp1_pos.y,-thickness])
+        rotate(180)
+        jack_connector();
+        translate([exp2_pos.x,exp2_pos.y,-thickness])
         jack_connector();
     }
 }

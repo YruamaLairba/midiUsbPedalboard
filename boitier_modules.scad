@@ -38,14 +38,15 @@ M4_reinforcing_t=10; //distance from the top border
 M4_reinforcing_r=pb_size.z/2; //distance from the rear border
 reinforcing1_pos=[pb_size.x/2-42,pb_size.y-thickness,pb_size.z-thickness];
 reinforcing1_rot=[180,0,-90];
-reinforcing2_pos=[pb_size.x/2+42,pb_size.y-thickness,pb_size.z-thickness];
+reinforcing2_pos=[pb_size.x/2+34,pb_size.y-thickness,pb_size.z-thickness];
 reinforcing2_rot=[180,0,-90];
 
 //connector positionning
-usb_pos=[pb_size.x/2-72,pb_size.z/2];
-midi1_pos=[pb_size.x/2-15,pb_size.z/2];
-midi2_pos=[pb_size.x/2+15,pb_size.z/2];
-exp_pos=[38,pb_size.z/2];
+usb_pos=[64,pb_size.z/2];
+midi1_pos=[pb_size.x/2-10,pb_size.z/2];
+midi2_pos=[pb_size.x/2+17,pb_size.z/2];
+exp1_pos=[62+36,pb_size.z/2];
+exp2_pos=[30,pb_size.z/2];
 
 module fingers(
 length=0,
@@ -309,9 +310,9 @@ module rear_2D()
             translate(midi2_pos)
             rotate(35)
             midi_cutout();
-            //jack input
-            translate(exp_pos)
-            circle(d=11);
+            //jack inputs
+            translate(exp1_pos) circle(d=11);
+            translate(exp2_pos) circle(d=11);
             //fingers
             translate([pb_size.x/2,0])
             fingers(pb_size.x+2,finger_size_x,thickness*2,false,true,debug);
