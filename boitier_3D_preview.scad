@@ -68,9 +68,9 @@ union()
         translate(d2) screw();
 
         //reinforcement
-        translate([reinforcing1_pos.x,pb_size.z-M4_reinforcing_r])
+        translate([pb_size.x-reinforcing1_pos.x,pb_size.z-M4_reinforcing_r])
         screw();
-        translate([reinforcing2_pos.x,pb_size.z-M4_reinforcing_r])
+        translate([pb_size.x-reinforcing2_pos.x,pb_size.z-M4_reinforcing_r])
         screw();
     }
 

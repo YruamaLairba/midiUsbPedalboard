@@ -330,9 +330,11 @@ module rear_2D()
             translate(d2) circle(d=M4Hole);
 
             //m4 holes for reinforcement
-            translate([reinforcing1_pos.x,pb_size.z-M4_reinforcing_r])
+            translate([pb_size.x-reinforcing1_pos.x,
+                pb_size.z-M4_reinforcing_r])
             circle(d=M4Hole);
-            translate([reinforcing2_pos.x,pb_size.z-M4_reinforcing_r])
+            translate([pb_size.x-reinforcing2_pos.x,
+                pb_size.z-M4_reinforcing_r])
             circle(d=M4Hole);
         }
     }
