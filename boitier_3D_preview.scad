@@ -20,16 +20,29 @@ color("lightgrey")
 union()
 {
     //top
+    translate([0,0,pb_size.z])
     union()
     {
-        d1=[M4_distance_tb.x,M4_distance_tb.y,pb_size.z];
-        d2=[pb_size.x-M4_distance_tb.x,M4_distance_tb.y,pb_size.z];
-        d3=[M4_distance_tb.x,pb_size.y-M4_distance_tb.y,pb_size.z];
-        d4=[pb_size.x-M4_distance_tb.x,pb_size.y-M4_distance_tb.y,pb_size.z];
+        //corner barcket
+        d1=[M4_distance_tb.x,M4_distance_tb.y];
+        d2=[pb_size.x-M4_distance_tb.x,M4_distance_tb.y];
+        d3=[M4_distance_tb.x,pb_size.y-M4_distance_tb.y];
+        d4=[pb_size.x-M4_distance_tb.x,pb_size.y-M4_distance_tb.y];
         translate(d1) screw();
         translate(d2) screw();
         translate(d3) screw();
         translate(d4) screw();
+
+        //reinforcement
+        translate([reinforcing1_pos.x,pb_size.y-M4_reinforcing_t])
+        screw();
+        translate([reinforcing2_pos.x,pb_size.y-M4_reinforcing_t])
+        screw();
+
+        //perfboard mounting
+        p_hole_space = 22.86;// 1"
+        translate([(pb_size.x-p_hole_space)/2,50]) screw();
+        translate([(pb_size.x+p_hole_space)/2,50]) screw();
     }
 
     //front
@@ -48,10 +61,17 @@ union()
     rotate([90,0,180])
     union()
     {
+        //corner bracket
         d1=M4_distance_fr;
         d2=[pb_size.x-M4_distance_fr.x,M4_distance_fr.y];
         translate(d1) screw();
         translate(d2) screw();
+
+        //reinforcement
+        translate([reinforcing1_pos.x,pb_size.z-M4_reinforcing_r])
+        screw();
+        translate([reinforcing2_pos.x,pb_size.z-M4_reinforcing_r])
+        screw();
     }
 
     //left
