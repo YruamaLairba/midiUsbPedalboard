@@ -28,10 +28,18 @@ debug=false;
 pb_size = [(nbFs-1)*fsSpace+2*fsSpaceBorder, 90, 30];
 echo("pb_size : ",pb_size);
 
-//M4 screw positionning from border
+//M4 screw positionning from border (corner bracket)
 M4_distance_tb=[12,12]; //for top/bottom panel
 M4_distance_fr=[12,pb_size.z/2]; //for front/rear panel
 M4_distance_lr=[15,pb_size.z/2]; //for left/right panel
+
+//reinforcing positionning
+M4_reinforcing_t=12; //distance from the top border
+M4_reinforcing_r=pb_size.z/2; //distance from the rear border
+reinforcing1_pos=[pb_size.x/2-40,pb_size.y-thickness,pb_size.z-thickness];
+reinforcing1_rot=[180,0,-90];
+reinforcing2_pos=[pb_size.x/2+40,pb_size.y-thickness,pb_size.z-thickness];
+reinforcing2_rot=[180,0,-90];
 
 //connector positionning
 usb_pos=[pb_size.x/2-72,pb_size.z/2];
@@ -85,9 +93,9 @@ debug=false)
 module reinforcing()
 {
     r_thickness=3;
-    r_size_x=14;
+    r_size_x=(M4_reinforcing_t-thickness)*2;
     r_size_y=16;
-    r_size_z=pb_size.z-2*thickness;
+    r_size_z=(M4_reinforcing_r-thickness)*2;
     r_hole=3.3;
     difference()
     {
@@ -97,9 +105,9 @@ module reinforcing()
             linear_extrude(height=r_size_y,center=true)
             polygon(points = [[0, 0],[0,-r_size_z],[r_size_x,0]]);
         }
-        translate([r_size_x/2,0,-5])
+        translate([M4_reinforcing_t-thickness,0,-5])
         cylinder(d=r_hole,h=r_size_z+10);
-        translate([-5,0,r_size_z/2])
+        translate([-5,0,M4_reinforcing_r-thickness])
         rotate([0,90,0])
         cylinder(d=r_hole,h=r_size_z+10);
         translate([r_thickness,-r_size_y/2+r_thickness,r_thickness])
@@ -215,6 +223,12 @@ module top_2D()
             translate(d3) circle(d=M4Hole);
             translate(d4) circle(d=M4Hole);
 
+            //m4 holes for reinforcement
+            translate([reinforcing1_pos.x,pb_size.y-M4_reinforcing_t])
+            circle(d=M4Hole);
+            translate([reinforcing2_pos.x,pb_size.y-M4_reinforcing_t])
+            circle(d=M4Hole);
+
             //m4 holes for perfboard mounting
             p_hole_space = 22.86;// 1"
             translate([(pb_size.x-p_hole_space)/2,50]) circle(d=M4Hole);
@@ -314,6 +328,12 @@ module rear_2D()
             d2=[pb_size.x-M4_distance_fr.x,M4_distance_fr.y];
             translate(d1) circle(d=M4Hole);
             translate(d2) circle(d=M4Hole);
+
+            //m4 holes for reinforcement
+            translate([reinforcing1_pos.x,pb_size.z-M4_reinforcing_r])
+            circle(d=M4Hole);
+            translate([reinforcing2_pos.x,pb_size.z-M4_reinforcing_r])
+            circle(d=M4Hole);
         }
     }
 }

@@ -115,11 +115,11 @@ union()
 //reinforcing
 union()
 {
-    translate([pb_size.x/2-40,pb_size.y-thickness,pb_size.z-thickness])
-    rotate([180,0,-90])
+    translate(reinforcing1_pos)
+    rotate(reinforcing1_rot)
     reinforcing();
-        translate([pb_size.x/2+40,pb_size.y-thickness,pb_size.z-thickness])
-    rotate([180,0,-90])
+    translate(reinforcing2_pos)
+    rotate(reinforcing2_rot)
     reinforcing();
 }
 
