@@ -34,11 +34,11 @@ M4_distance_fr=[12,pb_size.z/2]; //for front/rear panel
 M4_distance_lr=[15,pb_size.z/2]; //for left/right panel
 
 //reinforcing positionning
-M4_reinforcing_t=12; //distance from the top border
+M4_reinforcing_t=10; //distance from the top border
 M4_reinforcing_r=pb_size.z/2; //distance from the rear border
-reinforcing1_pos=[pb_size.x/2-40,pb_size.y-thickness,pb_size.z-thickness];
+reinforcing1_pos=[pb_size.x/2-42,pb_size.y-thickness,pb_size.z-thickness];
 reinforcing1_rot=[180,0,-90];
-reinforcing2_pos=[pb_size.x/2+40,pb_size.y-thickness,pb_size.z-thickness];
+reinforcing2_pos=[pb_size.x/2+42,pb_size.y-thickness,pb_size.z-thickness];
 reinforcing2_rot=[180,0,-90];
 
 //connector positionning
@@ -94,7 +94,7 @@ module reinforcing()
 {
     r_thickness=3;
     r_size_x=(M4_reinforcing_t-thickness)*2;
-    r_size_y=16;
+    r_size_y=14;
     r_size_z=(M4_reinforcing_r-thickness)*2;
     r_hole=3.3;
     difference()
