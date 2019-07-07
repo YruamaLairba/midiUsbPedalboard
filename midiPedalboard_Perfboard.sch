@@ -72,13 +72,13 @@ Text Label 4150 3600 0    50   ~ 0
 btn_ok
 Text Label 4150 3700 0    50   ~ 0
 btn_cancel
-Text Label 4150 4000 0    50   ~ 0
-fs_0
-Text Label 4150 4100 0    50   ~ 0
-fs_1
-Text Label 4150 4200 0    50   ~ 0
-fs_2
 Text Label 4150 4300 0    50   ~ 0
+fs_0
+Text Label 4150 4200 0    50   ~ 0
+fs_1
+Text Label 4150 4100 0    50   ~ 0
+fs_2
+Text Label 4150 4000 0    50   ~ 0
 fs_3
 NoConn ~ 5900 3300
 NoConn ~ 5900 3400
