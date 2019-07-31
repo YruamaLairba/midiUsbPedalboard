@@ -134,6 +134,7 @@ class MenuSystem
     private:
       MenuFsCmdTyp menu_fs_cmd_typ_;
       MenuFsCCVal menu_fs_cc_val_;
+      MenuFsMMCVal menu_fs_mmc_val_;
       MenuFsMode menu_fs_mode_;
       MenuControllerSetting* pt_menu_controller_setting_;
       uint8_t get_nb_item();

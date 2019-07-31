@@ -206,7 +206,10 @@ MenuSystem::MenuFsMMCVal::MenuFsMMCVal(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuFsMMCVal::get_nb_item(){return 128;}
+uint8_t MenuSystem::MenuFsMMCVal::get_nb_item()
+{
+  return static_cast<uint8_t>(fsMmc_t::MAX)+1;
+}
 
 void MenuSystem::MenuFsMMCVal::activate()
 {
@@ -218,16 +221,14 @@ void MenuSystem::MenuFsMMCVal::activate()
 
 void MenuSystem::MenuFsMMCVal::validate()
 {
-  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
-  pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
+  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
+  pt_menu_system_->pt_controller_system_->get_fs(fsNum)->
+    set_mmc(static_cast<fsMmc_t>(selection_));
   pt_menu_system_->set_active(pt_parent_);
 }
 
 void MenuSystem::MenuFsMMCVal::print()
 {
-  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
-  fsCmdTyp_t cmd_typ = 
-    pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fs);
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -241,20 +242,7 @@ void MenuSystem::MenuFsMMCVal::print()
     {
       display.setTextColor(WHITE,BLACK);
     }
-    switch (cmd_typ)
-    {
-      case fsCmdTyp_t::cc:
-        display.print(F("CC"));
-        display.print(i, DEC);
-        break;
-      case fsCmdTyp_t::pgm:
-        display.print(F("Pgm "));
-        display.print(i, DEC);
-        break;
-      case fsCmdTyp_t::mmc:
-        print_fs_mmc(static_cast<fsMmc_t>(i));
-        break;
-    }
+    print_fs_mmc(static_cast<fsMmc_t>(i));
     display.print(F("\n\r"));
   }
   display.display();
@@ -432,6 +420,7 @@ MenuSystem::MenuFsSetting::MenuFsSetting(
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_fs_cmd_typ_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_cc_val_(pt_menu_system, this, pt_menu_controller_setting)
+  , menu_fs_mmc_val_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
@@ -440,13 +429,26 @@ uint8_t MenuSystem::MenuFsSetting::get_nb_item(){return 3;}
 
 void MenuSystem::MenuFsSetting::validate()
 {
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  fsCmdTyp_t cmd_typ = 
+    pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fs);
   switch(selection_)
   {
     case 0:
       menu_fs_cmd_typ_.activate();
       break;
     case 1:
-      menu_fs_cc_val_.activate();
+      switch(cmd_typ)
+      {
+        case fsCmdTyp_t::cc:
+          menu_fs_cc_val_.activate();
+          break;
+        case fsCmdTyp_t::pgm:
+          break;
+        case fsCmdTyp_t::mmc:
+          menu_fs_mmc_val_.activate();
+          break;
+      }
       break;
     case 2:
       menu_fs_mode_.activate();
@@ -457,6 +459,8 @@ void MenuSystem::MenuFsSetting::validate()
 void MenuSystem::MenuFsSetting::print()
 {
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
+  fsCmdTyp_t cmd_typ = 
+    pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fsNum);
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -478,7 +482,18 @@ void MenuSystem::MenuFsSetting::print()
         display.print(F(" CmdTyp"));
         break;
       case 1:
-        display.print(F(" CmdVal"));
+        switch(cmd_typ)
+        {
+          case fsCmdTyp_t::cc:
+            display.print(F(" CCVal"));
+            break;
+          case fsCmdTyp_t::pgm:
+            display.print(F(" PGMVal"));
+            break;
+          case fsCmdTyp_t::mmc:
+            display.print(F(" MMCVal"));
+            break;
+        }
         break;
       case 2:
         display.print(F(" Mode"));
