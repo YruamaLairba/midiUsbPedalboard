@@ -98,6 +98,21 @@ class MenuSystem
       virtual void print();
   };
 
+  class MenuFsPGMVal : public SubMenuTemplate
+  {
+    private:
+      MenuControllerSetting* pt_menu_controller_setting_;
+      uint8_t get_nb_item();
+    public:
+      MenuFsPGMVal(
+          MenuSystem* pt_menu_system,
+          MenuBase* pt_parent,
+          MenuControllerSetting* pt_menu_controller_setting);
+      virtual void activate();
+      virtual void validate();
+      virtual void print();
+  };
+
   class MenuFsMMCVal : public SubMenuTemplate
   {
     private:
@@ -134,6 +149,7 @@ class MenuSystem
     private:
       MenuFsCmdTyp menu_fs_cmd_typ_;
       MenuFsCCVal menu_fs_cc_val_;
+      MenuFsPGMVal menu_fs_pgm_val_;
       MenuFsMMCVal menu_fs_mmc_val_;
       MenuFsMode menu_fs_mode_;
       MenuControllerSetting* pt_menu_controller_setting_;

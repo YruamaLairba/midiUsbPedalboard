@@ -248,6 +248,53 @@ void MenuSystem::MenuFsMMCVal::print()
   display.display();
 }
 
+MenuSystem::MenuFsPGMVal::MenuFsPGMVal(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuSystem::MenuFsPGMVal::get_nb_item(){return 128;}
+
+void MenuSystem::MenuFsPGMVal::activate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  selection_ =  pt_menu_system_->pt_controller_system_->get_fs_command(fs);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuFsPGMVal::validate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuFsPGMVal::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("PGM"));
+    display.print(i, DEC);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuSystem::MenuFsMode::MenuFsMode(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
@@ -420,6 +467,7 @@ MenuSystem::MenuFsSetting::MenuFsSetting(
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_fs_cmd_typ_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_cc_val_(pt_menu_system, this, pt_menu_controller_setting)
+  , menu_fs_pgm_val_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_mmc_val_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
@@ -461,6 +509,7 @@ void MenuSystem::MenuFsSetting::validate()
           menu_fs_cc_val_.activate();
           break;
         case fsCmdTyp_t::pgm:
+          menu_fs_pgm_val_.activate();
           break;
         case fsCmdTyp_t::mmc:
           menu_fs_mmc_val_.activate();
