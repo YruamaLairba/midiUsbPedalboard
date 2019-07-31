@@ -151,7 +151,7 @@ void MenuSystem::MenuFsCmdTyp::print()
   display.display();
 }
 
-MenuSystem::MenuFsCmdVal::MenuFsCmdVal(
+MenuSystem::MenuFsCCVal::MenuFsCCVal(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
@@ -159,9 +159,9 @@ MenuSystem::MenuFsCmdVal::MenuFsCmdVal(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuFsCmdVal::get_nb_item(){return 128;}
+uint8_t MenuSystem::MenuFsCCVal::get_nb_item(){return 128;}
 
-void MenuSystem::MenuFsCmdVal::activate()
+void MenuSystem::MenuFsCCVal::activate()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
   selection_ =  pt_menu_system_->pt_controller_system_->get_fs_command(fs);
@@ -169,14 +169,61 @@ void MenuSystem::MenuFsCmdVal::activate()
   SubMenuTemplate::activate();
 }
 
-void MenuSystem::MenuFsCmdVal::validate()
+void MenuSystem::MenuFsCCVal::validate()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
   pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
   pt_menu_system_->set_active(pt_parent_);
 }
 
-void MenuSystem::MenuFsCmdVal::print()
+void MenuSystem::MenuFsCCVal::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("CC"));
+    display.print(i, DEC);
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
+MenuSystem::MenuFsMMCVal::MenuFsMMCVal(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuSystem::MenuFsMMCVal::get_nb_item(){return 128;}
+
+void MenuSystem::MenuFsMMCVal::activate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  selection_ =  pt_menu_system_->pt_controller_system_->get_fs_command(fs);
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuFsMMCVal::validate()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  pt_menu_system_->pt_controller_system_->set_fs_command(fs, selection_);
+  pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuFsMMCVal::print()
 {
   uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
   fsCmdTyp_t cmd_typ = 
@@ -384,7 +431,7 @@ MenuSystem::MenuFsSetting::MenuFsSetting(
     MenuControllerSetting* pt_menu_controller_setting)
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_fs_cmd_typ_(pt_menu_system, this, pt_menu_controller_setting)
-  , menu_fs_cmd_val_(pt_menu_system, this, pt_menu_controller_setting)
+  , menu_fs_cc_val_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_fs_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
@@ -399,7 +446,7 @@ void MenuSystem::MenuFsSetting::validate()
       menu_fs_cmd_typ_.activate();
       break;
     case 1:
-      menu_fs_cmd_val_.activate();
+      menu_fs_cc_val_.activate();
       break;
     case 2:
       menu_fs_mode_.activate();
