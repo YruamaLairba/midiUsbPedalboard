@@ -400,6 +400,15 @@ void Footswitch::process_mmc(uint8_t cur_fs_pin_val)
   }
 }
 
+void Footswitch::reset()
+{
+  cmd_typ_ = fsCmdTyp_t::cc;
+  command_ = 0;
+  mode_ = 0;
+  fs_val_= 0;
+  digitalWrite(led_pin_, LOW);
+}
+
 void Footswitch::process()
 {
   uint8_t cur_fs_pin_val= digitalRead(fs_pin_);

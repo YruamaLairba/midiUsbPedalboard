@@ -108,6 +108,8 @@ class Footswitch
     FsConfig get_config();
     void set_config(FsConfig conf);
 
+    void reset();
+
     void process();
 };
 

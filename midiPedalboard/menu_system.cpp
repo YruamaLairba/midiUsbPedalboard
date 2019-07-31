@@ -114,9 +114,13 @@ void MenuSystem::MenuFsCmdTyp::activate()
 
 void MenuSystem::MenuFsCmdTyp::validate()
 {
-  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
-  pt_menu_system_->pt_controller_system_->set_fs_cmd_typ(
-      fs, static_cast<fsCmdTyp_t>(selection_));
+  uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
+  Footswitch* pt_fs = pt_menu_system_->pt_controller_system_->get_fs(fsNum);
+  if (pt_fs->get_cmd_typ() != static_cast<fsCmdTyp_t>(selection_))
+  {
+    pt_fs->reset();
+    pt_fs->set_cmd_typ(static_cast<fsCmdTyp_t>(selection_));
+  }
   pt_menu_system_->set_active(pt_parent_);
 }
 
