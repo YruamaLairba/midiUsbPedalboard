@@ -8,8 +8,8 @@ DIAGNOSTIC_POP
 
 //footswitch
 const uint8_t nbFs = 4;
-const uint8_t fsPins[] = {9, 10, 11, 12}; //footswitch input pin
-const uint8_t fsLedPins[] = {A3, A2, A1, A0};//footswitch led output pin
+const uint8_t fsPins[] = {12, 11, 10, 9}; //footswitch input pin
+const uint8_t fsLedPins[] = {A0, A1, A2, A3};//footswitch led output pin
 
 //expression pedal
 const uint8_t nbExp = 1;
