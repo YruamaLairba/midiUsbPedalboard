@@ -425,7 +425,24 @@ MenuSystem::MenuFsSetting::MenuFsSetting(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuFsSetting::get_nb_item(){return 3;}
+uint8_t MenuSystem::MenuFsSetting::get_nb_item()
+{
+  uint8_t fs = pt_menu_controller_setting_->get_selected_fs();
+  fsCmdTyp_t cmd_typ = 
+    pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fs);
+
+  switch(cmd_typ)
+  {
+    case fsCmdTyp_t::cc:
+      return 3;
+    case fsCmdTyp_t::pgm:
+      return 2;
+    case fsCmdTyp_t::mmc:
+      return 2;
+    default:
+      return 0;//this should never reached
+  }
+}
 
 void MenuSystem::MenuFsSetting::validate()
 {
@@ -459,7 +476,7 @@ void MenuSystem::MenuFsSetting::validate()
 void MenuSystem::MenuFsSetting::print()
 {
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
-  fsCmdTyp_t cmd_typ = 
+  fsCmdTyp_t cmd_typ =
     pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fsNum);
   display.clearDisplay();
   display.setCursor(0,0);
@@ -496,7 +513,7 @@ void MenuSystem::MenuFsSetting::print()
         }
         break;
       case 2:
-        display.print(F(" Mode"));
+        display.print(F(" CCMode"));
         break;
     }
     display.print(F("\n\r"));
