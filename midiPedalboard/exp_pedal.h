@@ -10,6 +10,14 @@ DIAGNOSTIC_POP
 //#warning "fix me"
 typedef uint8_t expCommand_t;
 
+enum class expCmdTyp_t: uint8_t
+{
+  none, MIN=none,
+  cc,
+  pitch_bend, MAX=pitch_bend
+} ;
+
+
 struct expMode
 {
   enum 
@@ -22,8 +30,9 @@ struct expMode
 
 struct ExpConfig
 {
-  uint8_t command;
-  uint8_t mode;
+  uint8_t command:7,:1;
+  uint8_t mode:4;
+  uint8_t cmd_typ:4;
 };
 
 class ControllerSystem;
@@ -33,6 +42,7 @@ class ExpPedal
     static const unsigned long changeDelayTime_ = 100;
     static const int16_t dead_zone_ = 8;
 
+    expCmdTyp_t cmd_typ_;
     uint8_t command_;
     uint8_t mode_;
 
@@ -51,6 +61,9 @@ class ExpPedal
     void setup(uint8_t exp_pin, ControllerSystem* pt_controller_system);
     uint8_t get_command() {return command_;};
     void set_command(uint8_t command);
+
+    expCmdTyp_t get_cmd_typ(){return cmd_typ_;};
+    void set_cmd_typ(expCmdTyp_t cmd_typ);
 
     uint8_t get_mode(){return mode_;};
     void set_mode(uint8_t mode);

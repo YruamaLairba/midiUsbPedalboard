@@ -43,6 +43,12 @@ void ExpPedal::setup(uint8_t exp_pin, ControllerSystem* pt_controller_system)
   pt_controller_system_ = pt_controller_system;
 }
 
+void ExpPedal::set_cmd_typ(expCmdTyp_t cmd_typ)
+{
+  cmd_typ_ = cmd_typ;
+}
+
+
 void ExpPedal::set_command(uint8_t command)
 {
   command_ = command;
