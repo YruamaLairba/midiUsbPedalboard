@@ -55,6 +55,8 @@ class ExpPedal
 
     ControllerSystem* pt_controller_system_;
     void midi_send(uint8_t val);
+    void process_cc(int16_t cur_exp_val);
+    void process_pb(int16_t cur_exp_val);//pitch_bend
 
   public:
     ExpPedal();

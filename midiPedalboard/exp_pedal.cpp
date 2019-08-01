@@ -82,6 +82,21 @@ void ExpPedal::reset()
   mode_ = 0;
 }
 
+void ExpPedal::process_cc(int16_t cur_exp_val)
+{
+      switch(mode_)
+      {
+        case expMode::normal:
+          midi_send(cur_exp_val/8);
+          break;
+        case expMode::reverse:
+          midi_send((1023-cur_exp_val)/8);
+          break;
+      }
+}
+
+//void ExpPedal::process_pb(int16_t cur_exp_val){}
+
 void ExpPedal::process()
 {
   int16_t cur_exp_val= analogRead(exp_pin_);
@@ -97,13 +112,14 @@ void ExpPedal::process()
     if (diff > dead_zone_)
     {
       change_delay_millis_ = cur_millis;
-      switch(mode_)
+      switch(cmd_typ_)
       {
-        case expMode::normal:
-          midi_send(cur_exp_val/8);
+        case expCmdTyp_t::cc:
+          process_cc(cur_exp_val);
           break;
-        case expMode::reverse:
-          midi_send((1023-cur_exp_val)/8);
+        case expCmdTyp_t::pitch_bend:
+          break;
+        default:
           break;
       }
       old_exp_val_ = cur_exp_val;
