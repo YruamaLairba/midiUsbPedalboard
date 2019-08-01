@@ -652,20 +652,56 @@ MenuSystem::MenuExpSetting::MenuExpSetting(
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuExpSetting::get_nb_item(){return 3;}
+uint8_t MenuSystem::MenuExpSetting::get_nb_item()
+{
+  uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
+  expCmdTyp_t cur_cmd_typ =
+    pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num);
+  switch(cur_cmd_typ)
+  {
+    case expCmdTyp_t::none:
+      return 1;
+    case expCmdTyp_t::cc:
+      return 3;
+    case expCmdTyp_t::pitch_bend:
+      return 2;
+    default :
+      return 1;
+  }
+}
 
 void MenuSystem::MenuExpSetting::validate()
 {
+  uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
+  expCmdTyp_t cur_cmd_typ =
+    pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num);
   switch(selection_)
   {
     case 0:
       menu_exp_cmd_typ_.activate();
       break;
     case 1:
-      menu_exp_command_.activate();
+      switch(cur_cmd_typ)
+      {
+        case expCmdTyp_t::cc:
+          menu_exp_command_.activate();
+          break;
+        case expCmdTyp_t::pitch_bend:
+          menu_exp_mode_.activate();
+          break;
+        default:
+          break;
+      }
       break;
     case 2:
-      menu_exp_mode_.activate();
+      switch(cur_cmd_typ)
+      {
+        case expCmdTyp_t::cc:
+          menu_exp_mode_.activate();
+          break;
+        default:
+          break;
+      }
       break;
   }
 }
@@ -673,7 +709,9 @@ void MenuSystem::MenuExpSetting::validate()
 
 void MenuSystem::MenuExpSetting::print()
 {
-  uint8_t expNum = pt_menu_controller_setting_->get_selected_exp();
+  uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
+  expCmdTyp_t cur_cmd_typ =
+    pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num);
   display.clearDisplay();
   display.setCursor(0,0);
   for (int i = display_offset_;
@@ -688,17 +726,34 @@ void MenuSystem::MenuExpSetting::print()
       display.setTextColor(WHITE,BLACK);
     }
     display.print(F("Exp"));
-    display.print(expNum, DEC);
+    display.print(exp_num, DEC);
     switch (i)
     {
       case 0:
         display.print(F(" CmdTyp"));
         break;
       case 1:
-        display.print(F(" Cmd"));
+        switch(cur_cmd_typ)
+        {
+          case expCmdTyp_t::cc:
+            display.print(F(" CCVal"));
+            break;
+          case expCmdTyp_t::pitch_bend:
+            display.print(F(" Mode"));
+            break;
+          default:
+            break;
+        }
         break;
       case 2:
-        display.print(F(" Mode"));
+        switch(cur_cmd_typ)
+        {
+          case expCmdTyp_t::cc:
+            display.print(F(" Mode"));
+            break;
+          default:
+            break;
+        }
         break;
     }
     display.print(F("\n\r"));
