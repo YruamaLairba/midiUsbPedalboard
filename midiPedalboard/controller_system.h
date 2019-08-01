@@ -44,10 +44,13 @@ class ControllerSystem
     uint8_t get_fs_mode(uint8_t fs_num);
     void set_fs_mode(uint8_t fs_num, uint8_t fs_mode);
     //accessor for exp pedal
+    expCmdTyp_t get_exp_cmd_typ(uint8_t exp_num);
+    void set_exp_cmd_typ(uint8_t exp_num, expCmdTyp_t exp_cmd_typ);
     uint8_t get_exp_command(uint8_t exp_num);
     void set_exp_command(uint8_t exp_num, uint8_t exp_cmd);
     uint8_t get_exp_mode(uint8_t exp_num);
     void set_exp_mode(uint8_t exp_num, uint8_t exp_mode);
+    void exp_reset(uint8_t exp_num);
     //preset
     uint8_t get_nb_preset();
     uint8_t get_current_preset();

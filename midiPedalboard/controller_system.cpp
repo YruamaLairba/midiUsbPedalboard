@@ -78,6 +78,17 @@ void ControllerSystem::set_fs_mode(uint8_t fs_num, uint8_t fs_mode)
   is_preset_modified_ = true;
 }
 
+expCmdTyp_t ControllerSystem::get_exp_cmd_typ(uint8_t exp_num)
+{
+  return exp_tab_[exp_num].get_cmd_typ();
+}
+
+void ControllerSystem::set_exp_cmd_typ(uint8_t exp_num, expCmdTyp_t exp_cmd_typ)
+{
+  exp_tab_[exp_num].set_cmd_typ(exp_cmd_typ);
+  is_preset_modified_ = true;
+}
+
 uint8_t ControllerSystem::get_exp_command(uint8_t exp_num)
 {
   return exp_tab_[exp_num].get_command();
@@ -98,6 +109,11 @@ void ControllerSystem::set_exp_mode(uint8_t exp_num, uint8_t exp_mode)
 {
   exp_tab_[exp_num].set_mode(exp_mode);
   is_preset_modified_ = true;
+}
+
+void ControllerSystem::exp_reset(uint8_t exp_num)
+{
+  exp_tab_[exp_num].reset();
 }
 
 uint8_t ControllerSystem::get_nb_preset()

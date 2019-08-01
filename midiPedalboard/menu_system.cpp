@@ -364,6 +364,73 @@ void MenuSystem::MenuFsMode::print()
   display.display();
 }
 
+MenuSystem::MenuExpCmdTyp::MenuExpCmdTyp(
+    MenuSystem* pt_menu_system,
+    MenuBase* pt_parent,
+    MenuControllerSetting* pt_menu_controller_setting)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , pt_menu_controller_setting_(pt_menu_controller_setting)
+{}
+
+uint8_t MenuSystem::MenuExpCmdTyp::get_nb_item()
+{
+  return static_cast<uint8_t>(expCmdTyp_t::MAX)+1;
+}
+
+void MenuSystem::MenuExpCmdTyp::activate()
+{
+  uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
+  selection_ =  static_cast<uint8_t>(
+      pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num));
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuExpCmdTyp::validate()
+{
+  uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
+  expCmdTyp_t cur_cmd_typ =
+      pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num);
+  if (cur_cmd_typ != static_cast<expCmdTyp_t>(selection_))
+  {
+    pt_menu_system_->pt_controller_system_->exp_reset(exp_num);
+    pt_menu_system_->pt_controller_system_->
+      set_exp_cmd_typ(exp_num,static_cast<expCmdTyp_t>(selection_));
+  }
+  pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuExpCmdTyp::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < (display_offset_ + 4); i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    switch (i)
+    {
+      case 0:
+        display.print(F("none\n\r"));
+        break;
+      case 1:
+        display.print(F("Ctl Change\n\r"));
+        break;
+      case 2:
+        display.print(F("Pitch Bend\n\r"));
+        break;
+    }
+  }
+  display.display();
+}
+
 MenuSystem::MenuExpCommand::MenuExpCommand(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent,

@@ -75,6 +75,8 @@ class ExpPedal
 
     //return value when positive
     //return -1 when fs state doesn't change
+    void reset();
+
     void process();
 };
 

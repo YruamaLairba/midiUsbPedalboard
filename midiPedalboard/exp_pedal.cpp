@@ -75,6 +75,13 @@ void ExpPedal::set_config(ExpConfig conf)
   set_mode(conf.mode);
 }
 
+void ExpPedal::reset()
+{
+  cmd_typ_ = expCmdTyp_t::none;
+  command_ = 0;
+  mode_ = 0;
+}
+
 void ExpPedal::process()
 {
   int16_t cur_exp_val= analogRead(exp_pin_);
