@@ -646,21 +646,25 @@ MenuSystem::MenuExpSetting::MenuExpSetting(
     MenuBase* pt_parent,
     MenuControllerSetting* pt_menu_controller_setting)
   : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_exp_cmd_typ_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_exp_command_(pt_menu_system, this, pt_menu_controller_setting)
   , menu_exp_mode_(pt_menu_system, this, pt_menu_controller_setting)
   , pt_menu_controller_setting_(pt_menu_controller_setting)
 {}
 
-uint8_t MenuSystem::MenuExpSetting::get_nb_item(){return 2;}
+uint8_t MenuSystem::MenuExpSetting::get_nb_item(){return 3;}
 
 void MenuSystem::MenuExpSetting::validate()
 {
   switch(selection_)
   {
     case 0:
-      menu_exp_command_.activate();
+      menu_exp_cmd_typ_.activate();
       break;
     case 1:
+      menu_exp_command_.activate();
+      break;
+    case 2:
       menu_exp_mode_.activate();
       break;
   }
@@ -688,9 +692,12 @@ void MenuSystem::MenuExpSetting::print()
     switch (i)
     {
       case 0:
-        display.print(F(" Cmd"));
+        display.print(F(" CmdTyp"));
         break;
       case 1:
+        display.print(F(" Cmd"));
+        break;
+      case 2:
         display.print(F(" Mode"));
         break;
     }

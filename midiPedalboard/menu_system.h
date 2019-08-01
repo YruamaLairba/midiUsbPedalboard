@@ -211,6 +211,7 @@ class MenuSystem
   class MenuExpSetting : public SubMenuTemplate
   {
     private:
+      MenuExpCmdTyp menu_exp_cmd_typ_;
       MenuExpCommand menu_exp_command_;
       MenuExpMode menu_exp_mode_;
       MenuControllerSetting* pt_menu_controller_setting_;
