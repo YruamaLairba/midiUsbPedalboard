@@ -1,32 +1,11 @@
 #include "exp_pedal.h"
+#include "midi_utils.h"
 #include "controller_system.h"
 #include "warnings.h"
 
 DIAGNOSTIC_IGNORE_ALL
 #include <MIDIUSB.h>
 DIAGNOSTIC_POP
-
-void ExpPedal::midi_send(uint8_t val)
-{
-  uint8_t usb_header = 0x0B;
-  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
-  uint8_t data0 = get_command();
-  uint8_t data1 = val;
-  Serial1.begin(31250);
-  Serial1.write(status);
-  Serial1.write(data0);
-  Serial1.write(data1);
-  midiEventPacket_t event = {
-    usb_header,
-    status,
-    data0,
-    data1,
-  };
-  MidiUSB.sendMIDI(event);
-  Serial1.flush();
-  Serial1.end();
-  MidiUSB.flush();
-}
 
 ExpPedal::ExpPedal()
   : command_(0)
@@ -84,15 +63,18 @@ void ExpPedal::reset()
 
 void ExpPedal::process_cc(int16_t cur_exp_val)
 {
+  uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
+  uint8_t cc_val;
       switch(mode_)
       {
         case expMode::normal:
-          midi_send(cur_exp_val/8);
+          cc_val = cur_exp_val/8;
           break;
         case expMode::reverse:
-          midi_send((1023-cur_exp_val)/8);
+          cc_val = (1023-cur_exp_val)/8;
           break;
       }
+      midi_send_cvm(status,get_command(),cc_val);
 }
 
 //void ExpPedal::process_pb(int16_t cur_exp_val){}
