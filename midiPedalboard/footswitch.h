@@ -29,17 +29,6 @@ enum class fsMmc_t: uint8_t
   rewind, MAX=rewind,
 };
 
-//mapping beetween some MMC command bytes and theire name
-enum MMC_CMD : uint8_t
-{
-  STOP=0x01,
-  PLAY=0x02,
-  FAST_FORWARD=0x04,
-  REWIND=0x05,
-  RECORD_STROBE=0x06,
-  RECORD_EXIT=0x07,
-  PAUSE=0x09
-};
 
 struct fsMode
 {
