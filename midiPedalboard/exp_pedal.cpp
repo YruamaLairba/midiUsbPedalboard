@@ -77,6 +77,24 @@ void ExpPedal::process_cc(int16_t cur_exp_val)
       midi_send_cvm(status,get_command(),cc_val);
 }
 
+void ExpPedal::process_pb(int16_t cur_exp_val)
+{
+  uint8_t status = 0xE0|pt_controller_system_->get_midi_channel();
+  int16_t pb_val;
+      switch(mode_)
+      {
+        case expMode::normal:
+          pb_val = cur_exp_val*16;
+          break;
+        case expMode::reverse:
+          pb_val = (1023-cur_exp_val)*16;
+          break;
+      }
+      uint8_t pb_val_lsb = 0x7F & pb_val;
+      uint8_t pb_val_msb = 0x7F & (pb_val >> 7);
+      midi_send_cvm(status,pb_val_lsb,pb_val_msb);
+}
+
 //void ExpPedal::process_pb(int16_t cur_exp_val){}
 
 void ExpPedal::process()
@@ -100,6 +118,7 @@ void ExpPedal::process()
           process_cc(cur_exp_val);
           break;
         case expCmdTyp_t::pitch_bend:
+          process_pb(cur_exp_val);
           break;
         default:
           break;
