@@ -39,7 +39,7 @@ class ControllerSystem;
 class ExpPedal
 {
   private:
-    static const unsigned long changeDelayTime_ = 100;
+    static const unsigned long changeDelayTime_ = 0;
     static const int16_t dead_zone_ = 8;
 
     expCmdTyp_t cmd_typ_;
