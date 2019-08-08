@@ -274,10 +274,23 @@ class MenuSystem
       virtual void print();
   };
 
+  //Menu to selected Exp pedal to calibrate
+  class MenuExpCalSel : public SubMenuTemplate
+  {
+    private:
+      uint8_t get_nb_item();
+    public:
+      MenuExpCalSel(MenuSystem* menu_system, MenuBase* pt_parent);
+      virtual void activate();
+      virtual void validate();
+      virtual void print();
+  };
+
   class MenuGlobalSetting : public SubMenuTemplate
   {
     private:
       MenuMidiChannel menu_midi_channel_;
+      MenuExpCalSel menu_exp_cal_sel_;
       uint8_t get_nb_item();
     public:
       MenuGlobalSetting(MenuSystem* menu_system, MenuBase* pt_parent);

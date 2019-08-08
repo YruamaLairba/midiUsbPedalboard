@@ -963,10 +963,55 @@ void MenuSystem::MenuMidiChannel::print()
   display.display();
 }
 
+MenuSystem::MenuExpCalSel::MenuExpCalSel(
+    MenuSystem* menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(menu_system, pt_parent)
+{}
+
+uint8_t MenuSystem::MenuExpCalSel::get_nb_item(){return nbExp;}
+
+void MenuSystem::MenuExpCalSel::activate()
+{
+  selection_ = 0;
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuExpCalSel::validate()
+{
+  //TODO
+  //pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
+  //pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuExpCalSel::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < display_offset_ + 4; i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    display.print(F("Exp "));
+    display.print(i + 1);
+    display.print(F(" cal"));
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
 MenuSystem::MenuGlobalSetting::MenuGlobalSetting(
     MenuSystem* pt_menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(pt_menu_system, pt_parent)
   , menu_midi_channel_(pt_menu_system, this)
+  , menu_exp_cal_sel_(pt_menu_system, this)
 {}
 
 uint8_t MenuSystem::MenuGlobalSetting::get_nb_item(){return 2;}
@@ -977,6 +1022,9 @@ void MenuSystem::MenuGlobalSetting::validate()
   {
     case 0:
       menu_midi_channel_.activate();
+      break;
+    case 1:
+      menu_exp_cal_sel_.activate();
       break;
   }
 }
