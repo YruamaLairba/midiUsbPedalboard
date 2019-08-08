@@ -8,16 +8,17 @@ DIAGNOSTIC_IGNORE_ALL
 #include <MIDIUSB.h>
 DIAGNOSTIC_POP
 
-unsigned long last_micros;
-unsigned long debug_last_micros;
+#ifdef DEBUG
+unsigned long loop_last_micros;
+#endif
 
 ControllerSystem controller_system;
 MenuSystem menu_system(&controller_system);
 
 void setup() {
-  // put your setup code here, to run once:
+#ifdef DEBUG
   Serial.begin(9600);
-  //Serial1.begin(31250);//physical serial configured for midi
+#endif
   controller_system.init();
 
   display.begin(SSD1306_SWITCHCAPVCC);
@@ -30,7 +31,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 #ifdef DEBUG
   unsigned long int menu_system_time = micros();
 #endif
@@ -56,6 +56,16 @@ void loop() {
   {
     Serial.print("controller system delay : ");
     Serial.println(diff2);
+  }
+#endif
+#ifdef DEBUG
+  unsigned long int loop_micros = micros();
+  unsigned long int loop_time = loop_micros - loop_last_micros;
+  loop_last_micros = loop_micros;
+  if(loop_time>1000)
+  {
+    Serial.print("loop duration : ");
+    Serial.println(loop_time);
   }
 #endif
 
