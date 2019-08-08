@@ -963,9 +963,69 @@ void MenuSystem::MenuMidiChannel::print()
   display.display();
 }
 
-MenuSystem::MenuExpCalSel::MenuExpCalSel(
+MenuSystem::MenuExpXCal::MenuExpXCal(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
+{}
+
+uint8_t MenuSystem::MenuExpXCal::get_nb_item(){return 2;}
+
+void MenuSystem::MenuExpXCal::activate()
+{
+  selection_ = 0;
+  display_offset_ = (get_nb_item() < 4)?0:min(selection_, get_nb_item()-4);
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuExpXCal::validate()
+{
+  //TODO
+  //pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
+  //pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuExpXCal::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  for (int i = display_offset_;
+      i < get_nb_item() && i < display_offset_ + 4; i++)
+  {
+    if (selection_ == i)
+    {
+      display.setTextColor(BLACK,WHITE);
+    }
+    else
+    {
+      display.setTextColor(WHITE,BLACK);
+    }
+    switch(i)
+    {
+      case 0:
+        display.print(F("Exp"));
+        display.print(exp_num_);
+        display.print(F(" Toes"));
+        break;
+      case 1:
+        display.print(F("Exp"));
+        display.print(exp_num_);
+        display.print(F(" Heel"));
+        break;
+    }
+    display.print(F("\n\r"));
+  }
+  display.display();
+}
+
+void MenuSystem::MenuExpXCal::set_exp(uint8_t exp_num)
+{
+  exp_num_=exp_num;
+}
+
+MenuSystem::MenuExpCalSel::MenuExpCalSel(
+    MenuSystem* pt_menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_exp_x_cal_(pt_menu_system, this)
 {}
 
 uint8_t MenuSystem::MenuExpCalSel::get_nb_item(){return nbExp;}
@@ -979,9 +1039,8 @@ void MenuSystem::MenuExpCalSel::activate()
 
 void MenuSystem::MenuExpCalSel::validate()
 {
-  //TODO
-  //pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
-  //pt_menu_system_->set_active(pt_parent_);
+  menu_exp_x_cal_.set_exp(selection_);
+  menu_exp_x_cal_.activate();
 }
 
 void MenuSystem::MenuExpCalSel::print()

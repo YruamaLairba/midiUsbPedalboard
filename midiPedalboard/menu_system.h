@@ -274,10 +274,24 @@ class MenuSystem
       virtual void print();
   };
 
+  //Menu to calibrate an Exp
+  class MenuExpXCal : public SubMenuTemplate
+  {
+    private:
+      uint8_t exp_num_;
+      uint8_t get_nb_item();
+    public:
+      MenuExpXCal(MenuSystem* menu_system, MenuBase* pt_parent);
+      virtual void activate();
+      virtual void validate();
+      virtual void print();
+      void set_exp(uint8_t exp_num);
+  };
   //Menu to selected Exp pedal to calibrate
   class MenuExpCalSel : public SubMenuTemplate
   {
     private:
+      MenuExpXCal menu_exp_x_cal_;
       uint8_t get_nb_item();
     public:
       MenuExpCalSel(MenuSystem* menu_system, MenuBase* pt_parent);
