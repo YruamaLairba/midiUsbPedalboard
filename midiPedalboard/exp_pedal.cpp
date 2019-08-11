@@ -74,17 +74,18 @@ void ExpPedal::reset()
 void ExpPedal::process_cc(int16_t cur_exp_val)
 {
   uint8_t status = 0xB0|pt_controller_system_->get_midi_channel();
-  uint8_t cc_val;
-      switch(mode_)
-      {
-        case expMode::normal:
-          cc_val = cur_exp_val/8;
-          break;
-        case expMode::reverse:
-          cc_val = (1023-cur_exp_val)/8;
-          break;
-      }
-      midi_send_cvm(status,get_command(),cc_val);
+  int16_t val;
+  switch(mode_)
+  {
+    case expMode::normal:
+      val = map(cur_exp_val,heel_val_,toes_val_,0,127);
+      break;
+    case expMode::reverse:
+      val = map(cur_exp_val,heel_val_,toes_val_,127,0);
+      break;
+  }
+  uint8_t cc_val = constrain(val,0,127);
+  midi_send_cvm(status,get_command(),cc_val);
 }
 
 void ExpPedal::process_pb(int16_t cur_exp_val)
@@ -94,12 +95,13 @@ void ExpPedal::process_pb(int16_t cur_exp_val)
       switch(mode_)
       {
         case expMode::normal:
-          pb_val = cur_exp_val*16;
+          pb_val = map(cur_exp_val,heel_val_,toes_val_,0,16383);
           break;
         case expMode::reverse:
-          pb_val = (1023-cur_exp_val)*16;
+          pb_val = map(cur_exp_val,heel_val_,toes_val_,16383,0);
           break;
       }
+      pb_val = constrain(pb_val,0,16383);
       uint8_t pb_val_lsb = 0x7F & pb_val;
       uint8_t pb_val_msb = 0x7F & (pb_val >> 7);
       midi_send_cvm(status,pb_val_lsb,pb_val_msb);
