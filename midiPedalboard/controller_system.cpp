@@ -111,6 +111,26 @@ void ControllerSystem::set_exp_mode(uint8_t exp_num, uint8_t exp_mode)
   is_preset_modified_ = true;
 }
 
+int16_t ControllerSystem::get_exp_toes_val(uint8_t exp_num)
+{
+  return exp_tab_[exp_num].get_toes_val();
+}
+
+void ControllerSystem::set_exp_toes_val(uint8_t exp_num,int16_t val)
+{
+  exp_tab_[exp_num].set_toes_val(val);
+}
+
+int16_t ControllerSystem::get_exp_heel_val(uint8_t exp_num)
+{
+  return exp_tab_[exp_num].get_heel_val();
+}
+
+void ControllerSystem::set_exp_heel_val(uint8_t exp_num,int16_t val)
+{
+  exp_tab_[exp_num].set_heel_val(val);
+}
+
 int16_t ControllerSystem::get_exp_raw_val(uint8_t exp_num)
 {
   return exp_tab_[exp_num].get_raw_val();

@@ -56,6 +56,14 @@ void ExpPedal::set_config(ExpConfig conf)
 
 int16_t ExpPedal::get_raw_val(){return raw_exp_val_;}
 
+int16_t ExpPedal::get_toes_val(){return toes_val_;}
+
+void ExpPedal::set_toes_val(int16_t val){toes_val_ = val;}
+
+int16_t ExpPedal::get_heel_val(){return heel_val_;}
+
+void ExpPedal::set_heel_val(int16_t val){heel_val_ = val;}
+
 void ExpPedal::reset()
 {
   cmd_typ_ = expCmdTyp_t::none;

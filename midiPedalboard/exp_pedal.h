@@ -52,6 +52,9 @@ class ExpPedal
     int16_t old_exp_val_; //used to filter noise on the raw value
     uint16_t exp_val_;//virtual value of the pin
 
+    int16_t toes_val_;//value on toes position (calibration)
+    int16_t heel_val_;//value on heel position (calibration)
+
     unsigned long change_delay_millis_;//for debouncing
 
     ControllerSystem* pt_controller_system_;
@@ -75,10 +78,15 @@ class ExpPedal
     void set_config(ExpConfig conf);
 
     //get raw value of the exp pedal,
-    int16_t get_raw_val();//void set_mode(uint8_t mode){mode_ = mode;};
+    int16_t get_raw_val();
 
-    //return value when positive
-    //return -1 when fs state doesn't change
+    //calibration
+    int16_t get_toes_val();
+    void set_toes_val(int16_t val);
+    int16_t get_heel_val();
+    void set_heel_val(int16_t val);
+
+    //reset to defaut midi message
     void reset();
 
     void process();
