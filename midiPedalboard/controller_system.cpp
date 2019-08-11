@@ -22,6 +22,14 @@ void ControllerSystem::init()
   {
     exp_tab_[i].setup(expPins[i], this);
   }
+  //load exp pedal calibration
+  for(uint8_t i=0; i<nb_exp_; i++)
+  {
+    ExpCal exp_cal;
+    EEPROM.get(int(eeprom_exp_cal_start+(i*sizeof(exp_cal))),exp_cal);
+    exp_tab_[i].set_toes_val(exp_cal.toes_val);
+    exp_tab_[i].set_heel_val(exp_cal.heel_val);
+  }
   //initialize preset
   EEPROM.get(eeprom_preset_number_start, current_preset_);
   load_preset(current_preset_);
@@ -119,6 +127,8 @@ int16_t ControllerSystem::get_exp_toes_val(uint8_t exp_num)
 void ControllerSystem::set_exp_toes_val(uint8_t exp_num,int16_t val)
 {
   exp_tab_[exp_num].set_toes_val(val);
+  EEPROM.put(int(eeprom_exp_cal_start+(exp_num*sizeof(ExpCal))+
+      offsetof(ExpCal,toes_val)),val);
 }
 
 int16_t ControllerSystem::get_exp_heel_val(uint8_t exp_num)
@@ -129,6 +139,8 @@ int16_t ControllerSystem::get_exp_heel_val(uint8_t exp_num)
 void ControllerSystem::set_exp_heel_val(uint8_t exp_num,int16_t val)
 {
   exp_tab_[exp_num].set_heel_val(val);
+  EEPROM.put(int(eeprom_exp_cal_start+(exp_num*sizeof(ExpCal))+
+      offsetof(ExpCal,heel_val)),val);
 }
 
 int16_t ControllerSystem::get_exp_raw_val(uint8_t exp_num)

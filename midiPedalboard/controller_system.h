@@ -16,6 +16,13 @@ struct PresetData
   ExpConfig expConfigs [nbExp];
 };
 
+//a block of pedal calibration data
+struct ExpCal
+{
+  int16_t toes_val;
+  int16_t heel_val;
+};
+
 class ControllerSystem
 {
   private:
