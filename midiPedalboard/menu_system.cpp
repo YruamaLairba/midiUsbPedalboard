@@ -1100,7 +1100,7 @@ void MenuSystem::MenuExpCalSel::print()
       display.setTextColor(WHITE,BLACK);
     }
     display.print(F("Exp "));
-    display.print(i + 1);
+    display.print(i);
     display.print(F(" cal"));
     display.print(F("\n\r"));
   }
