@@ -289,11 +289,27 @@ class MenuSystem
       void set_exp(uint8_t exp_num);
   };
 
+  //Menu to calibrate heel position
+  //TODO check if another base class is better
+  class MenuHeelCal : public SubMenuTemplate
+  {
+    private:
+      uint8_t exp_num_;
+      uint8_t get_nb_item();
+    public:
+      MenuHeelCal(MenuSystem* menu_system, MenuBase* pt_parent);
+      virtual void activate();
+      virtual void validate();
+      virtual void print();
+      void set_exp(uint8_t exp_num);
+  };
+
   //Menu to calibrate an Exp
   class MenuExpXCal : public SubMenuTemplate
   {
     private:
       MenuToesCal menu_toes_cal_;
+      MenuHeelCal menu_heel_cal_;
       uint8_t exp_num_;
       uint8_t get_nb_item();
     public:
