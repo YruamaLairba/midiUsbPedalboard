@@ -274,10 +274,26 @@ class MenuSystem
       virtual void print();
   };
 
+  //Menu to calibrate toes position
+  //TODO check if another base class is better
+  class MenuToesCal : public SubMenuTemplate
+  {
+    private:
+      uint8_t exp_num_;
+      uint8_t get_nb_item();
+    public:
+      MenuToesCal(MenuSystem* menu_system, MenuBase* pt_parent);
+      virtual void activate();
+      virtual void validate();
+      virtual void print();
+      void set_exp(uint8_t exp_num);
+  };
+
   //Menu to calibrate an Exp
   class MenuExpXCal : public SubMenuTemplate
   {
     private:
+      MenuToesCal menu_toes_cal_;
       uint8_t exp_num_;
       uint8_t get_nb_item();
     public:
@@ -287,6 +303,7 @@ class MenuSystem
       virtual void print();
       void set_exp(uint8_t exp_num);
   };
+
   //Menu to selected Exp pedal to calibrate
   class MenuExpCalSel : public SubMenuTemplate
   {

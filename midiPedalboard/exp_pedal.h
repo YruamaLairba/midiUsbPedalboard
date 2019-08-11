@@ -48,7 +48,8 @@ class ExpPedal
 
     uint8_t exp_pin_; //analog input pin
 
-    int16_t old_exp_val_; //
+    int16_t raw_exp_val_; //raw value value from last adc read
+    int16_t old_exp_val_; //used to filter noise on the raw value
     uint16_t exp_val_;//virtual value of the pin
 
     unsigned long change_delay_millis_;//for debouncing
@@ -73,7 +74,8 @@ class ExpPedal
     ExpConfig get_config();
     void set_config(ExpConfig conf);
 
-    //void set_mode(uint8_t mode){mode_ = mode;};
+    //get raw value of the exp pedal,
+    int16_t get_raw_val();//void set_mode(uint8_t mode){mode_ = mode;};
 
     //return value when positive
     //return -1 when fs state doesn't change

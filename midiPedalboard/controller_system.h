@@ -50,6 +50,7 @@ class ControllerSystem
     void set_exp_command(uint8_t exp_num, uint8_t exp_cmd);
     uint8_t get_exp_mode(uint8_t exp_num);
     void set_exp_mode(uint8_t exp_num, uint8_t exp_mode);
+    int16_t get_exp_raw_val(uint8_t exp_num);
     void exp_reset(uint8_t exp_num);
     //preset
     uint8_t get_nb_preset();

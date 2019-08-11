@@ -54,6 +54,8 @@ void ExpPedal::set_config(ExpConfig conf)
   set_mode(conf.mode);
 }
 
+int16_t ExpPedal::get_raw_val(){return raw_exp_val_;}
+
 void ExpPedal::reset()
 {
   cmd_typ_ = expCmdTyp_t::none;
@@ -99,31 +101,31 @@ void ExpPedal::process_pb(int16_t cur_exp_val)
 
 void ExpPedal::process()
 {
-  int16_t cur_exp_val= analogRead(exp_pin_);
+  raw_exp_val_= analogRead(exp_pin_);
   unsigned long cur_millis = millis();
 
 //  Serial.print(" exp val : ");
-//  Serial.print(cur_exp_val, DEC);
+//  Serial.print(raw_exp_val_, DEC);
 //  Serial.print("\r\n");
-//  if (old_exp_val_ != cur_exp_val)
+//  if (old_exp_val_ != raw_exp_val_)
   if ((cur_millis - change_delay_millis_) > changeDelayTime_)
   {
-    int16_t diff = abs(cur_exp_val - old_exp_val_);
+    int16_t diff = abs(raw_exp_val_ - old_exp_val_);
     if (diff > dead_zone_)
     {
       change_delay_millis_ = cur_millis;
       switch(cmd_typ_)
       {
         case expCmdTyp_t::cc:
-          process_cc(cur_exp_val);
+          process_cc(raw_exp_val_);
           break;
         case expCmdTyp_t::pitch_bend:
-          process_pb(cur_exp_val);
+          process_pb(raw_exp_val_);
           break;
         default:
           break;
       }
-      old_exp_val_ = cur_exp_val;
+      old_exp_val_ = raw_exp_val_;
     }
   }
 }

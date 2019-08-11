@@ -111,6 +111,11 @@ void ControllerSystem::set_exp_mode(uint8_t exp_num, uint8_t exp_mode)
   is_preset_modified_ = true;
 }
 
+int16_t ControllerSystem::get_exp_raw_val(uint8_t exp_num)
+{
+  return exp_tab_[exp_num].get_raw_val();
+}
+
 void ControllerSystem::exp_reset(uint8_t exp_num)
 {
   exp_tab_[exp_num].reset();

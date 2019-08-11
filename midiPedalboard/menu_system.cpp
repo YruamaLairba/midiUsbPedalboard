@@ -963,9 +963,51 @@ void MenuSystem::MenuMidiChannel::print()
   display.display();
 }
 
-MenuSystem::MenuExpXCal::MenuExpXCal(
+MenuSystem::MenuToesCal::MenuToesCal(
     MenuSystem* menu_system, MenuBase* pt_parent)
   : SubMenuTemplate(menu_system, pt_parent)
+{}
+
+//irreleveant func
+uint8_t MenuSystem::MenuToesCal::get_nb_item(){return 0;}
+
+//TODO
+void MenuSystem::MenuToesCal::activate()
+{
+  selection_ = 0;
+  SubMenuTemplate::activate();
+}
+
+void MenuSystem::MenuToesCal::validate()
+{
+  //TODO
+  //pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
+  //pt_menu_system_->set_active(pt_parent_);
+}
+
+void MenuSystem::MenuToesCal::print()
+{
+  display.clearDisplay();
+  display.setCursor(0,0);
+  display.print(F("Exp"));
+  display.print(exp_num_);
+  display.print(F(" Toes"));
+  display.print(F("\n\r"));
+  display.print(pt_menu_system_->pt_controller_system_->
+      get_exp_raw_val(exp_num_),DEC);
+  display.print(F("\n\r"));
+  display.display();
+}
+
+void MenuSystem::MenuToesCal::set_exp(uint8_t exp_num)
+{
+  exp_num_=exp_num;
+}
+
+MenuSystem::MenuExpXCal::MenuExpXCal(
+    MenuSystem* pt_menu_system, MenuBase* pt_parent)
+  : SubMenuTemplate(pt_menu_system, pt_parent)
+  , menu_toes_cal_(pt_menu_system, this)
 {}
 
 uint8_t MenuSystem::MenuExpXCal::get_nb_item(){return 2;}
@@ -980,8 +1022,7 @@ void MenuSystem::MenuExpXCal::activate()
 void MenuSystem::MenuExpXCal::validate()
 {
   //TODO
-  //pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
-  //pt_menu_system_->set_active(pt_parent_);
+  menu_toes_cal_.activate();
 }
 
 void MenuSystem::MenuExpXCal::print()
