@@ -980,9 +980,9 @@ void MenuSystem::MenuToesCal::activate()
 
 void MenuSystem::MenuToesCal::validate()
 {
-  //TODO
-  //pt_menu_system_->pt_controller_system_->set_midi_channel(selection_);
-  //pt_menu_system_->set_active(pt_parent_);
+  int16_t new_val = pt_menu_system_->pt_controller_system_->
+      get_exp_raw_val(exp_num_);
+  pt_menu_system_->pt_controller_system_->set_exp_toes_val(exp_num_,new_val);
 }
 
 void MenuSystem::MenuToesCal::print()
@@ -993,6 +993,11 @@ void MenuSystem::MenuToesCal::print()
   display.print(exp_num_);
   display.print(F(" Toes"));
   display.print(F("\n\r"));
+  display.print(F("cur: "));
+  display.print(pt_menu_system_->pt_controller_system_->
+      get_exp_toes_val(exp_num_),DEC);
+  display.print(F("\n\r"));
+  display.print(F("new: "));
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_raw_val(exp_num_),DEC);
   display.print(F("\n\r"));
@@ -1021,8 +1026,15 @@ void MenuSystem::MenuExpXCal::activate()
 
 void MenuSystem::MenuExpXCal::validate()
 {
-  //TODO
-  menu_toes_cal_.activate();
+  switch(selection_)
+  {
+    case 0:
+      menu_toes_cal_.activate();
+      break;
+    case 1:
+      //TODO
+      break;
+  }
 }
 
 void MenuSystem::MenuExpXCal::print()
