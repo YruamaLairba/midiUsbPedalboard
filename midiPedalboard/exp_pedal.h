@@ -55,6 +55,8 @@ class ExpPedal
     int16_t toes_val_;//value on toes position (calibration)
     int16_t heel_val_;//value on heel position (calibration)
 
+    int16_t last_midi_val_;//last midi value transmitted ie pb or cc
+
     unsigned long change_delay_millis_;//for debouncing
 
     ControllerSystem* pt_controller_system_;

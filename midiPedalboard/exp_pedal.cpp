@@ -85,26 +85,34 @@ void ExpPedal::process_cc(int16_t cur_exp_val)
       break;
   }
   uint8_t cc_val = constrain(val,0,127);
-  midi_send_cvm(status,get_command(),cc_val);
+  if(cc_val != last_midi_val_)
+  {
+    midi_send_cvm(status,get_command(),cc_val);
+    last_midi_val_=cc_val;
+  }
 }
 
 void ExpPedal::process_pb(int16_t cur_exp_val)
 {
   uint8_t status = 0xE0|pt_controller_system_->get_midi_channel();
-  int16_t pb_val;
-      switch(mode_)
-      {
-        case expMode::normal:
-          pb_val = map(cur_exp_val,heel_val_,toes_val_,0,16383);
-          break;
-        case expMode::reverse:
-          pb_val = map(cur_exp_val,heel_val_,toes_val_,16383,0);
-          break;
-      }
-      pb_val = constrain(pb_val,0,16383);
-      uint8_t pb_val_lsb = 0x7F & pb_val;
-      uint8_t pb_val_msb = 0x7F & (pb_val >> 7);
-      midi_send_cvm(status,pb_val_lsb,pb_val_msb);
+  int32_t pb_val;
+  switch(mode_)
+  {
+    case expMode::normal:
+      pb_val = map(cur_exp_val,heel_val_,toes_val_,0,16383);
+      break;
+    case expMode::reverse:
+      pb_val = map(cur_exp_val,heel_val_,toes_val_,16383,0);
+      break;
+  }
+  pb_val = constrain(pb_val,0,16383);
+  if(pb_val != last_midi_val_)
+  {
+    uint8_t pb_val_lsb = 0x7F & pb_val;
+    uint8_t pb_val_msb = 0x7F & (pb_val >> 7);
+    midi_send_cvm(status,pb_val_lsb,pb_val_msb);
+    last_midi_val_=pb_val;
+  }
 }
 
 //void ExpPedal::process_pb(int16_t cur_exp_val){}
