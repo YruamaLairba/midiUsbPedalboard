@@ -989,6 +989,7 @@ void MenuSystem::MenuToesCal::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
+  display.setTextColor(WHITE,BLACK);
   display.print(F("Exp"));
   display.print(exp_num_);
   display.print(F(" Toes"));
@@ -1035,6 +1036,7 @@ void MenuSystem::MenuHeelCal::print()
 {
   display.clearDisplay();
   display.setCursor(0,0);
+  display.setTextColor(WHITE,BLACK);
   display.print(F("Exp"));
   display.print(exp_num_);
   display.print(F(" Heel"));
