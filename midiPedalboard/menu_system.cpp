@@ -73,7 +73,10 @@ void MenuSystem::MenuTemplate::select_prev()
   print();
 }
 
-void MenuSystem::MenuTemplate::exp_refresh(){}
+void MenuSystem::MenuTemplate::exp_refresh(uint8_t exp_num)
+{
+  (void) exp_num;
+}
 
 MenuSystem::SubMenuTemplate::SubMenuTemplate(
     MenuSystem* pt_menu_system,
@@ -1007,9 +1010,9 @@ void MenuSystem::MenuToesCal::print()
   display.display();
 }
 
-void MenuSystem::MenuToesCal::exp_refresh()
+void MenuSystem::MenuToesCal::exp_refresh(uint8_t exp_num)
 {
-  this->print();
+  if(exp_num == exp_num_) this->print();
 }
 
 void MenuSystem::MenuToesCal::set_exp(uint8_t exp_num)
@@ -1059,9 +1062,9 @@ void MenuSystem::MenuHeelCal::print()
   display.display();
 }
 
-void MenuSystem::MenuHeelCal::exp_refresh()
+void MenuSystem::MenuHeelCal::exp_refresh(uint8_t exp_num)
 {
-  this->print();
+  if(exp_num == exp_num_) this->print();
 }
 
 void MenuSystem::MenuHeelCal::set_exp(uint8_t exp_num)
@@ -1351,7 +1354,7 @@ void MenuSystem::process()
     if (last_exp_val_[i] != cur_exp_val)
     {
       //TODO
-      pt_current_->exp_refresh();
+      pt_current_->exp_refresh(i);
       last_exp_val_[i] = cur_exp_val;
     }
   }

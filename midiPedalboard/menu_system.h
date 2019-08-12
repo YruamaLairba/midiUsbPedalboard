@@ -41,7 +41,7 @@ class MenuSystem
       virtual void cancel() = 0;
       virtual void print() = 0;
       //i need to refresh some menu when exp val change
-      virtual void exp_refresh() = 0;
+      virtual void exp_refresh(uint8_t exp_num) = 0;
   };
 
   class MenuTemplate : public MenuBase
@@ -57,7 +57,7 @@ class MenuSystem
       virtual void select_prev();
 
       //this function does nothing here
-      virtual void exp_refresh();
+      virtual void exp_refresh(uint8_t exp_num);
   };
 
   // for menus with a parent
@@ -291,7 +291,7 @@ class MenuSystem
       virtual void activate();
       virtual void validate();
       virtual void print();
-      virtual void exp_refresh();
+      virtual void exp_refresh(uint8_t exp_num);
       void set_exp(uint8_t exp_num);
   };
 
@@ -307,7 +307,7 @@ class MenuSystem
       virtual void activate();
       virtual void validate();
       virtual void print();
-      virtual void exp_refresh();
+      virtual void exp_refresh(uint8_t exp_num);
       void set_exp(uint8_t exp_num);
   };
 
