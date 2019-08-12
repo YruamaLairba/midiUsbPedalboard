@@ -73,6 +73,8 @@ void MenuSystem::MenuTemplate::select_prev()
   print();
 }
 
+void MenuSystem::MenuTemplate::exp_refresh(){}
+
 MenuSystem::SubMenuTemplate::SubMenuTemplate(
     MenuSystem* pt_menu_system,
     MenuBase* pt_parent)
@@ -1005,6 +1007,11 @@ void MenuSystem::MenuToesCal::print()
   display.display();
 }
 
+void MenuSystem::MenuToesCal::exp_refresh()
+{
+  this->print();
+}
+
 void MenuSystem::MenuToesCal::set_exp(uint8_t exp_num)
 {
   exp_num_=exp_num;
@@ -1050,6 +1057,11 @@ void MenuSystem::MenuHeelCal::print()
       get_exp_raw_val(exp_num_),DEC);
   display.print(F("\n\r"));
   display.display();
+}
+
+void MenuSystem::MenuHeelCal::exp_refresh()
+{
+  this->print();
 }
 
 void MenuSystem::MenuHeelCal::set_exp(uint8_t exp_num)
@@ -1332,5 +1344,17 @@ void MenuSystem::process()
   {
     pt_current_->cancel();
   }
+  //look for chang in exp value
+  for(uint8_t i =0; i< nbExp; i++)
+  {
+    int16_t cur_exp_val = pt_controller_system_->get_exp_raw_val(i);
+    if (last_exp_val_[i] != cur_exp_val)
+    {
+      //TODO
+      pt_current_->exp_refresh();
+      last_exp_val_[i] = cur_exp_val;
+    }
+  }
+
 }
 

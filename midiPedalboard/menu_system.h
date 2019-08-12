@@ -40,6 +40,8 @@ class MenuSystem
       virtual void validate() = 0;
       virtual void cancel() = 0;
       virtual void print() = 0;
+      //i need to refresh some menu when exp val change
+      virtual void exp_refresh() = 0;
   };
 
   class MenuTemplate : public MenuBase
@@ -53,6 +55,9 @@ class MenuSystem
       MenuTemplate(MenuSystem* menu_system);
       virtual void select_next();
       virtual void select_prev();
+
+      //this function does nothing here
+      virtual void exp_refresh();
   };
 
   // for menus with a parent
@@ -286,6 +291,7 @@ class MenuSystem
       virtual void activate();
       virtual void validate();
       virtual void print();
+      virtual void exp_refresh();
       void set_exp(uint8_t exp_num);
   };
 
@@ -301,6 +307,7 @@ class MenuSystem
       virtual void activate();
       virtual void validate();
       virtual void print();
+      virtual void exp_refresh();
       void set_exp(uint8_t exp_num);
   };
 
@@ -367,6 +374,8 @@ class MenuSystem
     PushButton button_ok_;
     PushButton button_cancel_;
     ControllerSystem* pt_controller_system_;
+
+    int16_t last_exp_val_[nbExp];
 
   public:
     MenuSystem(ControllerSystem* pt_controller_system);
