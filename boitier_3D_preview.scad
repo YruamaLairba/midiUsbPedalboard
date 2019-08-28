@@ -1,5 +1,4 @@
 use <footswitch.scad>;
-use <angle_bracket.scad>;
 use <USB_connector.scad>;
 use <midi_connector.scad>;
 use <jack_connector.scad>;
