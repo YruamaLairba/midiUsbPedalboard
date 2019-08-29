@@ -131,18 +131,18 @@ void MenuSystem::MenuFsCmdTyp::validate()
 
 void MenuSystem::MenuFsCmdTyp::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     switch (i)
     {
@@ -157,7 +157,7 @@ void MenuSystem::MenuFsCmdTyp::print()
         break;
     }
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuFsCCVal::MenuFsCCVal(
@@ -187,24 +187,24 @@ void MenuSystem::MenuFsCCVal::validate()
 
 void MenuSystem::MenuFsCCVal::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("CC"));
     display.print(i, DEC);
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuFsMMCVal::MenuFsMMCVal(
@@ -238,23 +238,23 @@ void MenuSystem::MenuFsMMCVal::validate()
 
 void MenuSystem::MenuFsMMCVal::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     print_fs_mmc(static_cast<fsMmc_t>(i));
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuFsPGMVal::MenuFsPGMVal(
@@ -284,24 +284,24 @@ void MenuSystem::MenuFsPGMVal::validate()
 
 void MenuSystem::MenuFsPGMVal::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("PGM"));
     display.print(i, DEC);
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuFsMode::MenuFsMode(
@@ -331,17 +331,17 @@ void MenuSystem::MenuFsMode::validate()
 
 void MenuSystem::MenuFsMode::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for(uint8_t i = display_offset_; i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
   switch (i)
     {
@@ -366,7 +366,7 @@ void MenuSystem::MenuFsMode::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuExpCmdTyp::MenuExpCmdTyp(
@@ -407,18 +407,18 @@ void MenuSystem::MenuExpCmdTyp::validate()
 
 void MenuSystem::MenuExpCmdTyp::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     switch (i)
     {
@@ -433,7 +433,7 @@ void MenuSystem::MenuExpCmdTyp::print()
         break;
     }
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuExpCommand::MenuExpCommand(
@@ -463,24 +463,24 @@ void MenuSystem::MenuExpCommand::validate()
 
 void MenuSystem::MenuExpCommand::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("CC"));
     display.print(i, DEC);
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuExpMode::MenuExpMode(
@@ -510,17 +510,17 @@ void MenuSystem::MenuExpMode::validate()
 
 void MenuSystem::MenuExpMode::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for(uint8_t i = display_offset_; i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
   switch (i)
     {
@@ -533,7 +533,7 @@ void MenuSystem::MenuExpMode::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuFsSetting::MenuFsSetting(
@@ -603,18 +603,18 @@ void MenuSystem::MenuFsSetting::print()
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   fsCmdTyp_t cmd_typ =
     pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fsNum);
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("FS"));
     display.print(fsNum, DEC);
@@ -643,7 +643,7 @@ void MenuSystem::MenuFsSetting::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuExpSetting::MenuExpSetting(
@@ -717,18 +717,18 @@ void MenuSystem::MenuExpSetting::print()
   uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
   expCmdTyp_t cur_cmd_typ =
     pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num);
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("Exp"));
     display.print(exp_num, DEC);
@@ -763,7 +763,7 @@ void MenuSystem::MenuExpSetting::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuControllerSetting::MenuControllerSetting(
@@ -797,18 +797,18 @@ void MenuSystem::MenuControllerSetting::print()
 {
   uint8_t nb_fs = pt_menu_system_->pt_controller_system_->get_nb_fs();
   uint8_t nb_exp = pt_menu_system_->pt_controller_system_->get_nb_exp();
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     if (i < nb_fs)
     {
@@ -822,7 +822,7 @@ void MenuSystem::MenuControllerSetting::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 uint8_t MenuSystem::MenuControllerSetting::get_selected_fs()
@@ -861,24 +861,24 @@ void MenuSystem::MenuPresetLoad::validate()
 
 void MenuSystem::MenuPresetLoad::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("Load "));
     display.print(i,DEC);
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuPresetSave::MenuPresetSave(
@@ -906,24 +906,24 @@ void MenuSystem::MenuPresetSave::validate()
 
 void MenuSystem::MenuPresetSave::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("Save to "));
     display.print(i,DEC);
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuMidiChannel::MenuMidiChannel(
@@ -948,24 +948,24 @@ void MenuSystem::MenuMidiChannel::validate()
 
 void MenuSystem::MenuMidiChannel::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("Channel "));
     display.print(i + 1);
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuToesCal::MenuToesCal(
@@ -992,9 +992,9 @@ void MenuSystem::MenuToesCal::validate()
 
 void MenuSystem::MenuToesCal::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
-  display.setTextColor(WHITE,BLACK);
+  display.setInvertMode(false);
   display.print(F("Exp"));
   display.print(exp_num_);
   display.print(F(" Toes"));
@@ -1007,7 +1007,7 @@ void MenuSystem::MenuToesCal::print()
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_raw_val(exp_num_),DEC);
   display.print(F("\n\r"));
-  display.display();
+  //display.display();
 }
 
 void MenuSystem::MenuToesCal::exp_refresh(uint8_t exp_num)
@@ -1044,9 +1044,9 @@ void MenuSystem::MenuHeelCal::validate()
 
 void MenuSystem::MenuHeelCal::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
-  display.setTextColor(WHITE,BLACK);
+  display.setInvertMode(false);
   display.print(F("Exp"));
   display.print(exp_num_);
   display.print(F(" Heel"));
@@ -1059,7 +1059,7 @@ void MenuSystem::MenuHeelCal::print()
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_raw_val(exp_num_),DEC);
   display.print(F("\n\r"));
-  display.display();
+  //display.display();
 }
 
 void MenuSystem::MenuHeelCal::exp_refresh(uint8_t exp_num)
@@ -1105,18 +1105,18 @@ void MenuSystem::MenuExpXCal::validate()
 
 void MenuSystem::MenuExpXCal::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     switch(i)
     {
@@ -1133,7 +1133,7 @@ void MenuSystem::MenuExpXCal::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 void MenuSystem::MenuExpXCal::set_exp(uint8_t exp_num)
@@ -1164,25 +1164,25 @@ void MenuSystem::MenuExpCalSel::validate()
 
 void MenuSystem::MenuExpCalSel::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     display.print(F("Exp "));
     display.print(i);
     display.print(F(" cal"));
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuGlobalSetting::MenuGlobalSetting(
@@ -1209,18 +1209,18 @@ void MenuSystem::MenuGlobalSetting::validate()
 
 void MenuSystem::MenuGlobalSetting::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
-      display.setTextColor(BLACK,WHITE);
+      display.setInvertMode(true);
     }
     else
     {
-      display.setTextColor(WHITE,BLACK);
+      display.setInvertMode(false);
     }
     switch(i)
     {
@@ -1233,7 +1233,7 @@ void MenuSystem::MenuGlobalSetting::print()
     }
     display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuConf::MenuConf(MenuSystem* menu_system)
@@ -1271,18 +1271,18 @@ void MenuSystem::MenuConf::cancel()
 
 void MenuSystem::MenuConf::print()
 {
-  display.clearDisplay();
+  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
       i < get_nb_item() && i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
       {
-        display.setTextColor(BLACK,WHITE);
+        display.setInvertMode(true);
       }
       else
       {
-        display.setTextColor(WHITE,BLACK);
+        display.setInvertMode(false);
       }
       switch(i)
     {
@@ -1303,7 +1303,7 @@ void MenuSystem::MenuConf::print()
     }
    display.print(F("\n\r"));
   }
-  display.display();
+  //display.display();
 }
 
 MenuSystem::MenuSystem(ControllerSystem* pt_controller_system)

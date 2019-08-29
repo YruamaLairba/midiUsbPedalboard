@@ -14,14 +14,7 @@ DIAGNOSTIC_IGNORE_ALL
 #ifdef DEBUG
 #include <Arduino.h>
 #endif //DEBUG
-
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 DIAGNOSTIC_POP
-
-#if (SSD1306_LCDHEIGHT != 64)
-#error("Height incorrect, please fix Adafruit_SSD1306.h!");
-#endif
 
 class MenuBase;
 class MenuConf;
