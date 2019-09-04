@@ -131,10 +131,9 @@ void MenuSystem::MenuFsCmdTyp::validate()
 
 void MenuSystem::MenuFsCmdTyp::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -147,15 +146,17 @@ void MenuSystem::MenuFsCmdTyp::print()
     switch (i)
     {
       case 0:
-        display.print(F("Ctl Change\n\r"));
+        display.print(F("Ctl Change"));
         break;
       case 1:
-        display.print(F("Pgm Change\n\r"));
+        display.print(F("Pgm Change"));
         break;
       case 2:
-        display.print(F("MMC Cmd\n\r"));
+        display.print(F("MMC Cmd"));
         break;
     }
+   display.clearToEOL();
+   display.print(F("\n\r"));
   }
   //display.display();
 }
@@ -187,10 +188,9 @@ void MenuSystem::MenuFsCCVal::validate()
 
 void MenuSystem::MenuFsCCVal::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -202,7 +202,8 @@ void MenuSystem::MenuFsCCVal::print()
     }
     display.print(F("CC"));
     display.print(i, DEC);
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -238,10 +239,9 @@ void MenuSystem::MenuFsMMCVal::validate()
 
 void MenuSystem::MenuFsMMCVal::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -252,7 +252,8 @@ void MenuSystem::MenuFsMMCVal::print()
       display.setInvertMode(false);
     }
     print_fs_mmc(static_cast<fsMmc_t>(i));
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -284,10 +285,9 @@ void MenuSystem::MenuFsPGMVal::validate()
 
 void MenuSystem::MenuFsPGMVal::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -299,7 +299,8 @@ void MenuSystem::MenuFsPGMVal::print()
     }
     display.print(F("PGM"));
     display.print(i, DEC);
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -331,7 +332,6 @@ void MenuSystem::MenuFsMode::validate()
 
 void MenuSystem::MenuFsMode::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for(uint8_t i = display_offset_; i < (display_offset_ + 4); i++)
   {
@@ -364,7 +364,8 @@ void MenuSystem::MenuFsMode::print()
         display.print(F("sing on"));
         break;
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -407,10 +408,9 @@ void MenuSystem::MenuExpCmdTyp::validate()
 
 void MenuSystem::MenuExpCmdTyp::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -423,15 +423,17 @@ void MenuSystem::MenuExpCmdTyp::print()
     switch (i)
     {
       case 0:
-        display.print(F("none\n\r"));
+        display.print(F("none"));
         break;
       case 1:
-        display.print(F("Ctl Change\n\r"));
+        display.print(F("Ctl Change"));
         break;
       case 2:
-        display.print(F("Pitch Bend\n\r"));
+        display.print(F("Pitch Bend"));
         break;
     }
+   display.clearToEOL();
+   display.print(F("\n\r"));
   }
   //display.display();
 }
@@ -463,10 +465,9 @@ void MenuSystem::MenuExpCommand::validate()
 
 void MenuSystem::MenuExpCommand::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -478,7 +479,8 @@ void MenuSystem::MenuExpCommand::print()
     }
     display.print(F("CC"));
     display.print(i, DEC);
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -510,7 +512,6 @@ void MenuSystem::MenuExpMode::validate()
 
 void MenuSystem::MenuExpMode::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for(uint8_t i = display_offset_; i < (display_offset_ + 4); i++)
   {
@@ -531,7 +532,8 @@ void MenuSystem::MenuExpMode::print()
         display.print(F("reverse"));
         break;
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -603,10 +605,9 @@ void MenuSystem::MenuFsSetting::print()
   uint8_t fsNum = pt_menu_controller_setting_->get_selected_fs();
   fsCmdTyp_t cmd_typ =
     pt_menu_system_->pt_controller_system_->get_fs_cmd_typ(fsNum);
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -616,8 +617,11 @@ void MenuSystem::MenuFsSetting::print()
     {
       display.setInvertMode(false);
     }
-    display.print(F("FS"));
-    display.print(fsNum, DEC);
+    if(i < get_nb_item())
+    {
+      display.print(F("FS"));
+      display.print(fsNum, DEC);
+    }
     switch (i)
     {
       case 0:
@@ -638,10 +642,12 @@ void MenuSystem::MenuFsSetting::print()
         }
         break;
       case 2:
+        if(cmd_typ == fsCmdTyp_t::cc)
         display.print(F(" CCMode"));
         break;
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -717,10 +723,9 @@ void MenuSystem::MenuExpSetting::print()
   uint8_t exp_num = pt_menu_controller_setting_->get_selected_exp();
   expCmdTyp_t cur_cmd_typ =
     pt_menu_system_->pt_controller_system_->get_exp_cmd_typ(exp_num);
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -730,8 +735,11 @@ void MenuSystem::MenuExpSetting::print()
     {
       display.setInvertMode(false);
     }
-    display.print(F("Exp"));
-    display.print(exp_num, DEC);
+    if ( i < get_nb_item())
+    {
+      display.print(F("Exp"));
+      display.print(exp_num, DEC);
+    }
     switch (i)
     {
       case 0:
@@ -761,7 +769,8 @@ void MenuSystem::MenuExpSetting::print()
         }
         break;
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -797,10 +806,9 @@ void MenuSystem::MenuControllerSetting::print()
 {
   uint8_t nb_fs = pt_menu_system_->pt_controller_system_->get_nb_fs();
   uint8_t nb_exp = pt_menu_system_->pt_controller_system_->get_nb_exp();
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
     {
@@ -820,7 +828,8 @@ void MenuSystem::MenuControllerSetting::print()
       display.print(F("Exp "));
       display.print(i - nb_fs, DEC);
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -861,10 +870,9 @@ void MenuSystem::MenuPresetLoad::validate()
 
 void MenuSystem::MenuPresetLoad::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < display_offset_ + 4; i++)
+      i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -876,7 +884,8 @@ void MenuSystem::MenuPresetLoad::print()
     }
     display.print(F("Load "));
     display.print(i,DEC);
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -906,10 +915,9 @@ void MenuSystem::MenuPresetSave::validate()
 
 void MenuSystem::MenuPresetSave::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < display_offset_ + 4; i++)
+      i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -921,7 +929,8 @@ void MenuSystem::MenuPresetSave::print()
     }
     display.print(F("Save to "));
     display.print(i,DEC);
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -948,10 +957,9 @@ void MenuSystem::MenuMidiChannel::validate()
 
 void MenuSystem::MenuMidiChannel::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < display_offset_ + 4; i++)
+      i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -963,7 +971,8 @@ void MenuSystem::MenuMidiChannel::print()
     }
     display.print(F("Channel "));
     display.print(i + 1);
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -992,21 +1001,23 @@ void MenuSystem::MenuToesCal::validate()
 
 void MenuSystem::MenuToesCal::print()
 {
-  display.clear();
   display.setCursor(0,0);
   display.setInvertMode(false);
   display.print(F("Exp"));
   display.print(exp_num_);
   display.print(F(" Toes"));
-  display.print(F("\n\r"));
+  display.clearToEOL();
+  display.print(F("\n\r"));;
   display.print(F("cur: "));
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_toes_val(exp_num_),DEC);
-  display.print(F("\n\r"));
+  display.clearToEOL();
+  display.print(F("\n\r"));;
   display.print(F("new: "));
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_raw_val(exp_num_),DEC);
-  display.print(F("\n\r"));
+  display.clearToEOL();
+  display.print(F("\n\r"));;
   //display.display();
 }
 
@@ -1044,21 +1055,23 @@ void MenuSystem::MenuHeelCal::validate()
 
 void MenuSystem::MenuHeelCal::print()
 {
-  display.clear();
   display.setCursor(0,0);
   display.setInvertMode(false);
   display.print(F("Exp"));
   display.print(exp_num_);
   display.print(F(" Heel"));
-  display.print(F("\n\r"));
+  display.clearToEOL();
+  display.print(F("\n\r"));;
   display.print(F("cur: "));
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_heel_val(exp_num_),DEC);
-  display.print(F("\n\r"));
+  display.clearToEOL();
+  display.print(F("\n\r"));;
   display.print(F("new: "));
   display.print(pt_menu_system_->pt_controller_system_->
       get_exp_raw_val(exp_num_),DEC);
-  display.print(F("\n\r"));
+  display.clearToEOL();
+  display.print(F("\n\r"));;
   //display.display();
 }
 
@@ -1105,10 +1118,9 @@ void MenuSystem::MenuExpXCal::validate()
 
 void MenuSystem::MenuExpXCal::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < display_offset_ + 4; i++)
+      i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -1131,7 +1143,8 @@ void MenuSystem::MenuExpXCal::print()
         display.print(F(" Heel"));
         break;
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -1164,10 +1177,9 @@ void MenuSystem::MenuExpCalSel::validate()
 
 void MenuSystem::MenuExpCalSel::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < display_offset_ + 4; i++)
+      i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -1177,10 +1189,14 @@ void MenuSystem::MenuExpCalSel::print()
     {
       display.setInvertMode(false);
     }
-    display.print(F("Exp "));
-    display.print(i);
-    display.print(F(" cal"));
-    display.print(F("\n\r"));
+    if(i < get_nb_item())
+    {
+      display.print(F("Exp "));
+      display.print(i);
+      display.print(F(" cal"));
+    }
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -1209,10 +1225,9 @@ void MenuSystem::MenuGlobalSetting::validate()
 
 void MenuSystem::MenuGlobalSetting::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < display_offset_ + 4; i++)
+      i < display_offset_ + 4; i++)
   {
     if (selection_ == i)
     {
@@ -1231,7 +1246,8 @@ void MenuSystem::MenuGlobalSetting::print()
         display.print(F("Exp cal"));
         break;
     }
-    display.print(F("\n\r"));
+    display.clearToEOL();
+    display.print(F("\n\r"));;
   }
   //display.display();
 }
@@ -1271,10 +1287,9 @@ void MenuSystem::MenuConf::cancel()
 
 void MenuSystem::MenuConf::print()
 {
-  display.clear();
   display.setCursor(0,0);
   for (int i = display_offset_;
-      i < get_nb_item() && i < (display_offset_ + 4); i++)
+      i < (display_offset_ + 4); i++)
   {
     if (selection_ == i)
       {
@@ -1301,6 +1316,7 @@ void MenuSystem::MenuConf::print()
       default:
         break;
     }
+   display.clearToEOL();
    display.print(F("\n\r"));
   }
   //display.display();
