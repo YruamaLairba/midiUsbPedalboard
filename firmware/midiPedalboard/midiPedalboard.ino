@@ -21,11 +21,11 @@ void setup() {
 #endif
   controller_system.init();
 
-  display.begin(SSD1306_SWITCHCAPVCC);
-  display.clearDisplay();
-  display.setTextSize(2);
-  display.setTextColor(WHITE,BLACK);
-  display.setTextWrap(0);
+  display.begin(&Adafruit128x64, displayCs, displayDc, displayReset);
+  display.clear();
+  display.setFont(Adafruit5x7); 
+  display.set2X();
+  display.setInvertMode(true);
   menu_system.init();
 
 }
